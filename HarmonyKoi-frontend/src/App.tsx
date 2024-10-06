@@ -1,24 +1,25 @@
 import React from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import Header from './components/Header'
-import HomePage from './pages/HomePage'
-import ConsultingPage from './pages/ConsultingPage'
-import PostPage from './pages/PostPage'
-import NewsPage from './pages/NewsPage'
-import LoginPage from './pages/LoginPage'
-import './App.css'
+import Navbar from './components/Navbar/Navbar'
+import HomePage from './pages/Home/HomePage'
+import ConsultingPage from './pages/Consulting/ConsultingPage'
+import PostPage from './pages/Post/PostPage'
+import NewsPage from './pages/News/NewsPage'
+import LoginPage from './pages/Login/LoginPage'
+import Footer from './components/Footer/Footer'
 
 const App: React.FC = () => {
   return (
     <BrowserRouter>
-      <Header />
+      <Navbar />
       <Routes>
-        <Route path='/' element={<HomePage />} />
+        <Route path='/home' element={<HomePage />} />
         <Route path='/consulting' element={<ConsultingPage />} />
-        <Route path='/articles' element={<PostPage />} />
+        <Route path='/post' element={<PostPage />} />
         <Route path='/news' element={<NewsPage />} />
         <Route path='/login' element={<LoginPage />} />
       </Routes>
+      <Footer />
     </BrowserRouter>
   )
 }
