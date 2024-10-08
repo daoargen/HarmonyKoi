@@ -1,0 +1,8 @@
+:root {
+  --color-blue-light: #d2e0fb;
+  --color-yellow-light: #fef9d9;
+  --color-green-light: #dee5d4;
+  --color-blue-gray: #8eaccd;
+  --border-color: var(--color-blue-gray);
+  --color-text: #000000;
+}
