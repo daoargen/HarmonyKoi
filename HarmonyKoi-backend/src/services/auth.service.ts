@@ -104,7 +104,7 @@ async function confirmRegister(code: string) {
     logNonCustomError(error)
     throw error
   }
-} // Confirm register adult account
+} // Confirm register MEMBER account
 
 async function login(loginKey: string, password: string, res: Response) {
   try {

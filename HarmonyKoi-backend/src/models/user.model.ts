@@ -24,12 +24,8 @@ export const User = sequelize.define<UserInstance>(tableName, {
     allowNull: false
   },
   role: {
-    type: DataTypes.ENUM("CHILD", "ADULT", "LECTURER", "SUPPORTER", "CONTENT_CREATOR", "MANAGER", "ADMIN"),
+    type: DataTypes.ENUM("MEMBER", "ADMIN"),
     allowNull: false
-  },
-  parentId: {
-    type: DataTypes.UUID,
-    allowNull: true
   },
   ...SQLModel
 })
@@ -40,7 +36,6 @@ export interface UserAttributes {
   username: string
   password: string
   role: Role
-  parentId?: string
   isDeleted?: boolean
 }
 
