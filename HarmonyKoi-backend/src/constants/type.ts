@@ -13,7 +13,7 @@ export type JWTResponse = {
 }
 
 export enum Role {
-  USER,
+  MEMBER,
   ADMIN
 }
 

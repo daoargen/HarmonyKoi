@@ -1,10 +1,12 @@
-import express from "express"
-
-import AuthController from "~/controllers/auth.controller"
-import authMiddleware from "~/middlewares/auth.middleware"
-
-const router = express.Router()
-
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = __importDefault(require("express"));
+const auth_controller_1 = __importDefault(require("../controllers/auth.controller"));
+const auth_middleware_1 = __importDefault(require("../middlewares/auth.middleware"));
+const router = express_1.default.Router();
 /**
  * @swagger
  * /api/auth/register:
@@ -46,8 +48,7 @@ const router = express.Router()
  *       500:
  *         description: Internal server error
  */
-router.post("/register", AuthController.register)
-
+router.post("/register", auth_controller_1.default.register);
 /**
  * @swagger
  * /api/auth/confirm-register:
@@ -67,8 +68,7 @@ router.post("/register", AuthController.register)
  *       400:
  *         description: Bad request
  */
-router.get("/confirm-register", AuthController.confirmRegister)
-
+router.get("/confirm-register", auth_controller_1.default.confirmRegister);
 /**
  * @swagger
  * /api/auth/login:
@@ -101,8 +101,7 @@ router.get("/confirm-register", AuthController.confirmRegister)
  *       400:
  *         description: Bad request
  */
-router.post("/login", AuthController.login)
-
+router.post("/login", auth_controller_1.default.login);
 /**
  * @swagger
  * /api/auth/logout:
@@ -116,8 +115,7 @@ router.post("/login", AuthController.login)
  *       400:
  *         description: Bad request
  */
-router.post("/logout", authMiddleware.verifyToken, AuthController.logout)
-
+router.post("/logout", auth_middleware_1.default.verifyToken, auth_controller_1.default.logout);
 /**
  * @swagger
  * /api/auth/forgot-password:
@@ -141,8 +139,7 @@ router.post("/logout", authMiddleware.verifyToken, AuthController.logout)
  *       400:
  *         description: Bad request
  */
-router.post("/forgot-password", AuthController.forgotPassword)
-
+router.post("/forgot-password", auth_controller_1.default.forgotPassword);
 /**
  * @swagger
  * /api/auth/reset-password:
@@ -178,8 +175,7 @@ router.post("/forgot-password", AuthController.forgotPassword)
  *       500:
  *         description: Internal server error
  */
-router.post("/reset-password", AuthController.resetPassword)
-
+router.post("/reset-password", auth_controller_1.default.resetPassword);
 /**
  * @swagger
  * /api/auth/change-password:
@@ -211,8 +207,7 @@ router.post("/reset-password", AuthController.resetPassword)
  *       500:
  *         description: Internal server error
  */
-router.post("/change-password", authMiddleware.verifyToken, AuthController.changePassword)
-
+router.post("/change-password", auth_middleware_1.default.verifyToken, auth_controller_1.default.changePassword);
 /**
  * @swagger
  * /api/auth/refresh-token:
@@ -246,6 +241,5 @@ router.post("/change-password", authMiddleware.verifyToken, AuthController.chang
  *       400:
  *         description: Bad request
  */
-router.post("/refresh-token", AuthController.getRefreshToken)
-
-export default router
+router.post("/refresh-token", auth_controller_1.default.getRefreshToken);
+exports.default = router;

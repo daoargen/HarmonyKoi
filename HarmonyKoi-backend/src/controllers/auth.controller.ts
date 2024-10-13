@@ -10,7 +10,7 @@ async function register(req: Request, res: Response) {
     if (!email || !username || !password || !gender || !dob) {
       return res.json(responseStatus.responseNotFound404("Missing required fields"))
     }
-    const userRole = role || "ADULT"
+    const userRole = role || "MEMBER"
     const dataRequest: CreateUser = {
       email,
       username,
