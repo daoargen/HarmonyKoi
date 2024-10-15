@@ -1,60 +1,83 @@
-import { createContext, FC, PropsWithChildren, useEffect, useReducer } from "react";
-import { toast } from "react-toastify";
+// src/context/AuthContext.tsx
 
-import { useQuery } from "@tanstack/react-query";
-
-import { getMe, getMeQueryKey } from '../apis/users.api';
-import Loading from '../components/common/Loading';
-import { SYSTEM_MESSAGES } from '../utils/constants';
-import { getToken } from '../utils/cookies';
-
-import { initialize, reducer } from "./auth.reducer";
-import { AuthContextType, AuthState } from "./auth.type";
-
-const initialState: AuthState = {
-  isAuthenticated: false,
-  isInitialized: false,
-  user: null,
-};
+import React, { createContext, useState, useEffect, ReactNode } from 'react'
+import { AuthContextType, LoginCredentials, User } from '../types'
 
 const AuthContext = createContext<AuthContextType>({
-  ...initialState,
-  dispatch: () => null,
-});
+  user: null,
+  isLoggedIn: false,
+  isLoading: true,
+  login: async () => {}, // Hàm rỗng để khởi tạo
+  logout: () => {} // Hàm rỗng để khởi tạo
+})
 
-const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
-  const [state, dispatch] = useReducer(reducer, initialState);
-  const { refetch: userRefetch } = useQuery({
-    queryKey: [getMeQueryKey],
-    queryFn: () => getMe(),
-    enabled: false,
-  });
+const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
+  const [user, setUser] = useState<User | null>(null)
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
-    (async () => {
-      const accessToken = getToken();
-      if (!accessToken) {
-        return dispatch(initialize({ isAuthenticated: false, user: null }));
-      }
-
+    const checkToken = async () => {
       try {
-        const { data } = await userRefetch();
-        if (data) {
-          const user = data.data.data.user;
-          dispatch(initialize({ isAuthenticated: true, user }));
+        const token = localStorage.getItem('token')
+        if (token) {
+          const response = await fetch('/api/me', {
+            headers: { Authorization: `Bearer ${token}` }
+          })
+          if (response.ok) {
+            const userData: User = await response.json()
+            setUser(userData)
+            setIsLoggedIn(true)
+          } else {
+            localStorage.removeItem('token')
+          }
         }
       } catch (error) {
-        toast.error(SYSTEM_MESSAGES.SOMETHING_WENT_WRONG);
-        dispatch(initialize({ isAuthenticated: false, user: null }));
+        console.error('Token check failed:', error)
+      } finally {
+        setIsLoading(false)
       }
-    })();
-  }, [userRefetch]);
+    }
+    checkToken()
+  }, [])
 
-  return (
-    <AuthContext.Provider value={{ ...state, dispatch }}>
-      {state.isInitialized ? children : <Loading />}
-    </AuthContext.Provider>
-  );
-};
+  const login = async (credentials: LoginCredentials) => {
+    try {
+      const response = await fetch('/api/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(credentials)
+      })
+      const data = await response.json()
 
-export { AuthContext, AuthProvider };
+      if (response.ok) {
+        localStorage.setItem('token', data.token)
+        setUser(data.user)
+        setIsLoggedIn(true)
+      } else {
+        throw new Error(data.message || 'Login failed.')
+      }
+    } catch (error) {
+      console.error('Login failed:', error)
+      throw error // Có thể xử lý lỗi ở component gọi login()
+    }
+  }
+
+  const logout = () => {
+    localStorage.removeItem('token')
+    setUser(null)
+    setIsLoggedIn(false)
+  }
+
+  const contextValue: AuthContextType = {
+    user,
+    isLoggedIn,
+    isLoading,
+    login,
+    logout
+  }
+
+  return <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>
+}
+
+export { AuthContext, AuthProvider }
