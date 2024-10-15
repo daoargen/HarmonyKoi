@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 
-import icons from "~assets/icons";
-import configs from "~configs";
+import icons from "../../../assets/icons";
+import configs from "../../../configs";
 
 const Logo = ({ to = configs.routes.home }: { to?: string }) => {
   return (

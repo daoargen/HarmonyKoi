@@ -1,6 +1,6 @@
 import { memo, ReactNode } from "react";
 
-import { FormLabel as ShadcnFormLabel } from "~components/ui/form";
+import { FormLabel as ShadcnFormLabel } from "../../../../ui/form";
 
 interface FormLabelProps {
   children: ReactNode;
