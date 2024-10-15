@@ -1,12 +1,12 @@
 import React from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import Navbar from './components/Navbar/Navbar'
+import Navbar from './components/common/Navbar/Navbar'
 import HomePage from './pages/Home/HomePage'
 import ConsultingPage from './pages/Consulting/ConsultingPage'
 import PostPage from './pages/Post/PostPage'
 import NewsPage from './pages/News/NewsPage'
 import LoginPage from './pages/Login/LoginPage'
-import Footer from './components/Footer/Footer'
+import Footer from './components/common/Footer/Footer'
 
 const App: React.FC = () => {
   return (
