@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import styles from './Navbar.module.css'
-import logoImage from '../../assets/images/logo.png'
+import logoImage from '~/assets/images/logo.png'
 
 const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false)
