@@ -23,11 +23,11 @@ const FormItems = ({ form, observeInputEmail, observeInputPassword }: FormItemsP
   const loginFields: LoginObjectType[] = useMemo(
     () => [
       {
-        name: "email",
+        name: "loginKey",
         label: "Tài khoản",
         component: (field) => (
           <Input
-            type="email"
+            type="loginKey"
             placeholder="customer@example.com"
             className="h-10 bg-white"
             observeInput={observeInputEmail}
