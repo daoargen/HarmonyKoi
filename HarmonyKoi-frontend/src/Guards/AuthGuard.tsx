@@ -9,10 +9,10 @@ import useAuth from "../hooks/useAuth";
 // AuthGuard is component that will be used to protect routes
 // that should only be accessed by authenticated users.
 const AuthGuard: FC<PropsWithChildren> = ({ children }) => {
-  const { isLoading, isLoggedIn } = useAuth();
+  const { isInitialized, isAuthenticated } = useAuth();
 
-  if (!isLoading) return <HomePage />; //chuyền lại về tới trang thông báo 
-  if (!isLoggedIn) return <Navigate to={`/${configs.routes.login}`} replace />;
+  if (!isInitialized) return <HomePage />; //chuyền lại về tới trang thông báo 
+  if (!isAuthenticated) return <Navigate to={`/${configs.routes.login}`} replace />;  
 
   return children || <Outlet />;
 };

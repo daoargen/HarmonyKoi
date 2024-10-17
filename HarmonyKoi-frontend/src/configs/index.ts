@@ -1,5 +1,5 @@
 import cookies from "./cookies";
-import routes from "./routes";
+import routes from "../context/routes";
 
 const configs = {
   routes,

@@ -9,10 +9,10 @@ import useAuth from "../hooks/useAuth";
 // GuestGuard is a component that will be used to protect routes
 // that should only be accessed by unauthenticated users.
 const GuestGuard: FC<PropsWithChildren> = ({ children }) => {
-  const { isLoading, isLoggedIn } = useAuth();
+  const { isInitialized, isAuthenticated } = useAuth();
 
-  if (!isLoading) return <HomePage />; //chuyền lại về tới trang thông báo 
-  if (isLoggedIn) return <Navigate to={configs.routes.home} replace />;
+  if (!isInitialized) return <HomePage />; //chuyền lại về tới trang thông báo 
+  if (isAuthenticated) return <Navigate to={configs.routes.home} replace />;
 
   return children || <Outlet />;
 };

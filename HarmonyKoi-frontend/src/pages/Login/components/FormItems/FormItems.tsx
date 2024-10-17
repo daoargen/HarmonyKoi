@@ -2,10 +2,10 @@ import { useMemo } from "react";
 import { ControllerRenderProps, UseFormReturn } from "react-hook-form";
 
 import InputPassword from  '../../../../components/common/AuthForm/components/InputPassword';//"~components/common/AuthForm/components/InputPassword";
-import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "~components/ui/form";
-import { Input } from "~components/ui/input";
-import { ObserveInput } from "~hooks/useTeddyAnimation";
-import { LoginFormType } from "~pages/Login/Login";
+import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "../../../../components/ui/form";
+import { Input } from "../../../../components/ui/input";
+import { ObserveInput } from "../../../../hooks/useTeddyAnimation";
+import { LoginFormType } from "../../../../pages/Login/LoginPage";
 
 interface FormItemsProps {
   form: UseFormReturn<LoginFormType>;

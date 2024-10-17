@@ -28,7 +28,7 @@ const passwordSchema = (message: string = "") =>
     });
 
 export const loginSchema = z.object({
-  email: emailSchema(),
+  loginKey: emailSchema(),
   password: passwordSchema(PASSWORD_MESSAGE),
 });
 
@@ -40,7 +40,7 @@ export const registerSchema = z.object({
     .min(1, {
       message: FULLNAME_MESSAGE,
     }),
-  email: emailSchema(),
+  loginKey: emailSchema(),
   phone: z
     .string({
       message: PHONE_MESSAGE,
@@ -52,7 +52,7 @@ export const registerSchema = z.object({
 });
 
 export const forgotPasswordSchema = z.object({
-  email: emailSchema(),
+  loginKey: emailSchema(),
 });
 
 export const resetPasswordSchema = z

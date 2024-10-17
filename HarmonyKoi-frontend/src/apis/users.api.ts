@@ -25,3 +25,7 @@ export const verifyTokenForgotPassword = (token: string | null, signal?: AbortSi
   http.post("/verify-token-forgot-password", { token }, { signal });
 
 export const resetPassword = (token: string, password: string) => http.post("/reset-password", { token, password });
+
+// users.api.ts
+export const refreshToken = () => http.post<AuthResponse>("/refresh_token");
+

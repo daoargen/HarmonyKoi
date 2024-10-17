@@ -5,6 +5,7 @@ import { AuthResponse } from '../types/auth.type';
 
 import { HTTP_STATUS } from "./constants";
 import { getToken, removeToken, setToken } from "./cookies";
+import { refreshToken } from "../apis/users.api";
 
 class Http {
   private accessToken: string;
@@ -27,10 +28,10 @@ class Http {
         }
         return config;
       },
-      (error) => {
-        return Promise.reject(error);
-      },
+      (error) =>  Promise.reject(error)
+      ,
     );
+
     this.instance.interceptors.response.use(
       (response) => {
         const { url, method } = response.config;
@@ -46,8 +47,18 @@ class Http {
         }
         return response;
       },
-      (error: AxiosError) => {
-        if (error.response?.status === HTTP_STATUS.UNAUTHORIZED) removeToken();
+      async (error: AxiosError) => {
+        if (error.response?.status === HTTP_STATUS.UNAUTHORIZED && error.config)  {
+          try {
+            const { data } = await refreshToken();  // Request new token using refresh token
+            this.accessToken = data.data.access_token;
+            setToken(this.accessToken);
+            error.config.headers.Authorization = `Bearer ${this.accessToken}`;
+            return this.instance.request(error.config);  // Retry the original request with new token
+          } catch (refreshError) {
+            removeToken();
+          } 
+        }
         return Promise.reject(error);
       },
     );

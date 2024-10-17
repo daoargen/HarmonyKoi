@@ -24,6 +24,15 @@ export const setToken = (token: string) => {
   setCookie(configs.cookies.accessToken, token);
 };
 
+export const getRefreshToken = () => {
+  return getCookie(configs.cookies.refreshToken);
+};
+
+export const setRefreshToken = (token: string) => {
+  setCookie(configs.cookies.refreshToken, token);
+};
+
 export const removeToken = () => {
-  removeCookie(configs.cookies.accessToken);  
+  removeCookie(configs.cookies.accessToken);
+  removeCookie(configs.cookies.refreshToken);
 };

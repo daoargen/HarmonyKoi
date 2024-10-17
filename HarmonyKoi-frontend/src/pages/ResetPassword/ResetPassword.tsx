@@ -5,19 +5,20 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 
-import { resetPassword } from "~apis/users.api";
-import AuthForm from "~components/common/AuthForm";
-import ButtonActionForm from "~components/common/AuthForm/components/ButtonActionForm";
-import { resetPasswordSchema } from "~components/common/AuthForm/data/schema";
-import { Form } from "~components/ui/form";
-import configs from "~configs";
-import useDocumentTitle from "~hooks/useDocumentTitle";
-import useTeddyAnimation from "~hooks/useTeddyAnimation";
-import { cn } from "~lib/utils";
-import { SYSTEM_MESSAGES, USER_MESSAGES } from "~utils/constants";
-import isAxiosError from "~utils/isAxiosError";
+import { resetPassword } from "../../apis/users.api";
+import AuthForm from "../../components/common/AuthForm";
+import ButtonActionForm from "../../components/common/AuthForm/components/ButtonActionForm";
+import { resetPasswordSchema } from "../../components/common/AuthForm/data/schema";
+import { Form } from "../../components/ui/form";
+import configs from "../../configs";
+import useDocumentTitle from "../../hooks/useDocumentTitle";
+import useTeddyAnimation from "../../hooks/useTeddyAnimation";
+import { cn } from "../../lib/utils";
+import { SYSTEM_MESSAGES, USER_MESSAGES } from "../../utils/constants";
+import isAxiosError from "../../utils/isAxiosError";
 
 import FormItems from "./components/FormItems";
+import React from "react";
 
 export interface ResetPasswordProps {
   token?: string | null;
@@ -30,7 +31,7 @@ const ResetPasswordFormDefaultValues: ResetPasswordFormType = {
   confirmPassword: "",
 };
 
-const ResetPassword = ({ token }: ResetPasswordProps) => {
+const ResetPassword: React.FC = ({ token }: ResetPasswordProps) => {
   useDocumentTitle("Prepify | Đặt lại mật khẩu");
 
   const { RiveComponent, observeInputPassword, teddySuccess, teddyFail } = useTeddyAnimation();

@@ -12,6 +12,7 @@ const routes = {
   orders: "/orders",
   about: "/about",
   error: "*",
+  notFound: "/not-found"
 };
 
 export default routes;

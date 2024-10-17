@@ -1,7 +1,7 @@
 import * as React from "react";
 
-import { ObserveInput } from "~hooks/useTeddyAnimation";
-import { cn } from "~lib/utils";
+import { ObserveInput } from "../../hooks/useTeddyAnimation";
+import { cn } from "../../lib/utils";
 
 export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   observeInput?: ObserveInput;
