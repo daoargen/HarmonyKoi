@@ -5,7 +5,7 @@ import { SuccessResponse } from './response.type';
 export interface User {
     id: string | null
     username: string | null
-    loginKey: string | null
+    email: string | null
     role: Role
 }
 
