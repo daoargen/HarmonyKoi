@@ -84,11 +84,11 @@ const LoginPage: React.FC = () => {
           <form>
             <div className={Styles.formGroup}>
               <Label htmlFor="email">Email</Label>
-              <Input type="email" id="email" placeholder="Enter your email" onChange={(e) => setEmail(e.target.value)} required/>
+              <Input type="email" id="email" placeholder="Nhập họ và tên" onChange={(e) => setEmail(e.target.value)} required/>
             </div>
             <div className={Styles.formGroup}>
               <Label htmlFor="password">Mật khẩu</Label>
-              <Input type="password" id="password" placeholder="Enter your password" onChange={(e) => setPassword(e.target.value)} required/>
+              <Input type="password" id="password" placeholder="Nhập mập khẩu" onChange={(e) => setPassword(e.target.value)} required/>
             </div>
             <div className={Styles.forgotPassword}>
               <a onClick={() => navigate('/not-found')} style={{cursor: "pointer"}}>Quên mật khẩu</a>
