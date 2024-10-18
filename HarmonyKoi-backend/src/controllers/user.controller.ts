@@ -22,6 +22,19 @@ async function getUser(req: Request, res: Response) {
   }
 } // Controller for get user by id
 
+async function getUserProfile(req: Request, res: Response) {
+  try {
+    const token = req.header("Authorization")?.replace("Bearer ", "")
+    if (!token) {
+      return res.json(responseStatus.responseUnauthorized401())
+    }
+    const user = await userService.getUserProfile(token)
+    return res.json(responseStatus.responseData200("Get user profile successfully!", user))
+  } catch (error) {
+    return res.json(error)
+  }
+}
+
 async function editUser(req: Request, res: Response) {
   try {
     const id = req.params.id
@@ -46,6 +59,7 @@ async function deleteUser(req: Request, res: Response) {
 export default {
   getUsers,
   getUser,
+  getUserProfile,
   editUser,
   deleteUser
 }
