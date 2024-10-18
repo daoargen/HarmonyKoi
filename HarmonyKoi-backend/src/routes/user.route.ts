@@ -38,6 +38,23 @@ router.get("/", authMiddleware.verifyMinimumRole(Role.ADMIN), UserController.get
 
 /**
  * @swagger
+ * /api/users/profile:
+ *   get:
+ *     tags:
+ *       - user
+ *     summary: Api for get user profile
+ *     responses:
+ *       200:
+ *         description: Returns a user profile object
+ *       404:
+ *         description: User not found or already deleted
+ *       500:
+ *         description: Internal server error
+ */
+router.get("/profile", authMiddleware.verifyToken, UserController.getUserProfile)
+
+/**
+ * @swagger
  * /api/users/{id}:
  *   get:
  *     tags:

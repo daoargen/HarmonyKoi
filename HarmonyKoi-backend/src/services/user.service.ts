@@ -6,6 +6,7 @@ import { UpdateUserAvatar, UpdateUserDetail } from "~/constants/type"
 import { User } from "~/models/user.model"
 import { UserDetail } from "~/models/userDetail.model"
 import { formatModelDate } from "~/utils/formatTimeModel.util"
+import { getUserFromToken } from "~/utils/getUserFromToken.util"
 
 async function getAllUsers(req: Request) {
   try {
@@ -68,6 +69,28 @@ async function getUserById(userId: string) {
       attributes: { exclude: ["isDeleted", "createdAt", "updatedAt"] }
     })
     if (!userDetail) throw responseStatus.responseNotFound404("User not found")
+    return userDetail
+  } catch (error) {
+    console.error(error)
+    throw error
+  }
+} // Find user by id
+
+async function getUserProfile(token: string) {
+  try {
+    const user = await getUserFromToken(token)
+    if (!user) throw responseStatus.responseNotFound404("User not found")
+    const userDetail = await UserDetail.findOne({
+      where: { userId: user.id },
+      include: [
+        {
+          model: User,
+          as: "user",
+          attributes: ["email", "username", "role"]
+        }
+      ],
+      attributes: { exclude: ["isDeleted", "createdAt", "updatedAt"] }
+    })
     return userDetail
   } catch (error) {
     console.error(error)
@@ -152,6 +175,7 @@ async function uploadAvatarUser(user: UpdateUserAvatar) {
 export default {
   getAllUsers,
   getUserById,
+  getUserProfile,
   editUser,
   deleteUser,
   uploadAvatarUser
