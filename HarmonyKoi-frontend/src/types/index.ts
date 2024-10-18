@@ -1,4 +1,5 @@
 // types/index.ts
+import { User } from "./user.type";
 
 // Ví dụ khai báo kiểu dữ liệu cho một bài viết (Post)
 export interface Post {
@@ -7,20 +8,6 @@ export interface Post {
   content: string
   author: string
   createdAt: Date
-}
-
-// Ví dụ khai báo kiểu dữ liệu cho một người dùng (User)
-export interface User {
-  id: string
-  username: string
-  email: string
-}
-
-// Interface cho dữ liệu người dùng (tuỳ chỉnh theo ứng dụng)
-export interface User {
-  id: string
-  username: string
-  // ... các thuộc tính khác của User
 }
 
 // Interface cho credentials login
