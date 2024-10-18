@@ -4,7 +4,7 @@ export interface ErrorResponse<T> {
   statusCode: number
 }
 
-export interface SuccessResponse<T> {
+export interface  SuccessResponse<T> {
   data: T
   message: string
   statusCode: number

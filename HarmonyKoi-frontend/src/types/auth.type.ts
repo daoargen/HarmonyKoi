@@ -2,10 +2,10 @@ import { SuccessResponse } from './response.type'
 
 export enum Role {
   ADMIN = 'ADMIN',
-  CUSTOMER = 'CUSTOMER'
+  MEMBER = 'MEMBER'
 }
 
 export type AuthResponse = SuccessResponse<{
-  access_token: string;
-  refresh_token: string;
-}>;
+  accessToken: string
+  refreshToken: string
+}>

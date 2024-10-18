@@ -10,6 +10,7 @@ import Footer from './components/common/Footer/Footer'
 import Register from './pages/Register'
 import NotFound from './pages/NotFound'
 import ResetPassword from './pages/ResetPassword'
+import ForgotPassword from './pages/ForgotPassword'
 
 const App: React.FC = () => {
   return (
@@ -21,7 +22,8 @@ const App: React.FC = () => {
         <Route path='/post' element={<PostPage />} />
         <Route path='/news' element={<NewsPage />} />
         <Route path="/register" element={<Register />} />
-        <Route path='/resetPassword' element={< ResetPassword />} />
+        {/* <Route path='/forgot-password' element={<ForgotPassword/>}/> */}
+        {/* <Route path='/reset-password' element={< ResetPassword />} /> */}
         <Route path='/login' element={<LoginPage />} />
         <Route path='/not-found' element={<NotFound/>}/>
       </Routes>

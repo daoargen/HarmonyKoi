@@ -10,6 +10,7 @@ import Login from "../pages/Login/LoginPage";
 import NotFound from "../pages/NotFound";
 import Register from "../pages/Register";
 import ResetPassword from "../pages/ResetPassword";
+import ForgotPassword from "../pages/ForgotPassword";
 
 const router = createBrowserRouter([
   {
@@ -22,6 +23,10 @@ const router = createBrowserRouter([
       {
         path: configs.routes.register,
         element: <Register />,
+      },
+      {
+        path: configs.routes.forgotPassword,
+        element: <ForgotPassword/>
       },
       {
         path: configs.routes.resetPassword,
