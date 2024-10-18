@@ -255,40 +255,41 @@ async function changePassword(token: string, currentPassword: string, newPasswor
 } // Change password user
 
 async function getRefreshToken(refreshToken: string, res: Response) {
-  if (!refreshTokens.includes(refreshToken)) {
-    throw responseStatus.responseUnauthorized401("Invalid token")
-  }
-
-  jwt.verify(refreshToken, process.env.SECRET as Secret, (err: VerifyErrors | null, user: any) => {
-    if (err) {
-      throw responseStatus.responseUnauthorized401("Invalid token")
+  return new Promise<JWTResponse>((resolve, reject) => {
+    if (!refreshTokens.includes(refreshToken)) {
+      return reject(responseStatus.responseUnauthorized401("Invalid token"))
     }
-    refreshTokens.filter((token) => token !== refreshToken)
-    const newAccessToken = generateAccessToken(user)
-    const newRefreshToken = generateRefreshToken(user)
-    refreshTokens.push(newRefreshToken)
-    res.cookie("refreshToken", newRefreshToken, {
-      httpOnly: true,
-      secure: false,
-      path: "/",
-      sameSite: "strict"
+
+    jwt.verify(refreshToken, process.env.SECRET as Secret, (err: VerifyErrors | null, user: any) => {
+      if (err) {
+        return reject(responseStatus.responseUnauthorized401("Invalid token"))
+      }
+      refreshTokens.filter((token) => token !== refreshToken)
+      const newAccessToken = generateAccessToken(user)
+      const newRefreshToken = generateRefreshToken(user)
+      refreshTokens.push(newRefreshToken)
+      res.cookie("refreshToken", newRefreshToken, {
+        httpOnly: true,
+        secure: false,
+        path: "/",
+        sameSite: "strict"
+      })
+
+      const jwtResponse: JWTResponse = {
+        accessToken: newAccessToken,
+        refreshToken: refreshToken,
+        expiresAt: new Date(new Date().setHours(new Date().getHours() + parseInt(expiresIn.substring(0, 1)))),
+        account: {
+          id: "",
+          email: "",
+          username: "",
+          role: user.role
+        } as Account
+      }
+      resolve(jwtResponse) // Resolve the promise with jwtResponse
     })
-
-    const jwtResponse: JWTResponse = {
-      accessToken: newAccessToken,
-      refreshToken: refreshToken,
-      expiresAt: new Date(new Date().setHours(new Date().getHours() + parseInt(expiresIn.substring(0, 1)))),
-      account: {
-        id: "",
-        email: "",
-        username: "",
-        role: user.role
-      } as Account
-    }
-    return jwtResponse
   })
-} // Get refresh token
-
+}
 const generateAccessToken = (user: UserInstance) => {
   return sign(
     {
