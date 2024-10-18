@@ -31,7 +31,7 @@ export type RegisterFormType = z.infer<typeof registerSchema>;
 
 const registerFormDefaultValues: RegisterFormType = {
   fullname: "",
-  email: "",
+  loginKey: "",
   phone: "",
   password: "",
 };

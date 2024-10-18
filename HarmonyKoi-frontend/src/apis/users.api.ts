@@ -10,7 +10,7 @@ export const getGoogleUrlQueryKey = "googleAuthUrl";
 
 export const register = (body: RegisterFormType) => http.post<AuthResponse>("/register", body);
 
-export const login = (body: LoginFormType) => http.post<AuthResponse>("/login", body);
+export const login = async (data: { loginKey: string; password: string }) => http.post<AuthResponse>("/auth/login", data);
 
 export const getMe = () => http.get<UserResponse>("/me");
 

@@ -39,7 +39,7 @@ const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
       }
 
       try {
-        const { data } = await userRefetch();
+        const { data } = await userRefetch(); 
         if (data) {
           const user = data.data.data.user;
           dispatch(initialize({ isAuthenticated: true, user }));

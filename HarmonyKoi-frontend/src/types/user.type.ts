@@ -3,16 +3,16 @@ import { SuccessResponse } from './response.type';
 
 // Ví dụ khai báo kiểu dữ liệu cho một người dùng (User)
 export interface User {
-    id: string | null
-    username: string | null
-    email: string | null
-    role: Role
+    id: string | null;
+    username: string | null;
+    email: string | null;
+    role: Role;
 }
 
   // Interface cho dữ liệu người dùng (tuỳ chỉnh theo ứng dụng)
   export interface User {
-    id: string | null
-    username: string | null
+    id: string | null;
+    username: string | null;
     // ... các thuộc tính khác của User
 }
 
