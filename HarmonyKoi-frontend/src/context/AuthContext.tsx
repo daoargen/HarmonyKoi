@@ -10,7 +10,7 @@ import { getToken, removeToken, setToken } from '../utils/cookies'
 
 import { initialize, reducer } from './auth.reducer'
 import { AuthContextType, AuthState } from './auth.type'
-import { Axios, AxiosError } from 'axios'
+import { AxiosError } from 'axios'
 
 const initialState: AuthState = {
   isAuthenticated: false,

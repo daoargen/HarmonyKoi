@@ -1,9 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react'
 import { AuthContext } from '../../context/AuthContext'
-import { AuthResponse } from '../../types/auth.type'
-import { setRefreshToken, setToken } from '../../utils/cookies'
 
-import { useQuery } from '@tanstack/react-query'
+import { setRefreshToken, setToken } from '../../utils/cookies'
 
 import { toast } from 'react-toastify'
 import { z } from 'zod'
@@ -11,7 +9,7 @@ import { loginSchema } from '../../components/common/AuthForm/data/schema'
 
 import { AUTH_MESSAGES, SYSTEM_MESSAGES } from '../../utils/constants'
 
-import { getProfile, getMeQueryKey, login } from '../../apis/users.api'
+import { getProfile, login } from '../../apis/users.api'
 
 // Import the custom CSS file
 import Styles from './LoginPage.module.css'
@@ -19,9 +17,8 @@ import Styles from './LoginPage.module.css'
 import { Button } from '../../components/ui/button'
 import { Label } from '../../components/ui/label'
 import { Input } from '../../components/ui/input'
-import { Link, Navigate, Route, Routes, useNavigate } from 'react-router-dom'
-import { initialize, signIn } from '../../context/auth.reducer'
-import { error } from 'console'
+import { useNavigate } from 'react-router-dom'
+
 // import NotFound from "../NotFound";
 
 export type LoginFormType = z.infer<typeof loginSchema>
@@ -55,9 +52,6 @@ const LoginPage: React.FC = () => {
 
       setToken(accessToken)
       setRefreshToken(refreshToken)
-
-      console.log(accessToken)
-      console.log(refreshToken)
 
       const userResponse = await getProfile()
       console.log('userResponse:', userResponse)
@@ -96,7 +90,7 @@ const LoginPage: React.FC = () => {
         <form onSubmit={handleLogin}>
           <Button
             type='submit'
-            variant='outline'
+            // variant='outline'
             onClick={() => navigate('/not-found')}
             className={Styles.googleButton}
           >
