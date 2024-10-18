@@ -68,7 +68,7 @@ const LoginPage: React.FC = () => {
       const user = userResponse.data.data
       console.log(user)
 
-      dispatch(signIn({ user }))
+      // dispatch(signIn({ user }))
 
       toast.success(AUTH_MESSAGES.LOGIN_TITLE_SUCCESS)
       navigate('/') // Redirect after login

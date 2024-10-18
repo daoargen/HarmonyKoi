@@ -2,6 +2,7 @@ import { LoginFormType } from '../pages/Login/LoginPage'
 import { RegisterFormType } from '../pages/Register/Register'
 import { AuthResponse } from '../types/auth.type'
 import { GoogleUrlResponse, UserResponse } from '../types/user.type'
+import { getRefreshToken } from '../utils/cookies'
 import http from '../utils/http'
 
 export const getMeQueryKey = 'me'
@@ -28,4 +29,4 @@ export const verifyTokenForgotPassword = (token: string | null, signal?: AbortSi
 export const resetPassword = (token: string, password: string) => http.post('/reset-password', { token, password })
 
 // users.api.ts
-export const refreshToken = () => http.post<AuthResponse>('/auth/refresh-token')
+export const refreshToken = () => http.post<AuthResponse>('/auth/refresh-token', { refreshToken: getRefreshToken() })
