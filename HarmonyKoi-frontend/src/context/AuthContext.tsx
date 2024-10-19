@@ -10,7 +10,7 @@ import { getToken, removeToken, setToken } from '../utils/cookies'
 
 import { initialize, reducer } from './auth.reducer'
 import { AuthContextType, AuthState } from './auth.type'
-import { Axios, AxiosError } from 'axios'
+import { AxiosError } from 'axios'
 
 const initialState: AuthState = {
   isAuthenticated: false,
@@ -45,23 +45,23 @@ const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
           dispatch(initialize({ isAuthenticated: true, user }))
         }
       } catch (error) {
-        toast.error(SYSTEM_MESSAGES.SOMETHING_WENT_WRONG)
-        dispatch(initialize({ isAuthenticated: false, user: null }))
-        // if ((error as AxiosError).response?.status === 401) {
-        //   try {
-        //     const response = await refreshToken()
-        //     const { accessToken } = response.data.data
-        //     setToken(accessToken) // Update token
-        //     const { data: newUser } = await userRefetch() // Fetch user with new token
-        //     dispatch(initialize({ isAuthenticated: true, user: newUser?.data?.data?.user }))
-        //   } catch (refreshError) {
-        //     removeToken()
-        //     dispatch(initialize({ isAuthenticated: false, user: null }))
-        //   }
-        // } else {
-        //   toast.error(SYSTEM_MESSAGES.SOMETHING_WENT_WRONG)
-        //   dispatch(initialize({ isAuthenticated: false, user: null }))
-        // }
+        // toast.error(SYSTEM_MESSAGES.SOMETHING_WENT_WRONG);
+        // dispatch(initialize({ isAuthenticated: false, user: null }));
+        if ((error as AxiosError).response?.status === 401) {
+          try {
+            const response = await refreshToken()
+            const { accessToken } = response.data.data
+            setToken(accessToken) // Update token
+            const { data: newUser } = await userRefetch() // Fetch user with new token
+            dispatch(initialize({ isAuthenticated: true, user: newUser?.data?.data?.user }))
+          } catch (refreshError) {
+            removeToken()
+            dispatch(initialize({ isAuthenticated: false, user: null }))
+          }
+        } else {
+          toast.error(SYSTEM_MESSAGES.SOMETHING_WENT_WRONG)
+          dispatch(initialize({ isAuthenticated: false, user: null }))
+        }
       }
     })()
   }, [userRefetch])
