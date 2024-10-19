@@ -10,10 +10,6 @@ const tableName = "Pond"
 
 export const Pond = sequelize.define<PondInstance>(tableName, {
   ...UUIDModel,
-  elementId: {
-    type: DataTypes.UUID,
-    allowNull: false
-  },
   name: {
     type: DataTypes.STRING,
     allowNull: false
@@ -29,14 +25,8 @@ export const Pond = sequelize.define<PondInstance>(tableName, {
   ...SQLModel
 })
 
-Pond.belongsTo(Element, {
-  foreignKey: "elementId",
-  as: "element"
-})
-
 export interface PondAttributes {
   id?: string
-  elementId: string
   name: string
   description: string | null
   imageUrl: string | null

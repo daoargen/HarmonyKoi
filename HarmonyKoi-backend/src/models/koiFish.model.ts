@@ -5,8 +5,6 @@ import UUIDModel from "~/constants/UUIDModel"
 import sequelize from "~/databases/database"
 
 import { Element } from "./element.model"
-import { PatternType } from "./patternType.model"
-import { Reticulation } from "./reticulation.model"
 import { Veriety } from "./veriety.model"
 
 const tableName = "KoiFish"
@@ -14,10 +12,6 @@ const tableName = "KoiFish"
 export const KoiFish = sequelize.define<KoiFishInstance>(tableName, {
   ...UUIDModel,
   verietyId: {
-    type: DataTypes.UUID,
-    allowNull: false
-  },
-  elementId: {
     type: DataTypes.UUID,
     allowNull: false
   },
@@ -37,18 +31,6 @@ export const KoiFish = sequelize.define<KoiFishInstance>(tableName, {
     type: DataTypes.STRING,
     allowNull: false
   },
-  patternTypeId: {
-    type: DataTypes.UUID,
-    allowNull: false
-  },
-  reticulationId: {
-    type: DataTypes.UUID,
-    allowNull: false
-  },
-  metallic: {
-    type: DataTypes.BOOLEAN,
-    allowNull: false
-  },
   symbolism: {
     type: DataTypes.STRING,
     allowNull: true
@@ -65,32 +47,13 @@ KoiFish.belongsTo(Veriety, {
   as: "veriety"
 })
 
-KoiFish.belongsTo(Element, {
-  foreignKey: "elementId",
-  as: "element"
-})
-
-KoiFish.belongsTo(PatternType, {
-  foreignKey: "patternTypeId",
-  as: "patternType"
-})
-
-KoiFish.belongsTo(Reticulation, {
-  foreignKey: "reticulationId",
-  as: "reticulation"
-})
-
 export interface KoiFishAttributes {
   id?: string
   verietyId: string
-  elementId: string
   name: string
   description: string | null
   imageUrl: string | null
   baseColor: string
-  patternTypeId: string
-  reticulationId: string
-  metallic: boolean
   symbolism: string | null
   price: number
   isDeleted?: boolean

@@ -44,7 +44,7 @@ const router = express.Router()
  *       200:
  *         description: Returns a list of posts
  */
-router.get("/", authMiddleware.verifyMinimumRole(Role.ADMIN), PostController.getPosts)
+router.get("/", PostController.getPosts)
 
 /**
  * @swagger

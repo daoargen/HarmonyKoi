@@ -34,7 +34,7 @@ const router = express.Router()
  *       200:
  *         description: Returns a list of varieties
  */
-router.get("/", authMiddleware.verifyMinimumRole(Role.ADMIN), VerietyController.getVerieties)
+router.get("/", VerietyController.getVerieties)
 
 /**
  * @swagger

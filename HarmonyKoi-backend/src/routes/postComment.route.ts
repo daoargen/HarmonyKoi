@@ -34,7 +34,7 @@ const router = express.Router()
  *       200:
  *         description: Returns a list of post comments
  */
-router.get("/", authMiddleware.verifyMinimumRole(Role.ADMIN), PostCommentController.getPostComments)
+router.get("/", PostCommentController.getPostComments)
 
 /**
  * @swagger
