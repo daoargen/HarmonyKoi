@@ -40,7 +40,7 @@ async function getAllKoiFishes(req: Request) {
         {
           model: Veriety,
           as: "veriety",
-          attributes: ["name"]
+          attributes: ["name", "description"]
         }
       ]
     })
@@ -102,7 +102,7 @@ async function getKoiFishById(koiFishId: string) {
         {
           model: Veriety,
           as: "veriety",
-          attributes: ["name"]
+          attributes: ["name", "description"]
         }
       ]
     })

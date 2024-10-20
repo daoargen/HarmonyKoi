@@ -1,6 +1,7 @@
 import { Request, Response } from "express"
 
 import responseStatus from "~/constants/responseStatus"
+import { CreatePost } from "~/constants/type"
 import postService from "~/services/post.service"
 
 async function getPosts(req: Request, res: Response) {
@@ -24,8 +25,17 @@ async function getPost(req: Request, res: Response) {
 
 async function createPost(req: Request, res: Response) {
   try {
-    const newPost = req.body
-    const post = await postService.createPost(newPost)
+    const token = req.header("Authorization")?.replace("Bearer ", "")
+    if (!token) {
+      return res.json(responseStatus.responseUnauthorized401())
+    }
+    const { title, content, status } = req.body
+    const dataRequest: CreatePost = {
+      title: title,
+      content,
+      status
+    }
+    const post = await postService.createPost(token, dataRequest)
     return res.json(responseStatus.responseData200("Create post successfully!", post))
   } catch (error) {
     return res.json(error)

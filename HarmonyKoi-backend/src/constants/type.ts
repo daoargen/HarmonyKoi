@@ -233,12 +233,9 @@ export interface UpdatePond {
 
 // Post
 export interface CreatePost {
-  userId: string
   title: string
   content: string
-  dateRemain: number
-  status: string
-  visible: boolean
+  status: string | null
 }
 
 export interface UpdatePost {

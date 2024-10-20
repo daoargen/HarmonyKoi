@@ -6,6 +6,7 @@ import { CreatePost, UpdatePost } from "~/constants/type"
 import { Post } from "~/models/post.model"
 import { User } from "~/models/user.model"
 import { formatModelDate } from "~/utils/formatTimeModel.util"
+import { getUserFromToken } from "~/utils/getUserFromToken.util"
 
 async function getAllPosts(req: Request) {
   try {
@@ -88,9 +89,20 @@ async function getPostById(postId: string) {
   }
 }
 
-async function createPost(newPost: CreatePost) {
+async function createPost(token: string, newPost: CreatePost) {
   try {
-    const post = await Post.create(newPost)
+    const user = await getUserFromToken(token)
+    if (!user.id) {
+      throw new Error("User ID not found in token.")
+    }
+    const post = await Post.create({
+      userId: user.id,
+      title: newPost.title,
+      content: newPost.content,
+      dateRemain: 100,
+      status: newPost.status ?? "PENDING",
+      visible: true
+    })
     return post
   } catch (error) {
     console.error(error)
