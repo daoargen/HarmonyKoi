@@ -65,3 +65,10 @@
 .menuButton {
   display: none;
 }
+
+.avatarImage {
+  width: 30px; /* Điều chỉnh kích thước theo ý muốn */
+  height: 30px;
+  border-radius: 50%; /* Hình tròn */
+  object-fit: cover; /* Giữ tỉ lệ ảnh */
+}
