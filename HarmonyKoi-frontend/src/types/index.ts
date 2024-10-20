@@ -1,24 +1,32 @@
+// import { Post } from './index'
 // types/index.ts
 import { SuccessResponse } from './response.type'
 import { User } from './user.type'
 
 // Ví dụ khai báo kiểu dữ liệu cho một bài viết (Post)
 export interface Post {
-  id: number
+  id: string
+  userId: string
   title: string
   content: string
-  author: string
-  imageUrl: string
+  dateRemain: number
+  status: string
+  visible: boolean
+  isDeleted: boolean
   createdAt: Date
+  updatedAt: Date
+  user: {
+    username: string
+  } | null
 }
 
 export interface News {
-  id: number
-  title: string
+  id: string
+  tittle: string
   content: string
-  author: string
-  imageUrl: string
+  isDeleted: boolean
   createdAt: Date
+  updatedAt: Date
 }
 
 // Interface cho credentials login
@@ -28,13 +36,9 @@ export interface LoginCredentials {
   // ... các trường dữ liệu khác cho login
 }
 
-export type PostResponse = SuccessResponse<{
-  post: Post
-}>
+export type PostResponse = SuccessResponse<Post[]>
 
-export type NewsResponse = SuccessResponse<{
-  news: News
-}>
+export type NewsResponse = SuccessResponse<News[]>
 
 export interface AuthContextType {
   user: User | null
