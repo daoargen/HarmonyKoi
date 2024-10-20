@@ -55,8 +55,28 @@ async function getKoiFishElementById(koiFishElementId: string) {
 
 async function createKoiFishElement(newKoiFishElement: CreateKoiFishElement) {
   try {
-    const koiFishElement = await KoiFishElement.create(newKoiFishElement)
-    return koiFishElement
+    const existingKoiFishElement = await KoiFishElement.findOne({
+      where: {
+        koiFishId: newKoiFishElement.koiFishId,
+        elementId: newKoiFishElement.elementId
+      }
+    })
+
+    if (existingKoiFishElement) {
+      // Nếu đã tồn tại bản ghi, cập nhật isDeleted = false
+      if (existingKoiFishElement.isDeleted) {
+        await existingKoiFishElement.update({ isDeleted: false })
+        return existingKoiFishElement
+      } else {
+        // Xử lý trường hợp đã tồn tại bản ghi chưa bị xóa
+        // Có thể throw error hoặc trả về thông báo cho biết bản ghi đã tồn tại
+        throw responseStatus.responeCustom(400, "KoiFishElement already exists")
+      }
+    } else {
+      // Nếu chưa tồn tại bản ghi, tạo mới
+      const koiFishElement = await KoiFishElement.create(newKoiFishElement)
+      return koiFishElement
+    }
   } catch (error) {
     console.error(error)
     throw error

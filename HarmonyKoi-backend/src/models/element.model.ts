@@ -12,12 +12,17 @@ export const Element = sequelize.define<ElementInstance>(tableName, {
     type: DataTypes.STRING,
     allowNull: false
   },
+  imageUrl: {
+    type: DataTypes.STRING,
+    allowNull: true
+  },
   ...SQLModel
 })
 
 export interface ElementAttributes {
   id?: string
   name: string
+  imageUrl: string | null
   isDeleted?: boolean
 }
 

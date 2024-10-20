@@ -34,7 +34,7 @@ const router = express.Router()
  *       200:
  *         description: Returns a list of ponds
  */
-router.get("/", authMiddleware.verifyMinimumRole(Role.ADMIN), PondController.getPonds)
+router.get("/", PondController.getPonds)
 
 /**
  * @swagger

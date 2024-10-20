@@ -44,7 +44,7 @@ const router = express.Router()
  *       200:
  *         description: Returns a list of posts
  */
-router.get("/", authMiddleware.verifyMinimumRole(Role.ADMIN), PostController.getPosts)
+router.get("/", PostController.getPosts)
 
 /**
  * @swagger
@@ -80,24 +80,15 @@ router.get("/:id", PostController.getPost)
  *           schema:
  *             type: object
  *             properties:
- *               userId:
- *                 type: string
- *                 description: User ID of the post
  *               title:
  *                 type: string
  *                 description: Title of the post
  *               content:
  *                 type: string
  *                 description: Content of the post
- *               dateRemain:
- *                 type: number
- *                 description: Remaining date of the post
  *               status:
  *                 type: string
  *                 description: Status of the post
- *               visible:
- *                 type: boolean
- *                 description: Visibility of the post
  *     responses:
  *       201:
  *         description: Post created successfully

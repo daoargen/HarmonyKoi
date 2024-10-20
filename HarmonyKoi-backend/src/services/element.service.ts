@@ -86,7 +86,8 @@ async function editElement(id: string, updatedElement: UpdateElement) {
 
     // Cập nhật các trường được cung cấp trong updatedElement
     await element.update({
-      name: updatedElement.name || element.name
+      name: updatedElement.name || element.name,
+      imageUrl: updatedElement.imageUrl || element.imageUrl
     })
 
     return element

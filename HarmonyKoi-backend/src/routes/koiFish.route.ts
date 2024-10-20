@@ -28,12 +28,12 @@ const router = express.Router()
  *         name: keyword
  *         schema:
  *           type: string
- *         description: Keyword to search in koi fish names, descriptions, symbolism, variety names, element names, pattern type names, or reticulation names
+ *         description: Keyword to search in koi fish names, descriptions, symbolism, variety names, element names
  *     responses:
  *       200:
  *         description: Returns a list of koi fishes
  */
-router.get("/", authMiddleware.verifyMinimumRole(Role.ADMIN), KoiFishController.getKoiFishes)
+router.get("/", KoiFishController.getKoiFishes)
 
 /**
  * @swagger
@@ -87,15 +87,6 @@ router.get("/:id", KoiFishController.getKoiFish)
  *               baseColor:
  *                 type: string
  *                 description: Base color of the koi fish
- *               patternTypeId:
- *                 type: string
- *                 description: Pattern type ID of the koi fish
- *               reticulationId:
- *                 type: string
- *                 description: Reticulation ID of the koi fish
- *               metallic:
- *                 type: boolean
- *                 description: Whether the koi fish is metallic
  *               symbolism:
  *                 type: string
  *                 description: Symbolism of the koi fish
@@ -175,15 +166,6 @@ router.post("/", authMiddleware.verifyToken, KoiFishController.createKoiFish)
  *               baseColor:
  *                 type: string
  *                 description: Base color of the koi fish
- *               patternTypeId:
- *                 type: string
- *                 description: Pattern type ID of the koi fish
- *               reticulationId:
- *                 type: string
- *                 description: Reticulation ID of the koi fish
- *               metallic:
- *                 type: boolean
- *                 description: Whether the koi fish is metallic
  *               symbolism:
  *                 type: string
  *                 description: Symbolism of the koi fish

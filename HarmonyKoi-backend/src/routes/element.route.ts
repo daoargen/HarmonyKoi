@@ -72,6 +72,9 @@ router.get("/:id", ElementController.getElement)
  *               name:
  *                 type: string
  *                 description: Name of the element
+ *               imageUrl:
+ *                 type: string
+ *                 description: Image URL of the element
  *     responses:
  *       201:
  *         description: Element created successfully
@@ -118,8 +121,14 @@ router.post("/", authMiddleware.verifyToken, ElementController.createElement)
  *         name: id
  *         required: true
  *         schema:
- *           type: string
- *         description: ID of the element to update
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *                 description: Name of the element
+ *               imageUrl:
+ *                 type: string
+ *                 description: Image URL of the element
  *     requestBody:
  *       required: true
  *       content:

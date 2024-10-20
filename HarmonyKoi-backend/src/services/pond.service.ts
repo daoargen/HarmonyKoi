@@ -105,7 +105,6 @@ async function editPond(id: string, updatedPond: UpdatePond) {
 
     // Cập nhật các trường được cung cấp trong updatedPond
     await pond.update({
-      elementId: updatedPond.elementId || pond.elementId,
       name: updatedPond.name || pond.name,
       description: updatedPond.description || pond.description,
       imageUrl: updatedPond.imageUrl || pond.imageUrl

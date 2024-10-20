@@ -5,8 +5,7 @@ import responseStatus from "~/constants/responseStatus"
 import { CreateKoiFish, UpdateKoiFish } from "~/constants/type"
 import { Element } from "~/models/element.model"
 import { KoiFish } from "~/models/koiFish.model"
-import { PatternType } from "~/models/patternType.model"
-import { Reticulation } from "~/models/reticulation.model"
+import { KoiFishElement } from "~/models/koiFishElement.model"
 import { Veriety } from "~/models/veriety.model"
 import { formatModelDate } from "~/utils/formatTimeModel.util"
 
@@ -27,9 +26,7 @@ async function getAllKoiFishes(req: Request) {
         { description: { [Op.like]: `%${keyword}%` } },
         { symbolism: { [Op.like]: `%${keyword}%` } },
         { "$veriety.name$": { [Op.like]: `%${keyword}%` } },
-        { "$element.name$": { [Op.like]: `%${keyword}%` } },
-        { "$patternType.name$": { [Op.like]: `%${keyword}%` } },
-        { "$reticulation.name$": { [Op.like]: `%${keyword}%` } }
+        { "$element.name$": { [Op.like]: `%${keyword}%` } }
       ]
     }
 
@@ -43,28 +40,41 @@ async function getAllKoiFishes(req: Request) {
         {
           model: Veriety,
           as: "veriety",
-          attributes: ["name"]
-        },
-        {
-          model: Element,
-          as: "element",
-          attributes: ["name"]
-        },
-        {
-          model: PatternType,
-          as: "patternType",
-          attributes: ["name"]
-        },
-        {
-          model: Reticulation,
-          as: "reticulation",
-          attributes: ["name"]
+          attributes: ["name", "description"]
         }
       ]
     })
 
+    let dataResponse: any = []
+    if (koiFishes.length > 0) {
+      const koiFishIds = koiFishes.map((koifish) => koifish.id).filter((id): id is string => id !== undefined)
+      const koiFishElements = await KoiFishElement.findAll({
+        where: { koiFishId: koiFishIds, isDeleted: false },
+        attributes: ["koiFishId", "elementId"]
+      })
+      const elementIds = koiFishElements
+        .map((koiFishElement) => koiFishElement.elementId)
+        .filter((elementId): elementId is string => elementId !== undefined)
+      const elements = await Element.findAll({
+        where: { id: elementIds, isDeleted: false },
+        attributes: ["id", "name", "imageUrl"]
+      })
+      const formatKoiFishs = koiFishes.map((koiFish) => {
+        // Lấy danh sách koiFishElement có koiFishId tương ứng
+        const relatedKoiFishElements = koiFishElements.filter((kfe) => kfe.koiFishId === koiFish.id)
+        // Lấy danh sách element tương ứng từ relatedKoiFishElements
+        const relatedElements = relatedKoiFishElements.map((kfe) => {
+          return elements.find((element) => element.id === kfe.elementId)
+        })
+
+        return {
+          ...koiFish.toJSON(),
+          elements: relatedElements
+        }
+      })
+    }
     // Định dạng lại dữ liệu
-    const formattedKoiFishes = koiFishes.map((koiFish) => formatModelDate(koiFish.dataValues))
+    dataResponse = koiFishes.map((koiFish) => formatModelDate(koiFish.dataValues))
 
     // Tính toán thông tin phân trang
     const totalPage = Math.ceil(count / pageSize)
@@ -77,7 +87,7 @@ async function getAllKoiFishes(req: Request) {
     }
 
     // Trả về kết quả
-    return { koiFishes: formattedKoiFishes, pagination }
+    return { koiFishes: dataResponse, pagination }
   } catch (error) {
     console.error(error)
     throw error
@@ -92,22 +102,7 @@ async function getKoiFishById(koiFishId: string) {
         {
           model: Veriety,
           as: "veriety",
-          attributes: ["name"]
-        },
-        {
-          model: Element,
-          as: "element",
-          attributes: ["name"]
-        },
-        {
-          model: PatternType,
-          as: "patternType",
-          attributes: ["name"]
-        },
-        {
-          model: Reticulation,
-          as: "reticulation",
-          attributes: ["name"]
+          attributes: ["name", "description"]
         }
       ]
     })
@@ -143,14 +138,10 @@ async function editKoiFish(id: string, updatedKoiFish: UpdateKoiFish) {
     // Cập nhật các trường được cung cấp trong updatedKoiFish
     await koiFish.update({
       verietyId: updatedKoiFish.verietyId || koiFish.verietyId,
-      elementId: updatedKoiFish.elementId || koiFish.elementId,
       name: updatedKoiFish.name || koiFish.name,
       description: updatedKoiFish.description || koiFish.description,
       imageUrl: updatedKoiFish.imageUrl || koiFish.imageUrl,
       baseColor: updatedKoiFish.baseColor || koiFish.baseColor,
-      patternTypeId: updatedKoiFish.patternTypeId || koiFish.patternTypeId,
-      reticulationId: updatedKoiFish.reticulationId || koiFish.reticulationId,
-      metallic: updatedKoiFish.metallic || koiFish.metallic,
       symbolism: updatedKoiFish.symbolism || koiFish.symbolism,
       price: updatedKoiFish.price || koiFish.price
     })
