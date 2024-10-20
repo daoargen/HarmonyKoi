@@ -125,14 +125,12 @@ export interface UpdateKoiFishElement {
 
 // News
 export interface CreateNew {
-  userId: string | null // Make userId nullable
-  category: string
+  tittle: string
   content: string
 }
 
 export interface UpdateNew {
-  userId?: string | null // Make userId nullable
-  category?: string
+  tittle?: string
   content?: string
 }
 

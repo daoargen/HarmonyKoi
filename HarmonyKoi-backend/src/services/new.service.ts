@@ -19,11 +19,7 @@ async function getAllNews(req: Request) {
     } // Điều kiện tìm kiếm
 
     if (keyword) {
-      whereCondition[Op.or] = [
-        { category: { [Op.like]: `%${keyword}%` } },
-        { content: { [Op.like]: `%${keyword}%` } },
-        { "$user.username$": { [Op.like]: `%${keyword}%` } } // Search by user's username
-      ]
+      whereCondition[Op.or] = []
     }
 
     // Tìm và đếm tổng số news
@@ -31,14 +27,7 @@ async function getAllNews(req: Request) {
       where: whereCondition,
       limit: pageSize,
       offset: (pageIndex - 1) * pageSize,
-      order: [["createdAt", "DESC"]],
-      include: [
-        {
-          model: User,
-          as: "user",
-          attributes: ["username"] // You can specify the attributes you want to include from the User model
-        }
-      ]
+      order: [["createdAt", "DESC"]]
     })
 
     // Định dạng lại dữ liệu
@@ -65,14 +54,7 @@ async function getAllNews(req: Request) {
 async function getNewById(newsId: string) {
   try {
     const news = await New.findOne({
-      where: { id: newsId, isDeleted: false },
-      include: [
-        {
-          model: User,
-          as: "user",
-          attributes: ["username"]
-        }
-      ]
+      where: { id: newsId, isDeleted: false }
     })
     if (!news) throw responseStatus.responseNotFound404("New not found")
     return news
@@ -84,7 +66,10 @@ async function getNewById(newsId: string) {
 
 async function createNew(newNew: CreateNew) {
   try {
-    const news = await New.create(newNew)
+    const news = await New.create({
+      tittle: newNew.tittle,
+      content: newNew.content
+    })
     return news
   } catch (error) {
     console.error(error)
@@ -105,8 +90,7 @@ async function editNew(id: string, updatedNew: UpdateNew) {
 
     // Cập nhật các trường được cung cấp trong updatedNew
     await news.update({
-      userId: updatedNew.userId !== undefined ? updatedNew.userId : news.userId,
-      category: updatedNew.category || news.category,
+      tittle: updatedNew.tittle || news.tittle,
       content: updatedNew.content || news.content
     })
 
