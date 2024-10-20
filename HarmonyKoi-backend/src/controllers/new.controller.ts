@@ -1,6 +1,7 @@
 import { Request, Response } from "express"
 
 import responseStatus from "~/constants/responseStatus"
+import { CreateNew } from "~/constants/type"
 import newService from "~/services/new.service"
 
 async function getNews(req: Request, res: Response) {
@@ -24,8 +25,12 @@ async function getNew(req: Request, res: Response) {
 
 async function createNew(req: Request, res: Response) {
   try {
-    const newNew = req.body
-    const news = await newService.createNew(newNew)
+    const { tittle, content } = req.body
+    const dataRequest: CreateNew = {
+      tittle,
+      content
+    }
+    const news = await newService.createNew(dataRequest)
     return res.json(responseStatus.responseData200("Create new successfully!", news))
   } catch (error) {
     return res.json(error)
