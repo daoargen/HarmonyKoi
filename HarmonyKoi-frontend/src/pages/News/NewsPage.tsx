@@ -41,8 +41,8 @@ const NewsPage = () => {
 
         const newsWithData = fetchNews.map((newsData) => ({
           ...newsData,
-          createdAt: parseDate(newsData.createdAt), // parse createdAt sang Date
-          updatedAt: parseDate(newsData.updatedAt) // parse updatedAt sang Date
+          createdAt: parseDate(newsData.createdAt),
+          updatedAt: parseDate(newsData.updatedAt)
         }))
         setNews(newsWithData)
       } catch (err) {

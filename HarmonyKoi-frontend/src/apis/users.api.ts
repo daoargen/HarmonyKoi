@@ -1,4 +1,4 @@
-import { LoginFormType } from '../pages/Login/LoginPage'
+// import { LoginFormType } from '../pages/Login/LoginPage'
 import { RegisterFormType } from '../pages/Register/Register'
 import { NewsResponse, PostResponse } from '../types'
 import { AuthResponse } from '../types/auth.type'

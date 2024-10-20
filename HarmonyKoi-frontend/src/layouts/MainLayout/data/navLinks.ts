@@ -1,18 +1,18 @@
-import configs from "~configs";
+import configs from '../../../configs'
 
 const navLinks = [
   {
-    title: "Trang chủ",
-    to: configs.routes.home,
+    title: 'Trang chủ',
+    to: configs.routes.home
   },
   {
-    title: "Cửa hàng",
-    to: configs.routes.shop,
+    title: 'Cửa hàng',
+    to: configs.routes.shop
   },
   {
-    title: "Đơn hàng của tôi",
-    to: configs.routes.orders,
-  },
-];
+    title: 'Đơn hàng của tôi',
+    to: configs.routes.orders
+  }
+]
 
-export default navLinks;
+export default navLinks
