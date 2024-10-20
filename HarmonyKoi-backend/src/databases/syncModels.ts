@@ -1,5 +1,3 @@
-import { Cart } from "~/models/cart.model"
-import { CartDetail } from "~/models/cartDetail.model"
 import { Element } from "~/models/element.model"
 import { KoiFish } from "~/models/koiFish.model"
 import { KoiFishElement } from "~/models/koiFishElement.model"
@@ -45,9 +43,6 @@ export async function syncModels() {
     await Pond.sync().then(() => {
       console.log("Pond table created successfully!")
     })
-    await Cart.sync().then(() => {
-      console.log("Cart table created successfully!")
-    })
     await Order.sync().then(() => {
       console.log("Order table created successfully!")
     })
@@ -56,9 +51,6 @@ export async function syncModels() {
     })
     await OrderDetail.sync().then(() => {
       console.log("OrderDetail table created successfully!")
-    })
-    await CartDetail.sync().then(() => {
-      console.log("CartDetail table created successfully!")
     })
     await Payment.sync().then(() => {
       console.log("Payment table created successfully!")

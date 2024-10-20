@@ -67,10 +67,6 @@ async function createKoiFishElement(newKoiFishElement: CreateKoiFishElement) {
       if (existingKoiFishElement.isDeleted) {
         await existingKoiFishElement.update({ isDeleted: false })
         return existingKoiFishElement
-      } else {
-        // Xử lý trường hợp đã tồn tại bản ghi chưa bị xóa
-        // Có thể throw error hoặc trả về thông báo cho biết bản ghi đã tồn tại
-        throw responseStatus.responeCustom(400, "KoiFishElement already exists")
       }
     } else {
       // Nếu chưa tồn tại bản ghi, tạo mới
