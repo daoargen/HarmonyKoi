@@ -1,61 +1,43 @@
-import { Link, NavLink } from "react-router-dom";
+// src/components/Footer/Footer.tsx
 
-import about from "~layouts/MainLayout/data/about";
-import navLinks from "~layouts/MainLayout/data/navLinks";
-import social from "~layouts/MainLayout/data/social";
-import { cn } from "~lib/utils";
+import React from 'react'
+import styles from './Footer.module.css'
 
-import Container from "../Container";
-
-const Footer = () => {
+const Footer: React.FC = () => {
   return (
-    <footer className="py-20 text-[#231900]">
-      <Container>
-        <div className="flex">
-          <section className="max-w-96">
-            <h2 className="text-primary text-2xl font-semibold">Prepify</h2>
-            <p className="mt-11 text-lg">Mang đến 1 cuộc sống tiện lợi, hiện đại và không lãng phí thực phẩm.</p>
-            <div className="flex gap-12 mt-[74px]">
-              {social.map((item) => (
-                <Link key={item.to} to={item.to} target="_blank">
-                  {item.icon}
-                </Link>
-              ))}
-            </div>
-          </section>
-
-          <section className="ml-auto">
-            <h3 className="text-2xl font-semibold">Trang</h3>
-            <ul className="mt-[42px]">
-              {navLinks.map((item) => (
-                <li key={item.to} className="py-[7px] text-lg">
-                  <NavLink to={item.to} className={({ isActive }) => cn("", { "text-primary": isActive })}>
-                    {item.title}
-                  </NavLink>
-                </li>
-              ))}
-            </ul>
-          </section>
-
-          <section className="max-w-[300px] ml-24">
-            <h3 className="text-2xl font-semibold">Về ‘Prepify’</h3>
-            <ul className="mt-[42px]">
-              {about.map((item) => (
-                <li key={item.to} className="py-[7px] text-lg">
-                  <Link to={item.to}>{item.label}</Link>
-                </li>
-              ))}
-            </ul>
-          </section>
+    <footer className={styles.footer}>
+      <div className={styles.container}>
+        <div className={styles.about}>
+          <h3>Về chúng tôi</h3>
+          <p>Koi Feng Shui - Cân Bằng Phong Thủy, Koi Vượng Tài Lộc!</p>
+          <p>
+            Koi Feng Shui là điểm đến lý tưởng cho những người yêu thích cá Koi và nghệ thuật tạo cảnh hồ cá. Chúng tôi
+            tự hào cung cấp:
+          </p>
+          <ul>
+            <li>Cá Koi chất lượng cao từ các trại giống uy tín</li>
+            <li>Đa dạng sản phẩm trang trí và thiết bị cho hồ cá Koi</li>
+            <li>Tư vấn chuyên sâu về cá Koi thông qua các bài blog chia sẻ kinh nghiệm</li>
+          </ul>
         </div>
-
-        <div className="flex justify-between mt-40 text-lg">
-          <span>Copyright © 2024 Prepify</span>
-          <span>Powered by Prepify</span>
+        <div className={styles.contact}>
+          <h3>Thông tin liên hệ</h3>
+          <p>
+            <strong>+ Hotline 24/7:</strong> xxxx.xxxx.xxxx
+          </p>
+          <p>
+            <strong>+ Email:</strong> koifengshui@gmail.com
+          </p>
         </div>
-      </Container>
+      </div>
+      <div className={styles.bottomBar}>
+        <p>
+          Thiết kế & duy trì bởi Koi Feng Shui | <a href='https://koifengshui.com.vn'>koifengshui.com.vn</a>
+        </p>
+        <p>© Copy right 2024</p>
+      </div>
     </footer>
-  );
-};
+  )
+}
 
-export default Footer;
+export default Footer
