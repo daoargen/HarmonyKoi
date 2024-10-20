@@ -34,7 +34,7 @@ const router = express.Router()
  *       200:
  *         description: Returns a list of news
  */
-router.get("/", authMiddleware.verifyMinimumRole(Role.ADMIN), NewController.getNews)
+router.get("/", NewController.getNews)
 
 /**
  * @swagger

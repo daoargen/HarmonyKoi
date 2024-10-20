@@ -7,7 +7,6 @@ import { New } from "~/models/new.model"
 import { Order } from "~/models/order.model"
 import { OrderDetail } from "~/models/orderDetail.model"
 import { Package } from "~/models/package.model"
-import { PatternType } from "~/models/patternType.model"
 import { Payment } from "~/models/payment.model"
 import { Pond } from "~/models/pond.model"
 import { PondElement } from "~/models/pondElement.model"
@@ -15,7 +14,6 @@ import { Post } from "~/models/post.model"
 import { PostComment } from "~/models/postComment.model"
 import { PostKoiFish } from "~/models/postKoiFish.model"
 import { PostPond } from "~/models/postPond.model"
-import { Reticulation } from "~/models/reticulation.model"
 import { User } from "~/models/user.model"
 import { UserDetail } from "~/models/userDetail.model"
 import { Veriety } from "~/models/veriety.model"
@@ -31,12 +29,6 @@ export async function syncModels() {
     })
     await Element.sync().then(() => {
       console.log("Element table created successfully!")
-    })
-    await PatternType.sync().then(() => {
-      console.log("PatternType table created successfully!")
-    })
-    await Reticulation.sync().then(() => {
-      console.log("Reticulation table created successfully!")
     })
     await Veriety.sync().then(() => {
       console.log("Veriety table created successfully!")

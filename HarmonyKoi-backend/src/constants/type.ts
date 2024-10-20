@@ -84,37 +84,31 @@ export interface UpdateCartDetail {
 // Element
 export interface CreateElement {
   name: string
+  imageUrl: string | null
 }
 
 export interface UpdateElement {
   name?: string
+  imageUrl: string | null
 }
 
 // Koi Fish
 export interface CreateKoiFish {
   verietyId: string
-  elementId: string
   name: string
   description: string | null
   imageUrl: string | null
   baseColor: string
-  patternTypeId: string
-  reticulationId: string
-  metallic: boolean
   symbolism: string | null
   price: number
 }
 
 export interface UpdateKoiFish {
   verietyId?: string
-  elementId?: string
   name?: string
   description?: string | null
   imageUrl?: string | null
   baseColor?: string
-  patternTypeId?: string
-  reticulationId?: string
-  metallic?: boolean
   symbolism?: string | null
   price?: number
 }
@@ -226,14 +220,12 @@ export interface UpdatePayment {
 
 // Pond
 export interface CreatePond {
-  elementId: string
   name: string
   description: string | null
   imageUrl: string | null
 }
 
 export interface UpdatePond {
-  elementId?: string
   name?: string
   description?: string | null
   imageUrl?: string | null
@@ -241,12 +233,9 @@ export interface UpdatePond {
 
 // Post
 export interface CreatePost {
-  userId: string
   title: string
   content: string
-  dateRemain: number
-  status: string
-  visible: boolean
+  status: string | null
 }
 
 export interface UpdatePost {
@@ -269,17 +258,6 @@ export interface UpdatePostComment {
   userId?: string
   postId?: string
   content?: string
-}
-
-// Reticulation
-export interface CreateReticulation {
-  name: string
-  description: string | null
-}
-
-export interface UpdateReticulation {
-  name?: string
-  description?: string | null
 }
 
 // Veriety

@@ -34,7 +34,7 @@ const router = express.Router()
  *       200:
  *         description: Returns a list of packages
  */
-router.get("/", authMiddleware.verifyMinimumRole(Role.ADMIN), PackageController.getPackages)
+router.get("/", PackageController.getPackages)
 
 /**
  * @swagger
