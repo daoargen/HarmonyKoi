@@ -1,42 +1,42 @@
-import { useMemo } from "react";
-import { ControllerRenderProps, UseFormReturn } from "react-hook-form";
+import { useMemo } from 'react'
+import { ControllerRenderProps, UseFormReturn } from 'react-hook-form'
 
-import InputPassword from "~components/common/AuthForm/components/InputPassword";
-import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "~components/ui/form";
-import { ObserveInput } from "~hooks/useTeddyAnimation";
-import { ResetPasswordFormType } from "~pages/ResetPassword/ResetPassword";
+import InputPassword from '../../../../components/common/AuthForm/components/InputPassword'
+import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '../../../../components/ui/form'
+import { ObserveInput } from '../../../../hooks/useTeddyAnimation'
+import { ResetPasswordFormType } from '../../../../pages/ResetPassword/ResetPassword'
 
 interface FormItemsProps {
-  form: UseFormReturn<ResetPasswordFormType>;
-  observeInputPassword: ObserveInput;
+  form: UseFormReturn<ResetPasswordFormType>
+  observeInputPassword: ObserveInput
 }
 
 type ResetPasswordObjectType = {
-  name: keyof ResetPasswordFormType;
-  label: string;
-  component: (field: ControllerRenderProps<ResetPasswordFormType, keyof ResetPasswordFormType>) => JSX.Element;
-};
+  name: keyof ResetPasswordFormType
+  label: string
+  component: (field: ControllerRenderProps<ResetPasswordFormType, keyof ResetPasswordFormType>) => JSX.Element
+}
 
 const FormItems = ({ form, observeInputPassword }: FormItemsProps) => {
   const resetPasswordFields: ResetPasswordObjectType[] = useMemo(
     () => [
       {
-        name: "password",
-        label: "Mật khẩu",
+        name: 'password',
+        label: 'Mật khẩu',
         component: (field) => (
-          <InputPassword placeholder="Mật khẩu" observeInput={observeInputPassword} field={{ ...field }} />
-        ),
+          <InputPassword placeholder='Mật khẩu' observeInput={observeInputPassword} field={{ ...field }} />
+        )
       },
       {
-        name: "confirmPassword",
-        label: "Nhập lại mật khẩu",
+        name: 'confirmPassword',
+        label: 'Nhập lại mật khẩu',
         component: (field) => (
-          <InputPassword placeholder="Nhập lại mật khẩu" observeInput={observeInputPassword} field={{ ...field }} />
-        ),
-      },
+          <InputPassword placeholder='Nhập lại mật khẩu' observeInput={observeInputPassword} field={{ ...field }} />
+        )
+      }
     ],
-    [observeInputPassword],
-  );
+    [observeInputPassword]
+  )
 
   return resetPasswordFields.map(({ name, label, component }) => (
     <FormField
@@ -44,14 +44,14 @@ const FormItems = ({ form, observeInputPassword }: FormItemsProps) => {
       key={name}
       name={name}
       render={({ field }) => (
-        <FormItem className="w-96">
+        <FormItem className='w-96'>
           <FormLabel>{label}</FormLabel>
           <FormControl>{component(field)}</FormControl>
           <FormMessage />
         </FormItem>
       )}
     />
-  ));
-};
+  ))
+}
 
-export default FormItems;
+export default FormItems

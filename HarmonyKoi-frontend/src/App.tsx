@@ -21,11 +21,11 @@ const App: React.FC = () => {
         <Route path='/consulting' element={<ConsultingPage />} />
         <Route path='/post' element={<PostPage />} />
         <Route path='/news' element={<NewsPage />} />
-        <Route path="/register" element={<Register />} />
+        <Route path='/register' element={<Register />} />
         {/* <Route path='/forgot-password' element={<ForgotPassword/>}/> */}
         {/* <Route path='/reset-password' element={< ResetPassword />} /> */}
         <Route path='/login' element={<LoginPage />} />
-        <Route path='/not-found' element={<NotFound/>}/>
+        <Route path='/not-found' element={<NotFound />} />
       </Routes>
       <Footer />
     </BrowserRouter>

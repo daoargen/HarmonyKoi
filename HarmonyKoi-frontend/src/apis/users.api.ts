@@ -1,5 +1,6 @@
 import { LoginFormType } from '../pages/Login/LoginPage'
 import { RegisterFormType } from '../pages/Register/Register'
+import { NewsResponse, PostResponse } from '../types'
 import { AuthResponse } from '../types/auth.type'
 import { GoogleUrlResponse, UserResponse } from '../types/user.type'
 import { getRefreshToken } from '../utils/cookies'
@@ -30,3 +31,6 @@ export const resetPassword = (token: string, password: string) => http.post('/re
 
 // users.api.ts
 export const refreshToken = () => http.post<AuthResponse>('/auth/refresh-token', { refreshToken: getRefreshToken() })
+
+export const getPost = () => http.get<PostResponse>('/posts')
+export const getNews = () => http.get<NewsResponse>('/news')

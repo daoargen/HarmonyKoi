@@ -14,3 +14,10 @@ export const formatDate = (date: Date): string => {
   const year = date.getFullYear()
   return `${day}/${month}/${year}`
 }
+
+export const parseDate = (dateString: string): Date => {
+  const [time, date] = dateString.split('-')
+  const [day, month, year] = date.split('/')
+  const [hours, minutes, seconds] = time.split(':')
+  return new Date(Number(year), Number(month) - 1, Number(day), Number(hours), Number(minutes), Number(seconds))
+}
