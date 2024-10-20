@@ -18,6 +18,7 @@ import { Button } from '../../components/ui/button'
 import { Label } from '../../components/ui/label'
 import { Input } from '../../components/ui/input'
 import { useNavigate } from 'react-router-dom'
+import { AuthActionType } from '../../context/auth.type'
 
 // import NotFound from "../NotFound";
 
@@ -31,7 +32,7 @@ const LoginPage: React.FC = () => {
 
   useEffect(() => {
     if (isAuthenticated) {
-      navigate('/')
+      navigate('/not-found')
     }
   }, [isAuthenticated, navigate])
 
@@ -62,7 +63,7 @@ const LoginPage: React.FC = () => {
       const user = userResponse.data.data
       console.log(user)
 
-      // dispatch(signIn({ user }))
+      dispatch({ type: AuthActionType.SIGN_IN, payload: user })
 
       toast.success(AUTH_MESSAGES.LOGIN_TITLE_SUCCESS)
       navigate('/') // Redirect after login

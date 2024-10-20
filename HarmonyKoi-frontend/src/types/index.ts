@@ -1,5 +1,6 @@
 // types/index.ts
-import { User } from "./user.type";
+import { SuccessResponse } from './response.type'
+import { User } from './user.type'
 
 // Ví dụ khai báo kiểu dữ liệu cho một bài viết (Post)
 export interface Post {
@@ -7,6 +8,16 @@ export interface Post {
   title: string
   content: string
   author: string
+  imageUrl: string
+  createdAt: Date
+}
+
+export interface News {
+  id: number
+  title: string
+  content: string
+  author: string
+  imageUrl: string
   createdAt: Date
 }
 
@@ -16,6 +27,14 @@ export interface LoginCredentials {
   password: string
   // ... các trường dữ liệu khác cho login
 }
+
+export type PostResponse = SuccessResponse<{
+  post: Post
+}>
+
+export type NewsResponse = SuccessResponse<{
+  news: News
+}>
 
 export interface AuthContextType {
   user: User | null
