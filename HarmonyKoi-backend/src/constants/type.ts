@@ -101,6 +101,7 @@ export interface CreateKoiFish {
   baseColor: string
   symbolism: string | null
   price: number
+  elementIds: string[]
 }
 
 export interface UpdateKoiFish {

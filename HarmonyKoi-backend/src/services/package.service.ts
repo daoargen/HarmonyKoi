@@ -26,7 +26,7 @@ async function getAllPackages(req: Request) {
       where: whereCondition,
       limit: pageSize,
       offset: (pageIndex - 1) * pageSize,
-      order: [["createdAt", "DESC"]]
+      order: [["amountPost", "ASC"]]
     })
 
     // Định dạng lại dữ liệu

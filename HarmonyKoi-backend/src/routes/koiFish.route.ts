@@ -29,6 +29,11 @@ const router = express.Router()
  *         schema:
  *           type: string
  *         description: Keyword to search in koi fish names, descriptions, symbolism, variety names, element names
+ *       - in: query
+ *         name: yearOfBirth
+ *         schema:
+ *           type: integer
+ *         description: year of birth
  *     responses:
  *       200:
  *         description: Returns a list of koi fishes
@@ -72,9 +77,6 @@ router.get("/:id", KoiFishController.getKoiFish)
  *               verietyId:
  *                 type: string
  *                 description: Variety ID of the koi fish
- *               elementId:
- *                 type: string
- *                 description: Element ID of the koi fish
  *               name:
  *                 type: string
  *                 description: Name of the koi fish
@@ -93,6 +95,11 @@ router.get("/:id", KoiFishController.getKoiFish)
  *               price:
  *                 type: number
  *                 description: Price of the koi fish
+ *               elementIds:
+ *                 type: array
+ *                 description: Array of Element IDs
+ *                 items:
+ *                   type: string
  *     responses:
  *       201:
  *         description: Koi fish created successfully
