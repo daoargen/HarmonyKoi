@@ -70,12 +70,9 @@ router.get("/:id", NewController.getNew)
  *           schema:
  *             type: object
  *             properties:
- *               userId:
+ *               tittle:
  *                 type: string
- *                 description: User ID of the news creator (can be null for general news)
- *               category:
- *                 type: string
- *                 description: Category of the news
+ *                 description: Tittle of the news
  *               content:
  *                 type: string
  *                 description: Content of the news
@@ -134,12 +131,9 @@ router.post("/", authMiddleware.verifyToken, NewController.createNew)
  *           schema:
  *             type: object
  *             properties:
- *               userId:
+ *               tittle:
  *                 type: string
- *                 description: User ID of the news creator (can be null for general news)
- *               category:
- *                 type: string
- *                 description: Category of the news
+ *                 description: Tittle of the news
  *               content:
  *                 type: string
  *                 description: Content of the news

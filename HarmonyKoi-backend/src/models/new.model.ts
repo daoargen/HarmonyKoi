@@ -10,11 +10,7 @@ const tableName = "New"
 
 export const New = sequelize.define<NewInstance>(tableName, {
   ...UUIDModel,
-  userId: {
-    type: DataTypes.UUID,
-    allowNull: true // Assuming userId can be null for general news
-  },
-  category: {
+  tittle: {
     type: DataTypes.STRING,
     allowNull: false
   },
@@ -25,15 +21,9 @@ export const New = sequelize.define<NewInstance>(tableName, {
   ...SQLModel
 })
 
-New.belongsTo(User, {
-  foreignKey: "userId",
-  as: "user"
-})
-
 export interface NewAttributes {
   id?: string
-  userId: string | null
-  category: string
+  tittle: string
   content: string
   isDeleted?: boolean
 }
