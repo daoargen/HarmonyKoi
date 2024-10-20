@@ -15,17 +15,6 @@ export interface AuthState {
   user?: User | null
 }
 
-interface SignInPayload {
-  user: User
-  accessToken: string
-  refreshToken: string
-}
-
-export type AuthAction =
-  | PayloadAction<AuthState>
-  | PayloadAction<SignInPayload> // SIGN_IN action bây giờ có payload là SignInPayload
-  | { type: AuthActionType.SIGN_OUT }
-
 export interface PayloadAction<T> {
   type: AuthActionType
   payload: T
