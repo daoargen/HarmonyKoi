@@ -82,6 +82,11 @@ router.get("/:id", PondController.getPond)
  *               imageUrl:
  *                 type: string
  *                 description: Image URL of the pond
+ *               elementIds:
+ *                 type: array
+ *                 description: Array of Element IDs
+ *                 items:
+ *                   type: string
  *     responses:
  *       201:
  *         description: Pond created successfully
@@ -149,6 +154,11 @@ router.post("/", authMiddleware.verifyToken, PondController.createPond)
  *               imageUrl:
  *                 type: string
  *                 description: Image URL of the pond
+ *               elementIds:
+ *                 type: array
+ *                 description: Array of Element IDs
+ *                 items:
+ *                   type: string
  *     responses:
  *       200:
  *         description: Pond updated successfully

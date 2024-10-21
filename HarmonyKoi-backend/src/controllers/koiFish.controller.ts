@@ -1,7 +1,7 @@
 import { Request, Response } from "express"
 
 import responseStatus from "~/constants/responseStatus"
-import { CreateKoiFish } from "~/constants/type"
+import { CreateKoiFish, UpdateKoiFish } from "~/constants/type"
 import koiFishService from "~/services/koiFish.service"
 
 async function getKoiFishes(req: Request, res: Response) {
@@ -46,8 +46,18 @@ async function createKoiFish(req: Request, res: Response) {
 async function editKoiFish(req: Request, res: Response) {
   try {
     const id = req.params.id
-    const updatedKoiFish = req.body
-    await koiFishService.editKoiFish(id, updatedKoiFish)
+    const { verietyId, name, description, imageUrl, baseColor, symbolism, price, elementIds } = req.body
+    const dataRequest: UpdateKoiFish = {
+      verietyId,
+      name,
+      description,
+      imageUrl,
+      baseColor,
+      symbolism,
+      price,
+      elementIds
+    }
+    await koiFishService.editKoiFish(id, dataRequest)
     return res.json(responseStatus.responseMessage200("Edit koi fish successfully!"))
   } catch (error) {
     return res.json(error)
