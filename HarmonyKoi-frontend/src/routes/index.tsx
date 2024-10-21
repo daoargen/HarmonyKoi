@@ -2,19 +2,19 @@ import { createBrowserRouter } from 'react-router-dom'
 
 import configs from '../configs'
 import GuestGuard from '../Guards/GuestGuard'
-import ResetPasswordGuard from '../Guards/ResetPasswordGuard'
 import AdminLayout from '../layouts/AdminLayout'
-import MainLayout from '../layouts/MainLayout'
+// import MainLayout from '../layouts/MainLayout'
 import Home from '../pages/Home/HomePage'
 import Login from '../pages/Login/LoginPage'
 import NotFound from '../pages/NotFound'
 import Register from '../pages/Register'
-import ResetPassword from '../pages/ResetPassword'
-import ForgotPassword from '../pages/ForgotPassword'
+// import ResetPassword from '../pages/ResetPassword'
+// import ForgotPassword from '../pages/ForgotPassword'
 import PostPage from '../pages/Post/PostPage'
 import NewsPage from '../pages/News/NewsPage'
 import ConsultingPage from '../pages/Consulting/ConsultingPage'
 import AppLayout from '../App'
+import LoginPage from '../pages/Login/LoginPage'
 
 const router = createBrowserRouter([
   {
@@ -25,6 +25,14 @@ const router = createBrowserRouter([
       {
         path: configs.routes.home,
         element: <Home />
+      },
+      {
+        path: configs.routes.login,
+        element: <LoginPage />
+      },
+      {
+        path: configs.routes.register,
+        element: <Register />
       },
       {
         path: configs.routes.post,
@@ -64,6 +72,10 @@ const router = createBrowserRouter([
         ]
       }
     ]
+  },
+  {
+    path: configs.routes.home,
+    element: <Home />
   },
   {
     path: configs.routes.admin,
