@@ -143,7 +143,6 @@ async function getKoiFishById(koiFishId: string) {
       ]
     })
     if (!koiFish) throw responseStatus.responseNotFound404("Koi fish not found")
-    // --- Logic lấy elements tương tự như trong getAllKoiFishes ---
     const koiFishElements = await KoiFishElement.findAll({
       where: { koiFishId: [koiFishId], isDeleted: false }, // Truy vấn cho koiFishId hiện tại
       attributes: ["koiFishId", "elementId"]
@@ -157,7 +156,7 @@ async function getKoiFishById(koiFishId: string) {
       where: { id: elementIds, isDeleted: false },
       attributes: ["id", "name", "imageUrl"]
     })
-    // Bổ sung đoạn code bị thiếu
+
     return {
       ...koiFish.toJSON(),
       elements: elements

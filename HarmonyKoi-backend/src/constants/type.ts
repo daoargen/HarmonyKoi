@@ -223,12 +223,14 @@ export interface CreatePond {
   name: string
   description: string | null
   imageUrl: string | null
+  elementIds: string[]
 }
 
 export interface UpdatePond {
   name?: string
   description?: string | null
   imageUrl?: string | null
+  elementIds: string[]
 }
 
 export interface CreatePondElement {

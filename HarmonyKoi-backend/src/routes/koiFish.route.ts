@@ -179,6 +179,11 @@ router.post("/", authMiddleware.verifyToken, KoiFishController.createKoiFish)
  *               price:
  *                 type: number
  *                 description: Price of the koi fish
+ *               elementIds:
+ *                 type: array
+ *                 description: Array of Element IDs
+ *                 items:
+ *                   type: string
  *     responses:
  *       200:
  *         description: Koi fish updated successfully
