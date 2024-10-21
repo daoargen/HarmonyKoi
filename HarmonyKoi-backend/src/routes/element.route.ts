@@ -33,7 +33,7 @@ const router = express.Router()
  *       200:
  *         description: Returns a list of elements
  */
-router.get("/", authMiddleware.verifyMinimumRole(Role.ADMIN), ElementController.getElements)
+router.get("/", ElementController.getElements)
 
 /**
  * @swagger

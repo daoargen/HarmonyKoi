@@ -1,8 +1,6 @@
 import express from "express"
 
 import authRouter from "~/routes/auth.route"
-import cartRouter from "~/routes/cart.route"
-import cartDetailRouter from "~/routes/cartDetail.route"
 import elementRouter from "~/routes/element.route"
 import koiFishRouter from "~/routes/koiFish.route"
 import newsRouter from "~/routes/new.route"
@@ -20,8 +18,6 @@ const app = express()
 // Routes
 app.use("/users", userRouter)
 app.use("/auth", authRouter)
-app.use("/carts", cartRouter)
-app.use("/cartDetails", cartDetailRouter)
 app.use("/elements", elementRouter)
 app.use("/koiFishes", koiFishRouter)
 app.use("/news", newsRouter)

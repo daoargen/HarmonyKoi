@@ -1,13 +1,15 @@
 import { Request } from "express"
-import { Op } from "sequelize"
+import { Op, ValidationErrorItemOrigin } from "sequelize"
 
 import responseStatus from "~/constants/responseStatus"
-import { CreateKoiFish, UpdateKoiFish } from "~/constants/type"
+import { CreateKoiFish, CreateKoiFishElement, UpdateKoiFish } from "~/constants/type"
 import { Element } from "~/models/element.model"
 import { KoiFish } from "~/models/koiFish.model"
 import { KoiFishElement } from "~/models/koiFishElement.model"
 import { Veriety } from "~/models/veriety.model"
 import { formatModelDate } from "~/utils/formatTimeModel.util"
+
+import koiFishElementService from "./koiFishElement.service"
 
 async function getAllKoiFishes(req: Request) {
   try {
@@ -15,19 +17,55 @@ async function getAllKoiFishes(req: Request) {
     const pageIndex = parseInt(req.query.page_index as string) || 1
     const pageSize = parseInt(req.query.page_size as string) || 10
     const keyword = req.query.keyword as string
+    const yearOfBirth = parseInt(req.query.yearOfBirth as string)
 
     const whereCondition: any = {
       isDeleted: false
-    } // Điều kiện tìm kiếm
+    }
 
     if (keyword) {
       whereCondition[Op.or] = [
         { name: { [Op.like]: `%${keyword}%` } },
         { description: { [Op.like]: `%${keyword}%` } },
         { symbolism: { [Op.like]: `%${keyword}%` } },
-        { "$veriety.name$": { [Op.like]: `%${keyword}%` } },
-        { "$element.name$": { [Op.like]: `%${keyword}%` } }
+        { "$veriety.name$": { [Op.like]: `%${keyword}%` } }
       ]
+    }
+
+    if (yearOfBirth) {
+      const destiny = getDestinyByYearOfBirth(yearOfBirth)
+      console.log(destiny)
+      const element = await Element.findOne({
+        where: {
+          name: destiny,
+          isDeleted: false
+        }
+      })
+      console.log(element)
+      if (element && element.id) {
+        const elementId = element.id
+        const koiFishIdsWithElement = await KoiFishElement.findAll({
+          where: { elementId, isDeleted: false },
+          attributes: ["koiFishId"]
+        }).then((results) => results.map((result) => result.koiFishId))
+
+        if (koiFishIdsWithElement.length === 0) {
+          return {
+            koiFishes: [],
+            pagination: {
+              pageSize: 10,
+              totalItem: 0,
+              currentPage: 1,
+              maxPageSize: 100,
+              totalPage: 0
+            }
+          }
+        }
+
+        whereCondition.id = {
+          [Op.in]: koiFishIdsWithElement
+        }
+      }
     }
 
     // Tìm và đếm tổng số koi fish
@@ -72,10 +110,8 @@ async function getAllKoiFishes(req: Request) {
           elements: relatedElements
         }
       })
+      dataResponse = formatKoiFishs.map((koiFish: any) => formatModelDate(koiFish))
     }
-    // Định dạng lại dữ liệu
-    dataResponse = koiFishes.map((koiFish) => formatModelDate(koiFish.dataValues))
-
     // Tính toán thông tin phân trang
     const totalPage = Math.ceil(count / pageSize)
     const pagination = {
@@ -107,7 +143,25 @@ async function getKoiFishById(koiFishId: string) {
       ]
     })
     if (!koiFish) throw responseStatus.responseNotFound404("Koi fish not found")
-    return koiFish
+    // --- Logic lấy elements tương tự như trong getAllKoiFishes ---
+    const koiFishElements = await KoiFishElement.findAll({
+      where: { koiFishId: [koiFishId], isDeleted: false }, // Truy vấn cho koiFishId hiện tại
+      attributes: ["koiFishId", "elementId"]
+    })
+
+    const elementIds = koiFishElements
+      .map((koiFishElement) => koiFishElement.elementId)
+      .filter((elementId): elementId is string => elementId !== undefined)
+
+    const elements = await Element.findAll({
+      where: { id: elementIds, isDeleted: false },
+      attributes: ["id", "name", "imageUrl"]
+    })
+    // Bổ sung đoạn code bị thiếu
+    return {
+      ...koiFish.toJSON(),
+      elements: elements
+    }
   } catch (error) {
     console.error(error)
     throw error
@@ -116,7 +170,28 @@ async function getKoiFishById(koiFishId: string) {
 
 async function createKoiFish(newKoiFish: CreateKoiFish) {
   try {
-    const koiFish = await KoiFish.create(newKoiFish)
+    const koiFish = await KoiFish.create({
+      verietyId: newKoiFish.verietyId,
+      name: newKoiFish.verietyId,
+      description: newKoiFish.description,
+      imageUrl: newKoiFish.imageUrl,
+      baseColor: newKoiFish.baseColor,
+      symbolism: newKoiFish.symbolism,
+      price: newKoiFish.price
+    })
+    if (!koiFish.id) {
+      throw responseStatus.responseBadRequest400("Fail to create new fish")
+    }
+    newKoiFish.elementIds.map(async (elementId) => {
+      if (koiFish.id) {
+        // Kiểm tra koiFish.id trước khi sử dụng
+        const newKoiFishElement: CreateKoiFishElement = {
+          koiFishId: koiFish.id,
+          elementId: elementId
+        }
+        await koiFishElementService.createKoiFishElement(newKoiFishElement)
+      }
+    })
     return koiFish
   } catch (error) {
     console.error(error)
@@ -173,10 +248,78 @@ async function deleteKoiFish(id: string) {
   }
 } // Delete koi fish
 
+function getDestinyByYearOfBirth(yearOfBirth: number): string {
+  type HeavenlyStem = "Giap" | "At" | "Binh" | "Dinh" | "Mau" | "Ky" | "Canh" | "Tan" | "Nham" | "Quy"
+  type EarthlyBranch = "Ty" | "Suu" | "Dan" | "Mao" | "Thin" | "Ti" | "Ngo" | "Mui" | "Than" | "Dau" | "Tuat" | "Hoi"
+
+  const heavenlyStemValues: Record<HeavenlyStem, number> = {
+    Giap: 1,
+    At: 1,
+    Binh: 2,
+    Dinh: 2,
+    Mau: 3,
+    Ky: 3,
+    Canh: 4,
+    Tan: 4,
+    Nham: 5,
+    Quy: 5
+  }
+
+  const earthlyBranchValues: Record<EarthlyBranch, number> = {
+    Ty: 0,
+    Suu: 0,
+    Ngo: 0,
+    Mui: 0,
+    Dan: 1,
+    Mao: 1,
+    Than: 1,
+    Dau: 1,
+    Thin: 2,
+    Ti: 2,
+    Tuat: 2,
+    Hoi: 2
+  }
+
+  const destinyValues = ["Metal", "Water", "Fire", "Earth", "Wood"]
+
+  const heavenlyStems: HeavenlyStem[] = ["Giap", "At", "Binh", "Dinh", "Mau", "Ky", "Canh", "Tan", "Nham", "Quy"]
+  const earthlyBranches: EarthlyBranch[] = [
+    "Ty",
+    "Suu",
+    "Dan",
+    "Mao",
+    "Thin",
+    "Ti",
+    "Ngo",
+    "Mui",
+    "Than",
+    "Dau",
+    "Tuat",
+    "Hoi"
+  ]
+
+  // Tính chỉ số Thiên Can
+  const heavenlyStemIndex = (yearOfBirth - 4) % 10
+
+  // Tính chỉ số Địa Chi
+  const earthlyBranchIndex = (yearOfBirth - 4) % 12
+
+  const heavenlyStem = heavenlyStems[heavenlyStemIndex]
+  const earthlyBranch = earthlyBranches[earthlyBranchIndex]
+
+  let destinyValue = heavenlyStemValues[heavenlyStem] + earthlyBranchValues[earthlyBranch]
+  if (destinyValue > 5) {
+    destinyValue -= 5
+  }
+  console.log(destinyValues[destinyValue - 1])
+  return destinyValues[destinyValue - 1]
+}
+
 export default {
   getAllKoiFishes,
   getKoiFishById,
   createKoiFish,
   editKoiFish,
-  deleteKoiFish
+  deleteKoiFish,
+  getDestinyByYearOfBirth
 }
