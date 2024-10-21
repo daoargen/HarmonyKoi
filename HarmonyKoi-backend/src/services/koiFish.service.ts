@@ -220,6 +220,20 @@ async function editKoiFish(id: string, updatedKoiFish: UpdateKoiFish) {
       symbolism: updatedKoiFish.symbolism || koiFish.symbolism,
       price: updatedKoiFish.price || koiFish.price
     })
+    if (koiFish.id) {
+      await koiFishElementService.deleteAllKoiFishElementByKoiFishId(koiFish.id)
+    }
+
+    updatedKoiFish.elementIds.map(async (elementId) => {
+      if (koiFish.id) {
+        // Kiểm tra koiFish.id trước khi sử dụng
+        const newKoiFishElement: CreateKoiFishElement = {
+          koiFishId: koiFish.id,
+          elementId: elementId
+        }
+        await koiFishElementService.createKoiFishElement(newKoiFishElement)
+      }
+    })
 
     return koiFish
   } catch (error) {
