@@ -1,0 +1,97 @@
+.container {
+  width: 90%;
+  margin: 0 auto;
+}
+
+.title {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.fishCard {
+  position: relative;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 16px;
+  background-color: white;
+  transition: box-shadow 0.3s ease;
+  cursor: pointer;
+}
+
+.fishCard:hover {
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.featuredTag {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: red;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+
+.fishImage {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.fishInfo {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.fishInfo h2 {
+  font-size: 1.25rem;
+  margin-bottom: 5px;
+}
+
+.fishInfo p {
+  margin: 5px 0;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  align-items: center;
+}
+
+.pageButton {
+  background-color: #f0f0f0;
+  padding: 8px 12px;
+  border-radius: 5px;
+  margin: 0 5px;
+  cursor: pointer;
+  border: none;
+  transition: background-color 0.3s;
+}
+
+.pageButton:hover {
+  background-color: #d3d3d3;
+}
+
+.active {
+  background-color: #007bff;
+  color: white;
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 20px;
+}
+.ellipsis {
+  padding: 8px 12px;
+}

@@ -15,7 +15,8 @@ const routes = {
   notFound: '/not-found',
   post: '/post',
   consult: '/consulting',
-  news: '/news'
+  news: '/news',
+  koifish: '/koifish'
 }
 
 export default routes

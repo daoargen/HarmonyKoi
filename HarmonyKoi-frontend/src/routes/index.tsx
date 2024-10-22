@@ -15,6 +15,7 @@ import PostPage from '../pages/Post/PostPage'
 import NewsPage from '../pages/News/NewsPage'
 import ConsultingPage from '../pages/Consulting/ConsultingPage'
 import AppLayout from '../App'
+import KoiFishList from '../pages/koiFish/KoiFishList'
 
 const router = createBrowserRouter([
   {
@@ -37,6 +38,10 @@ const router = createBrowserRouter([
       {
         path: configs.routes.consult,
         element: <ConsultingPage />
+      },
+      {
+        path: configs.routes.koifish,
+        element: <KoiFishList />
       },
 
       // GuestGuard
