@@ -112,6 +112,7 @@ export interface UpdateKoiFish {
   baseColor?: string
   symbolism?: string | null
   price?: number
+  elementIds: string[]
 }
 
 export interface CreateKoiFishElement {
@@ -222,12 +223,24 @@ export interface CreatePond {
   name: string
   description: string | null
   imageUrl: string | null
+  elementIds: string[]
 }
 
 export interface UpdatePond {
   name?: string
   description?: string | null
   imageUrl?: string | null
+  elementIds: string[]
+}
+
+export interface CreatePondElement {
+  pondId: string
+  elementId: string
+}
+
+export interface UpdatePondElement {
+  pondId?: string
+  elementId?: string
 }
 
 // Post

@@ -4,55 +4,6 @@ import { Element } from "~/models/element.model"
 import { KoiFish } from "~/models/koiFish.model"
 import { KoiFishElement } from "~/models/koiFishElement.model"
 
-async function getAllKoiFishElements() {
-  try {
-    const koiFishElements = await KoiFishElement.findAll({
-      where: { isDeleted: false },
-      include: [
-        {
-          model: KoiFish,
-          as: "koiFish",
-          attributes: ["name"] // Chọn các thuộc tính bạn muốn lấy từ model KoiFish
-        },
-        {
-          model: Element,
-          as: "element",
-          attributes: ["name"] // Chọn các thuộc tính bạn muốn lấy từ model Element
-        }
-      ]
-    })
-    return koiFishElements
-  } catch (error) {
-    console.error(error)
-    throw error
-  }
-}
-
-async function getKoiFishElementById(koiFishElementId: string) {
-  try {
-    const koiFishElement = await KoiFishElement.findOne({
-      where: { id: koiFishElementId, isDeleted: false },
-      include: [
-        {
-          model: KoiFish,
-          as: "koiFish",
-          attributes: ["name"]
-        },
-        {
-          model: Element,
-          as: "element",
-          attributes: ["name"]
-        }
-      ]
-    })
-    if (!koiFishElement) throw responseStatus.responseNotFound404("KoiFishElement not found")
-    return koiFishElement
-  } catch (error) {
-    console.error(error)
-    throw error
-  }
-}
-
 async function createKoiFishElement(newKoiFishElement: CreateKoiFishElement) {
   try {
     const existingKoiFishElement = await KoiFishElement.findOne({
@@ -73,28 +24,6 @@ async function createKoiFishElement(newKoiFishElement: CreateKoiFishElement) {
       const koiFishElement = await KoiFishElement.create(newKoiFishElement)
       return koiFishElement
     }
-  } catch (error) {
-    console.error(error)
-    throw error
-  }
-}
-
-async function editKoiFishElement(id: string, updatedKoiFishElement: UpdateKoiFishElement) {
-  try {
-    const koiFishElement = await KoiFishElement.findOne({
-      where: { id, isDeleted: false }
-    })
-
-    if (!koiFishElement) {
-      throw responseStatus.responseNotFound404("KoiFishElement not found")
-    }
-
-    await koiFishElement.update({
-      koiFishId: updatedKoiFishElement.koiFishId || koiFishElement.koiFishId,
-      elementId: updatedKoiFishElement.elementId || koiFishElement.elementId
-    })
-
-    return koiFishElement
   } catch (error) {
     console.error(error)
     throw error
@@ -123,10 +52,17 @@ async function deleteKoiFishElement(id: string) {
   }
 }
 
+async function deleteAllKoiFishElementByKoiFishId(koiFishId: string) {
+  try {
+    await KoiFishElement.update({ isDeleted: true }, { where: { koiFishId } })
+  } catch (error) {
+    console.error(error)
+    throw error
+  }
+}
+
 export default {
-  getAllKoiFishElements,
-  getKoiFishElementById,
   createKoiFishElement,
-  editKoiFishElement,
-  deleteKoiFishElement
+  deleteKoiFishElement,
+  deleteAllKoiFishElementByKoiFishId
 }

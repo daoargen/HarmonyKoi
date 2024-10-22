@@ -1,6 +1,7 @@
 import { Request, Response } from "express"
 
 import responseStatus from "~/constants/responseStatus"
+import { CreatePond, UpdatePond } from "~/constants/type"
 import pondService from "~/services/pond.service"
 
 async function getPonds(req: Request, res: Response) {
@@ -24,8 +25,14 @@ async function getPond(req: Request, res: Response) {
 
 async function createPond(req: Request, res: Response) {
   try {
-    const newPond = req.body
-    const pond = await pondService.createPond(newPond)
+    const { name, description, imageUrl, elementIds } = req.body
+    const dataRequest: CreatePond = {
+      name,
+      description,
+      imageUrl,
+      elementIds
+    }
+    const pond = await pondService.createPond(dataRequest)
     return res.json(responseStatus.responseData200("Create pond successfully!", pond))
   } catch (error) {
     return res.json(error)
@@ -35,8 +42,14 @@ async function createPond(req: Request, res: Response) {
 async function editPond(req: Request, res: Response) {
   try {
     const id = req.params.id
-    const updatedPond = req.body
-    await pondService.editPond(id, updatedPond)
+    const { name, description, imageUrl, elementIds } = req.body
+    const dataRequest: UpdatePond = {
+      name,
+      description,
+      imageUrl,
+      elementIds
+    }
+    await pondService.editPond(id, dataRequest)
     return res.json(responseStatus.responseMessage200("Edit pond successfully!"))
   } catch (error) {
     return res.json(error)

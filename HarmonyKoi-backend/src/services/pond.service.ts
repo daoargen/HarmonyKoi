@@ -2,10 +2,13 @@ import { Request } from "express"
 import { Op } from "sequelize"
 
 import responseStatus from "~/constants/responseStatus"
-import { CreatePond, UpdatePond } from "~/constants/type"
+import { CreatePond, CreatePondElement, UpdatePond } from "~/constants/type"
 import { Element } from "~/models/element.model"
 import { Pond } from "~/models/pond.model"
+import { PondElement } from "~/models/pondElement.model"
 import { formatModelDate } from "~/utils/formatTimeModel.util"
+
+import pondElementService from "./pondElement.service"
 
 async function getAllPonds(req: Request) {
   try {
@@ -31,19 +34,38 @@ async function getAllPonds(req: Request) {
       where: whereCondition,
       limit: pageSize,
       offset: (pageIndex - 1) * pageSize,
-      order: [["createdAt", "DESC"]],
-      include: [
-        {
-          model: Element,
-          as: "element",
-          attributes: ["name"] // Select the attributes you want from Element
-        }
-      ]
+      order: [["createdAt", "DESC"]]
     })
 
-    // Định dạng lại dữ liệu
-    const formattedPonds = ponds.map((pond) => formatModelDate(pond.dataValues))
+    let dataResponse: any = []
+    if (ponds.length > 0) {
+      const pondId = ponds.map((pond) => pond.id).filter((id): id is string => id !== undefined)
+      const pondElements = await PondElement.findAll({
+        where: { pondId: pondId, isDeleted: false },
+        attributes: ["pondId", "elementId"]
+      })
+      const elementIds = pondElements
+        .map((pondElement) => pondElement.elementId)
+        .filter((elementId): elementId is string => elementId !== undefined)
+      const elements = await Element.findAll({
+        where: { id: elementIds, isDeleted: false },
+        attributes: ["id", "name", "imageUrl"]
+      })
+      const formatPonds = ponds.map((pond) => {
+        // Lấy danh sách pondElement có pondId tương ứng
+        const relatedpondElements = pondElements.filter((kfe) => kfe.pondId === pond.id)
+        // Lấy danh sách element tương ứng từ relatedpondElements
+        const relatedElements = relatedpondElements.map((kfe) => {
+          return elements.find((element) => element.id === kfe.elementId)
+        })
 
+        return {
+          ...pond.toJSON(),
+          elements: relatedElements
+        }
+      })
+      dataResponse = formatPonds.map((pond: any) => formatModelDate(pond))
+    }
     // Tính toán thông tin phân trang
     const totalPage = Math.ceil(count / pageSize)
     const pagination = {
@@ -55,7 +77,7 @@ async function getAllPonds(req: Request) {
     }
 
     // Trả về kết quả
-    return { ponds: formattedPonds, pagination }
+    return { ponds: dataResponse, pagination }
   } catch (error) {
     console.error(error)
     throw error
@@ -75,7 +97,25 @@ async function getPondById(pondId: string) {
       ]
     })
     if (!pond) throw responseStatus.responseNotFound404("Pond not found")
-    return pond
+
+    const pondElements = await PondElement.findAll({
+      where: { pondId: [pondId], isDeleted: false },
+      attributes: ["pondId", "elementId"]
+    })
+
+    const elementIds = pondElements
+      .map((pondElement) => pondElement.elementId)
+      .filter((elementId): elementId is string => elementId !== undefined)
+
+    const elements = await Element.findAll({
+      where: { id: elementIds, isDeleted: false },
+      attributes: ["id", "name", "imageUrl"]
+    })
+    // Bổ sung đoạn code bị thiếu
+    return {
+      ...pond.toJSON(),
+      elements: elements
+    }
   } catch (error) {
     console.error(error)
     throw error
@@ -84,7 +124,23 @@ async function getPondById(pondId: string) {
 
 async function createPond(newPond: CreatePond) {
   try {
-    const pond = await Pond.create(newPond)
+    const pond = await Pond.create({
+      name: newPond.name,
+      description: newPond.description,
+      imageUrl: newPond.imageUrl
+    })
+    if (!pond.id) {
+      throw responseStatus.responseBadRequest400("Fail to create new fish")
+    }
+    newPond.elementIds.map(async (elementId) => {
+      if (pond.id) {
+        const newPondElement: CreatePondElement = {
+          pondId: pond.id,
+          elementId: elementId
+        }
+        await pondElementService.createPondElement(newPondElement)
+      }
+    })
     return pond
   } catch (error) {
     console.error(error)
@@ -108,6 +164,20 @@ async function editPond(id: string, updatedPond: UpdatePond) {
       name: updatedPond.name || pond.name,
       description: updatedPond.description || pond.description,
       imageUrl: updatedPond.imageUrl || pond.imageUrl
+    })
+
+    if (pond.id) {
+      await pondElementService.deleteAllPondElementByPondId(pond.id)
+    }
+
+    updatedPond.elementIds.map(async (elementId) => {
+      if (pond.id) {
+        const newPondElement: CreatePondElement = {
+          pondId: pond.id,
+          elementId: elementId
+        }
+        await pondElementService.createPondElement(newPondElement)
+      }
     })
 
     return pond
