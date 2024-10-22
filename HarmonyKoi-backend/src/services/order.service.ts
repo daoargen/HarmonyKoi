@@ -8,6 +8,7 @@ import { Package } from "~/models/package.model"
 import { Post } from "~/models/post.model"
 import { User } from "~/models/user.model"
 import { formatModelDate } from "~/utils/formatTimeModel.util"
+import { getUserFromToken } from "~/utils/getUserFromToken.util"
 
 async function getAllOrders(req: Request) {
   try {
@@ -45,11 +46,6 @@ async function getAllOrders(req: Request) {
           attributes: ["username"]
         },
         {
-          model: Package,
-          as: "package",
-          attributes: ["name"]
-        },
-        {
           model: Post,
           as: "post",
           attributes: ["title"]
@@ -78,24 +74,7 @@ async function getAllOrders(req: Request) {
 async function getOrderById(orderId: string) {
   try {
     const order = await Order.findOne({
-      where: { id: orderId, isDeleted: false },
-      include: [
-        {
-          model: User,
-          as: "user",
-          attributes: ["username"]
-        },
-        {
-          model: Package,
-          as: "package",
-          attributes: ["name"]
-        },
-        {
-          model: Post,
-          as: "post",
-          attributes: ["title"]
-        }
-      ]
+      where: { id: orderId, isDeleted: false }
     })
     if (!order) throw responseStatus.responseNotFound404("Order not found")
     return order
@@ -152,6 +131,21 @@ async function deleteOrder(id: string) {
 
     if (orderResult[0] === 0) {
       throw responseStatus.responeCustom(400, "Delete order failed")
+    }
+
+    return
+  } catch (error) {
+    console.error(error)
+    throw error
+  }
+}
+
+async function getCurrentPackage(token: string) {
+  try {
+    const user = await getUserFromToken(token)
+    const order = await Order.findAll({ where: { userId: user.id, isDeleted: false } })
+    if (!order) {
+      throw responseStatus.responseNotFound404("Order not found or already deleted")
     }
 
     return
