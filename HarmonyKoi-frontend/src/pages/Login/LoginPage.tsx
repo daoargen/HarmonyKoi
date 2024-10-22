@@ -60,7 +60,12 @@ const LoginPage: React.FC = () => {
         throw new Error('Lỗi khi lấy thông tin người dùng') // Xử lý lỗi khi getProfile thất bại
       }
 
-      const user = userResponse.data.data
+      const user = await userResponse.data.data
+      if (!user) {
+        await localStorage.getItem('user')
+      }
+
+      localStorage.setItem('user', JSON.stringify(user))
       console.log(user)
 
       dispatch({ type: AuthActionType.SIGN_IN, payload: user })
@@ -77,7 +82,7 @@ const LoginPage: React.FC = () => {
     <div className={Styles.loginContainer}>
       <div className={Styles.loginForm}>
         <div className={Styles.logo}>
-          <img src='src/assets/images/loginImage.jpg' alt='Koi Feng Shui Logo' />
+          <img src='src/assets/images/logo.png' alt='Koi Feng Shui Logo' />
           <span>Koi Feng Shui</span>
         </div>
         <h1>Đăng nhập</h1>
@@ -89,17 +94,6 @@ const LoginPage: React.FC = () => {
           </a>
         </p>
         <form onSubmit={handleLogin}>
-          <Button
-            type='submit'
-            // variant='outline'
-            onClick={() => navigate('/not-found')}
-            className={Styles.googleButton}
-          >
-            <img src='src/assets/images/googleLogo.png' alt='Google Logo' />
-            Google
-          </Button>
-          <div className={Styles.divider}>Hoặc đăng nhập bằng</div>
-
           <div className={Styles.formGroup}>
             <Label htmlFor='email'>Email</Label>
             <Input
@@ -127,6 +121,18 @@ const LoginPage: React.FC = () => {
           </div>
           <Button id='submit' type='submit' className={Styles.loginButton}>
             Đăng nhập
+          </Button>
+
+          <div className={Styles.divider}>Hoặc đăng nhập bằng</div>
+
+          <Button
+            type='submit'
+            variant='outline'
+            onClick={() => navigate('/not-found')}
+            className={Styles.googleButton}
+          >
+            <img src='src/assets/images/googleLogo.png' alt='Google Logo' />
+            Google
           </Button>
         </form>
       </div>

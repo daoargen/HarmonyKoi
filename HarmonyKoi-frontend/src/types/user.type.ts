@@ -4,7 +4,7 @@ import { SuccessResponse } from './response.type'
 export interface UserAccount {
   email: string
   username: string
-  role: 'MEMBER' | 'ADMIN' // Nếu có nhiều loại role, thêm vào đây
+  role: Role // Nếu có nhiều loại role, thêm vào đây
 }
 
 export interface User {
@@ -21,7 +21,7 @@ export interface User {
 
 export enum Role {
   ADMIN = 'ADMIN',
-  CUSTOMER = 'CUSTOMER'
+  MEMBER = 'MEMBER'
 }
 
 export type UserResponse = SuccessResponse<{

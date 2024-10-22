@@ -3,7 +3,7 @@ import { Button } from '../../components/ui/button'
 import { News } from '../../types'
 import styles from './NewsPage.module.css'
 import koiImage from '../../assets/images/koiImage.jpg'
-import { getNews } from '../../apis/users.api'
+import { getNews } from '../../apis/news.api'
 import { parseDate } from '../../utils/helpers'
 
 const BlogCard: React.FC<News> = ({ tittle, content, createdAt }) => {
