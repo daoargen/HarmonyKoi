@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react'
 import { Button } from '../../components/ui/button'
 import { Post } from '../../types'
 import styles from './PostPage.module.css'
-import { getPost } from '../../apis/users.api'
-import koiImage from '../../assets/images/koiImage.jpg'
+import { getPost } from '../../apis/post.api'
+import koiImage from '../../assets/images/PostImage.jpg'
 import { parseDate } from '../../utils/helpers'
 
 const BlogCard: React.FC<Post> = ({ title, content, createdAt }) => {

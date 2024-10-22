@@ -34,12 +34,14 @@ const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
   useEffect(() => {
     ;(async () => {
       const accessToken = getToken()
+      console.log(accessToken)
       if (!accessToken) {
         return dispatch(initialize({ isAuthenticated: false, user: null }))
       }
 
       try {
         const { data } = await userRefetch()
+        console.log(data)
         if (data) {
           const user = data.data.data.user
           dispatch(initialize({ isAuthenticated: true, user }))

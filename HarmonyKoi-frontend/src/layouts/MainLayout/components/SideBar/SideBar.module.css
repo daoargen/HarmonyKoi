@@ -1,0 +1,51 @@
+.sidebar {
+  position: fixed;
+  top: 0;
+  right: -300px;
+  width: 300px;
+  height: 100%;
+  background-color: var(--color-blue-gray); /* Dùng màu xanh xám nhạt */
+  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+  transition: right 0.3s ease-in-out;
+  z-index: 1000;
+}
+
+.sidebar.open {
+  right: 0;
+}
+
+.closeButton {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.sidebarList {
+  list-style-type: none;
+  padding: 20px;
+  margin-top: 40px;
+  text-align: left;
+}
+
+.sidebarLink {
+  color: var(--color-yellow-light); /* Dùng màu vàng nhạt cho text */
+  font-size: 1.2rem;
+  font-weight: bold;
+  text-decoration: leff;
+  padding: 0.5rem 1rem;
+  transition: color 0.3s ease;
+}
+
+.sidebarLink:hover {
+  color: #0056b3;
+}
+
+.logoutButton {
+  margin-top: 15px;
+  cursor: pointer;
+  font-weight: bold;
+}

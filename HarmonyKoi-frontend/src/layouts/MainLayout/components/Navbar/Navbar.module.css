@@ -32,6 +32,7 @@
   list-style-type: none;
   margin: 0;
   padding: 0;
+  text-align: center;
 }
 
 .navLink {
@@ -71,4 +72,44 @@
   height: 30px;
   border-radius: 50%; /* Hình tròn */
   object-fit: cover; /* Giữ tỉ lệ ảnh */
+}
+
+.avatar {
+  width: 30px; /* Điều chỉnh kích thước tùy ý */
+  height: 30px;
+  border-radius: 50%; /* Hình tròn */
+}
+
+.avatarButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.profileContainer {
+  display: flex;
+  align-items: center; /* Canh giữa theo chiều dọc */
+}
+
+.logoutButton {
+  margin-left: 10px; /* Khoảng cách giữa avatar và nút */
+  /* Thêm style khác cho nút tùy ý */
+}
+
+.profileContainer {
+  display: flex;
+  align-items: center;
+  position: relative; /* Add this */
+}
+
+.navList.open {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background-color: #b0c4de;
+  padding: 1rem;
 }
