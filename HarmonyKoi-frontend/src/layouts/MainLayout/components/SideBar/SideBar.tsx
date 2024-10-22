@@ -21,7 +21,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, userRole }) => {
   const mainItems =
     userRole === Role.ADMIN
       ? {
-          title: 'Quản lý trang',
+          title: 'Quản lý hệ thống',
           link: '/admin/manage'
         }
       : {
