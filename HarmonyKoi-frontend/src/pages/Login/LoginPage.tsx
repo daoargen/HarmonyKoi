@@ -7,7 +7,7 @@ import { toast } from 'react-toastify'
 import { z } from 'zod'
 import { loginSchema } from '../../components/common/AuthForm/data/schema'
 
-import { AUTH_MESSAGES, SYSTEM_MESSAGES } from '../../utils/constants'
+import { AUTH_MESSAGES } from '../../utils/constants'
 
 import { getProfile, login } from '../../apis/users.api'
 
@@ -70,13 +70,15 @@ const LoginPage: React.FC = () => {
 
       dispatch({ type: AuthActionType.SIGN_IN, payload: user })
 
-      toast.success(AUTH_MESSAGES.LOGIN_TITLE_SUCCESS)
+      alert(AUTH_MESSAGES.LOGIN_TITLE_SUCCESS)
       navigate('/') // Redirect after login
 
       window.location.reload()
     } catch (error: any) {
       console.log('error login: ', error)
-      toast.error(SYSTEM_MESSAGES.SOMETHING_WENT_WRONG)
+      if (error.response?.status === 401) {
+        alert('Sai mật khẩu hoặc tài khoản không tồn tại')
+      }
     }
   }
 
