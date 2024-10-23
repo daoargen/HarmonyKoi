@@ -72,6 +72,8 @@ const LoginPage: React.FC = () => {
 
       toast.success(AUTH_MESSAGES.LOGIN_TITLE_SUCCESS)
       navigate('/') // Redirect after login
+
+      window.location.reload()
     } catch (error: any) {
       console.log('error login: ', error)
       toast.error(SYSTEM_MESSAGES.SOMETHING_WENT_WRONG)

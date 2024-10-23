@@ -12,7 +12,7 @@ const ManagePage: React.FC = () => {
       <ManageSidebar userRole={user?.role} />
       <div className={styles.content}>
         {/* Đây là nơi sẽ hiển thị nội dung quản lý cụ thể */}
-        <Dashboard />
+        <h1>Trang quản lý</h1>
       </div>
     </div>
   )

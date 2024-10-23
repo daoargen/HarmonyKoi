@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import styles from './Navbar.module.css'
-import logoImage from '~/assets/images/logo.png'
+import logoImage from '../../../../assets/images/logo.png'
 import { getToken } from '../../../../utils/cookies'
 import { User } from '../../../../types/user.type'
 import Sidebar from '../SideBar/SideBar'
