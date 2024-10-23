@@ -3,7 +3,6 @@ import { AuthContext } from '../../context/AuthContext'
 
 import { setRefreshToken, setToken } from '../../utils/cookies'
 
-import { toast } from 'react-toastify'
 import { z } from 'zod'
 import { loginSchema } from '../../components/common/AuthForm/data/schema'
 

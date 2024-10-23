@@ -41,7 +41,7 @@ export const refreshToken = async () => {
     return await http.post<AuthResponse>('/auth/refresh-token', { refreshToken: token })
   } catch (error: any) {
     console.error('Error refreshing token:', error)
-    // Kiểm tra lỗi 401 và đưa ra xử lý phù hợp (ví dụ: logout, redirect đến trang login, etc.)
+    // Kiểm tra lỗi 401
     if (error.response?.status === 401) {
       // Xử lý logout hoặc điều hướng người dùng
       console.log('Refresh token expired or invalid')
