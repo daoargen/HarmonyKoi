@@ -9,8 +9,13 @@ export const getMeQueryKey = 'me'
 
 export const getGoogleUrlQueryKey = 'googleAuthUrl'
 
-export const register = async (data: { email: string; loginKey: string; password: string }) =>
-  await http.post<AuthResponse>('/auth/register', data)
+export const registerUser = async (data: {
+  email: string
+  username: string
+  password: string
+  gender: string
+  dob: string
+}) => await http.post<AuthResponse>('/auth/register', data)
 
 export const login = async (data: { loginKey: string; password: string }) =>
   await http.post<AuthResponse>('/auth/login', data)

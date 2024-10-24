@@ -3,18 +3,19 @@ import { useNavigate } from 'react-router-dom'
 import { Button } from '../../components/ui/button'
 import { Input } from '../../components/ui/input'
 import { Label } from '../../components/ui/label'
-import { register } from '../../apis/users.api'
+import { registerUser } from '../../apis/users.api'
 import Styles from '../Register/Register.module.css'
 import logoImage from '../../../src/assets/images/logo.png'
 
 const Register: React.FC = () => {
   const navigate = useNavigate()
-  const [loginKey, setLoginKey] = useState('') // Tên đăng nhập
+  const [username, setLoginKey] = useState('') // Tên đăng nhập
   const [password, setPassword] = useState('') // Mật khẩu
+  const [email, setEmail] = useState('') // Email người dùng nhập
   const [confirmPassword, setConfirmPassword] = useState('') // Xác nhận mật khẩu
+  const [gender, setGender] = useState('MALE') // Giới tính mặc định là MALE
 
-  // Email cứng là rolemember@gmail.com
-  const email = 'rolemember@gmail.com'
+  const dob = '2000-01-01'
 
   const handleRegister = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -26,7 +27,7 @@ const Register: React.FC = () => {
 
     try {
       // Gọi API đăng ký
-      const response = await register({ email, loginKey, password })
+      const response = await registerUser({ email, username, password, gender, dob })
       console.log('Đăng ký thành công:', response)
 
       alert('Đăng ký thành công!')
@@ -54,23 +55,23 @@ const Register: React.FC = () => {
 
         <form onSubmit={handleRegister}>
           <div className={Styles.formGroup}>
-            <Label htmlFor='loginKey'>Tên đăng nhập</Label>
+            <Label htmlFor='username'>Tên đăng nhập</Label>
             <Input
               type='text'
-              id='loginKey'
+              id='username'
               placeholder='Nhập tên đăng nhập'
               onChange={(e) => setLoginKey(e.target.value)}
               required
             />
           </div>
           <div className={Styles.formGroup}>
-            <Label htmlFor='email'>Email (mặc định)</Label>
+            <Label htmlFor='email'>Email</Label>
             <Input
               type='email'
               id='email'
-              value={email} // Đặt email cứng
-              readOnly
-              disabled
+              placeholder='Nhập email'
+              onChange={(e) => setEmail(e.target.value)}
+              required
             />
           </div>
           <div className={Styles.formGroup}>
@@ -93,6 +94,28 @@ const Register: React.FC = () => {
               required
             />
           </div>
+
+          <div className={Styles.formGroup}>
+            <Label htmlFor='dob'>Ngày sinh (mặc định)</Label>
+            <Input type='text' id='dob' value={dob} readOnly disabled /> {/* Hiển thị dob mặc định */}
+          </div>
+
+          {/* Thêm dropdown chọn giới tính */}
+          <div className={Styles.formGroup}>
+            <Label htmlFor='gender'>Giới tính</Label>
+            <select
+              id='gender'
+              value={gender}
+              onChange={(e) => setGender(e.target.value)}
+              required
+              className={Styles.selectInput}
+            >
+              <option value='MALE'>Nam</option>
+              <option value='FEMALE'>Nữ</option>
+              <option value='OTHER'>Khác</option>
+            </select>
+          </div>
+
           <Button type='submit' className={Styles.submitButton}>
             Đăng ký
           </Button>
