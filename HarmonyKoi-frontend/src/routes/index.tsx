@@ -15,13 +15,13 @@ import PostPage from '../pages/Post/PostPage'
 import NewsPage from '../pages/News/NewsPage'
 import ConsultingPage from '../pages/Consulting/ConsultingPage'
 import AppLayout from '../App'
-import KoiFishList from '../pages/koiFish/KoiFishList'
+import KoiFishForm from '../pages/koiFish/koiFishForm'
+import KoiFishDetail from '../pages/koiFish/KoiFishDetail' // Adjust the path as needed
 
 const router = createBrowserRouter([
   {
     path: '/',
     element: <AppLayout />,
-    // errorElement: <ErrorPage />, // Xử lý lỗi 404 và các lỗi khác
     children: [
       {
         path: configs.routes.home,
@@ -41,9 +41,12 @@ const router = createBrowserRouter([
       },
       {
         path: configs.routes.koifish,
-        element: <KoiFishList />
+        element: <KoiFishForm />
       },
-
+      {
+        path: '/koiFishes/:id', // Add the detail route here
+        element: <KoiFishDetail />
+      },
       // GuestGuard
       {
         element: <GuestGuard />,
@@ -52,12 +55,10 @@ const router = createBrowserRouter([
             path: configs.routes.login,
             element: <Login />
           },
-
           {
             path: configs.routes.register,
             element: <Register />
           }
-
           // {
           //   path: configs.routes.resetPassword,
           //   element: (

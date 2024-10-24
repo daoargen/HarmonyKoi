@@ -33,11 +33,6 @@ const ConsultingPage: React.FC = () => {
           <span className={styles.highlight}>Tư vấn bản mệnh</span>
         </b>
       </div>
-      <div className={styles['tab-container']}>
-        <Link to='/consulting'>
-          <button className={`${styles['tab-button1']} ${styles.tab} ${styles['active-tab']}`}>Tư vấn bản mệnh</button>
-        </Link>
-      </div>
       <div className={styles['form-container']}>
         <h2>Tư vấn bản mệnh</h2>
         <form onSubmit={handleSubmit}>

@@ -11,6 +11,7 @@ import Register from './pages/Register'
 import NotFound from './pages/NotFound'
 import ResetPassword from './pages/ResetPassword'
 import ForgotPassword from './pages/ForgotPassword'
+import KoiFishForm from './pages/koiFish/koiFishForm'
 
 const App: React.FC = () => {
   return (

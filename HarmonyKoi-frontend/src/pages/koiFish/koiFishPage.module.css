@@ -1,0 +1,146 @@
+body {
+  font-family: 'Arial', sans-serif; /* Clean sans-serif font */
+  background-color: #f4f7f8; /* Light background for contrast */
+  color: #333; /* Dark text for readability */
+  line-height: 1.6; /* Increase line height */
+  margin: 0; /* Remove default margin */
+  padding: 20px; /* Add padding around the body */
+}
+
+.container {
+  max-width: 1000px; /* Limit container width */
+  margin: 0 auto; /* Center the container */
+  padding: 20px; /* Padding inside the container */
+  background-color: #ffffff; /* White background for the container */
+  border-radius: 12px; /* Slightly larger rounded corners */
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1); /* Enhanced shadow for depth */
+}
+
+h1 {
+  text-align: center; /* Center the heading */
+  color: #4caf50; /* Green color for the heading */
+  font-size: 2.5rem; /* Larger font size for the heading */
+  margin-bottom: 20px; /* Space below the heading */
+  font-family: 'Georgia', serif; /* Change to a serif font for elegance */
+  text-transform: uppercase; /* Uppercase letters for style */
+  letter-spacing: 2px; /* Spacing between letters */
+}
+
+.koi-list {
+  display: grid; /* Use grid layout */
+  grid-template-columns: repeat(3, 1fr); /* 3 columns for 3x3 layout */
+  gap: 20px; /* Space between grid items */
+}
+
+.koi-card {
+  background-color: #ffffff; /* Background color for the card */
+  border-radius: 12px; /* Larger rounded corners for the cards */
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15); /* Soft shadow for a polished look */
+  padding: 15px; /* Increased padding inside the card */
+  display: flex; /* Flexbox for internal alignment */
+  flex-direction: column; /* Stack children vertically */
+  align-items: flex-start; /* Align items to the left */
+  text-align: left; /* Align text to the left */
+  transition:
+    transform 0.3s,
+    box-shadow 0.3s; /* Smooth effect on hover */
+}
+
+.koi-card:hover {
+  transform: translateY(-5px); /* Slightly lift the card on hover */
+  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.2); /* Enhance shadow on hover */
+}
+
+.koi-image {
+  width: 100%; /* Take full width of the card */
+  height: 400px; /* Fixed height for uniformity */
+  object-fit: cover; /* Cover the area, cropping if necessary */
+  border-radius: 12px; /* Larger rounded corners for the image */
+  margin-bottom: 15px; /* Space below the image */
+  border: 2px solid #4caf50; /* Border around the image for emphasis */
+}
+
+.koi-card h2 {
+  font-size: 1.5rem; /* Font size for the name */
+  margin: 10px 0; /* Margin above and below the name */
+  color: #4caf50; /* Color for the name */
+}
+
+.koi-card p {
+  margin: 5px 0; /* Margin for paragraphs */
+  font-size: 0.95rem; /* Font size for description */
+  color: #555; /* Slightly lighter color for description */
+}
+
+/* Pagination styles */
+
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+  gap: 10px; /* Add consistent gap between buttons */
+}
+
+.pageButton,
+.pageButtonfirst {
+  background-color: #ffffff;
+  border: 2px solid #4caf50;
+  border-radius: 50px;
+  margin: 0; /* Ensure no unwanted margin */
+  padding: 10px 15px;
+  color: #4caf50;
+  cursor: pointer;
+  transition:
+    background-color 0.3s,
+    transform 0.2s;
+}
+.pageButton.active {
+  background-color: #4caf50;
+  color: white;
+  font-weight: bold;
+}
+
+.pageButton:hover {
+  background-color: #4caf50;
+  color: #fff;
+  transform: translateY(-2px);
+}
+
+.pageButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.pageInfo {
+  font-size: 1.1rem;
+  color: #333;
+  margin-left: 15px;
+}
+
+/* Details Button Styles */
+.detailsButton {
+  margin-top: 15px; /* Space above the button */
+  padding: 12px 30px; /* Increased padding for a larger button */
+  background-color: #ff4757; /* Solid background color */
+  color: white; /* White text color */
+  border: none; /* No border */
+  border-radius: 50px; /* More rounded corners for a softer look */
+  cursor: pointer; /* Pointer cursor on hover */
+  transition:
+    background-color 0.3s,
+    transform 0.2s,
+    box-shadow 0.3s; /* Smooth transitions */
+  text-align: center; /* Center the button text */
+  width: 100px; /* Full width button */
+  font-size: 1rem; /* Font size for better readability */
+  font-weight: bold; /* Bold text for emphasis */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Shadow for depth */
+  justify-content: center;
+}
+
+.detailsButton:hover {
+  background-color: #ff6b81; /* Change background color on hover */
+  transform: scale(1.05); /* Slightly enlarge the button on hover */
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3); /* Increase shadow on hover for depth */
+}

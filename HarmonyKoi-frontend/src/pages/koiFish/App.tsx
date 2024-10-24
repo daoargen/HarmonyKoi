@@ -1,5 +1,5 @@
 import React from 'react'
-import KoiFishList from './KoiFishList'
+import KoiFishList from './KoiFishDetail'
 
 const Apps: React.FC = () => {
   return (
