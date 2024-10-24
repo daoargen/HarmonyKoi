@@ -72,6 +72,7 @@ const router = createBrowserRouter([
           }
         ]
       },
+      //MEMBER
       {
         element: <AuthGuard />,
         children: [
@@ -93,6 +94,7 @@ const router = createBrowserRouter([
           }
         ]
       },
+      //ADMIN
       {
         element: <AuthGuard />,
         children: [

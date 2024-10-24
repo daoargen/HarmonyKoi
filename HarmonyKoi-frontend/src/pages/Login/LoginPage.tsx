@@ -92,17 +92,16 @@ const LoginPage: React.FC = () => {
         <p className={Styles.signupLink}>
           Chưa có tài khoản ?
           <a onClick={() => navigate('/register')} style={{ cursor: 'pointer' }}>
-            {' '}
             Đăng kí tài khoản mới
           </a>
         </p>
         <form onSubmit={handleLogin}>
           <div className={Styles.formGroup}>
-            <Label htmlFor='email'>Email</Label>
+            <Label htmlFor='username'>Tên đăng nhập</Label>
             <Input
-              type='email'
-              id='email'
-              placeholder='Nhập địa chỉ email'
+              type='username'
+              id='username'
+              placeholder='Nhập tên đăng nhập'
               onChange={(e) => setEmail(e.target.value)}
               required
             />
@@ -125,7 +124,7 @@ const LoginPage: React.FC = () => {
           <Button id='submit' type='submit' className={Styles.loginButton}>
             Đăng nhập
           </Button>
-
+          {/* 
           <div className={Styles.divider}>Hoặc đăng nhập bằng</div>
 
           <Button
@@ -136,7 +135,7 @@ const LoginPage: React.FC = () => {
           >
             <img src='src/assets/images/googleLogo.png' alt='Google Logo' />
             Google
-          </Button>
+          </Button> */}
         </form>
       </div>
       <div className={Styles.koiImage}></div>

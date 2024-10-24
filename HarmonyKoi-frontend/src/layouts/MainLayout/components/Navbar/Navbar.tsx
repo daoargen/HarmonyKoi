@@ -31,7 +31,7 @@ const Navbar: React.FC = () => {
   return (
     <header className={styles.navbar}>
       <nav className={styles.nav}>
-        <Link to='/home' className={styles.logo}>
+        <Link to='/' className={styles.logo}>
           <img src={logoImage} alt='Company Logo' className={styles.logoImage} />
         </Link>
         <button className={styles.menuButton} onClick={() => setIsOpen(!isOpen)} aria-label='Toggle menu'>
