@@ -157,7 +157,7 @@ export interface CreateOrderDetail {
   orderId: string
   koiFishId: string | null
   packageId: string | null
-  type: string
+  type: "PACKAGE" | "KOIFISH"
   unitPrice: number
   totalPrice: number
 }
@@ -166,7 +166,7 @@ export interface UpdateOrderDetail {
   orderId?: string
   koiFishId?: string | null
   packageId?: string | null
-  type?: string
+  type?: "PACKAGE" | "KOIFISH"
   unitPrice?: number
   totalPrice?: number
 }

@@ -171,7 +171,7 @@ async function createKoiFish(newKoiFish: CreateKoiFish) {
   try {
     const koiFish = await KoiFish.create({
       verietyId: newKoiFish.verietyId,
-      name: newKoiFish.verietyId,
+      name: newKoiFish.name,
       description: newKoiFish.description,
       imageUrl: newKoiFish.imageUrl,
       baseColor: newKoiFish.baseColor,
