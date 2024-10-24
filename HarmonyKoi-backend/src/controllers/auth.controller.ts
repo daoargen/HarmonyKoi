@@ -121,7 +121,7 @@ export default {
   register,
   confirmRegister,
   login,
-  logout, 
+  logout,
   forgotPassword,
   resetPassword,
   changePassword,
