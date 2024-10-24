@@ -5,6 +5,7 @@ import styles from './NewsPage.module.css'
 import koiImage from '../../assets/images/koiImage.jpg'
 import { getNews } from '../../apis/news.api'
 import { parseDate } from '../../utils/helpers'
+import Paging from '../../components/common/Paging/Paging'
 
 const BlogCard: React.FC<News> = ({ tittle, content, createdAt }) => {
   const truncatedContent = content.length > 100 ? content.substring(0, 100) + '...' : content
@@ -64,11 +65,17 @@ const NewsPage = () => {
   return (
     // Thêm phần return cho PostPage
     <div className={styles.blogContainer}>
-      <div className={styles.blogGrid}>
-        {news.map((newsData) => (
-          <BlogCard key={newsData.id} {...newsData} />
-        ))}
-      </div>
+      {/* <div className={styles.blogGrid}> */}
+      {/* {news.map((newsData) => (
+        <BlogCard key={newsData.id} {...newsData} />
+      ))} */}
+      {/* </div> */}
+
+      <Paging
+        data={news}
+        itemsPerPage={9} // hoặc số lượng items mỗi trang bạn muốn
+        renderItem={(newsData: News) => <BlogCard key={newsData.id} {...newsData} />}
+      />
     </div>
   )
 }
