@@ -25,7 +25,7 @@ export const OrderDetail = sequelize.define<OrderDetailInstance>(tableName, {
     allowNull: true
   },
   type: {
-    type: DataTypes.STRING,
+    type: DataTypes.ENUM("PACKAGE", "KOIFISH"),
     allowNull: false
   },
   unitPrice: {
@@ -59,7 +59,7 @@ export interface OrderDetailAttributes {
   orderId: string
   koiFishId: string | null
   packageId: string | null
-  type: string
+  type: "PACKAGE" | "KOIFISH"
   unitPrice: number
   totalPrice: number
   isDeleted?: boolean
