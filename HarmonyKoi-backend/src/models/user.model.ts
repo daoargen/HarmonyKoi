@@ -11,8 +11,8 @@ export const User = sequelize.define<UserInstance>(tableName, {
   ...UUIDModel,
   email: {
     type: DataTypes.STRING,
-    allowNull: true,
-    unique: true
+    allowNull: true
+    // unique: true
   },
   username: {
     type: DataTypes.STRING,
