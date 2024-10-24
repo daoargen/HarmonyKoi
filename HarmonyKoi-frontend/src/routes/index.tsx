@@ -2,13 +2,11 @@ import { createBrowserRouter } from 'react-router-dom'
 
 import configs from '../configs'
 import GuestGuard from '../Guards/GuestGuard'
-import AdminLayout from '../layouts/AdminLayout'
 // import MainLayout from '../layouts/MainLayout'
 import Home from '../pages/Home/HomePage'
 import Login from '../pages/Login/LoginPage'
 import NotFound from '../pages/NotFound'
 import Register from '../pages/Register'
-import ManageSidebar from '../layouts/MainLayout/components/Manage/ManageSidebar/MangeSidebar'
 // import ResetPassword from '../pages/ResetPassword'
 // import ForgotPassword from '../pages/ForgotPassword'
 import PostPage from '../pages/Post/PostPage'
@@ -74,6 +72,7 @@ const router = createBrowserRouter([
           }
         ]
       },
+      //MEMBER
       {
         element: <AuthGuard />,
         children: [
@@ -95,6 +94,7 @@ const router = createBrowserRouter([
           }
         ]
       },
+      //ADMIN
       {
         element: <AuthGuard />,
         children: [

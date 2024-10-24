@@ -34,7 +34,8 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, userRole }) => {
     localStorage.removeItem('user') // Xóa user khỏi localStorage
     onClose()
     dispatch(signOut())
-    navigate('/login') // Chuyển hướng đến trang login
+    navigate('/login')
+    window.location.reload() // Chuyển hướng đến trang login
   }
 
   // const items = userRole === Role.ADMIN ? adminItems : memberItems
