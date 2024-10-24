@@ -24,16 +24,16 @@ import { AuthActionType } from '../../context/auth.type'
 export type LoginFormType = z.infer<typeof loginSchema>
 
 const LoginPage: React.FC = () => {
-  const { dispatch, isAuthenticated } = useContext(AuthContext)
+  const { dispatch } = useContext(AuthContext)
   const [loginKey, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const navigate = useNavigate()
 
-  useEffect(() => {
-    if (isAuthenticated) {
-      navigate('/not-found')
-    }
-  }, [isAuthenticated, navigate])
+  // useEffect(() => {
+  //   if (isAuthenticated) {
+  //     navigate('/not-found')
+  //   }
+  // }, [isAuthenticated, navigate])
 
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()

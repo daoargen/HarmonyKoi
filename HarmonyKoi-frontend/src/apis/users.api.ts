@@ -9,11 +9,11 @@ export const getMeQueryKey = 'me'
 
 export const getGoogleUrlQueryKey = 'googleAuthUrl'
 
-export const register = (data: { email: string; loginKey: string; password: string }) =>
-  http.post<AuthResponse>('/auth/register', data)
+export const register = async (data: { email: string; loginKey: string; password: string }) =>
+  await http.post<AuthResponse>('/auth/register', data)
 
 export const login = async (data: { loginKey: string; password: string }) =>
-  http.post<AuthResponse>('/auth/login', data)
+  await http.post<AuthResponse>('/auth/login', data)
 
 export const getProfile = async () => await http.get<UserResponse>('/users/profile')
 

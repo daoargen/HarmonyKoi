@@ -54,7 +54,7 @@ const Register: React.FC = () => {
 
         <form onSubmit={handleRegister}>
           <div className={Styles.formGroup}>
-            <Label htmlFor='username'>Tên đăng nhập</Label>
+            <Label htmlFor='loginKey'>Tên đăng nhập</Label>
             <Input
               type='text'
               id='loginKey'
