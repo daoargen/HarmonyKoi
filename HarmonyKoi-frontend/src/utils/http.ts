@@ -24,9 +24,6 @@ class Http {
     this.instance.interceptors.request.use(
       (config) => {
         if (this.accessToken && config.headers) {
-          // console.log(this.accessToken)
-          // console.log(1)
-          // console.log(config.headers)
           config.headers.Authorization = this.accessToken
           return config
         }
@@ -60,7 +57,7 @@ class Http {
             error.config.headers.Authorization = `Bearer ${this.accessToken}`
             return this.instance.request(error.config) // Retry the original request with new token
           } catch (refreshError) {
-            console.log(2)
+            // console.log(2)
             removeToken()
           }
         }

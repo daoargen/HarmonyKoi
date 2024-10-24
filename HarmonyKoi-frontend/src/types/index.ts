@@ -29,6 +29,18 @@ export interface News {
   updatedAt: Date
 }
 
+export interface Package {
+  id: string
+  name: string
+  description: string
+  duration: number
+  amountPost: number
+  price: number
+  isDeleted: boolean
+  createdAt: Date
+  updatedAt: Date
+}
+
 // Interface cho credentials login
 export interface LoginCredentials {
   username: string
@@ -39,6 +51,8 @@ export interface LoginCredentials {
 export type PostResponse = SuccessResponse<Post[]>
 
 export type NewsResponse = SuccessResponse<News[]>
+
+export type PackageResponse = SuccessResponse<Package[]>
 
 export interface AuthContextType {
   user: User | null

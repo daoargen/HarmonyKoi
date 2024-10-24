@@ -1,6 +1,7 @@
 const routes = {
   home: '/',
   admin: '/admin',
+  member: '/member',
   login: '/login',
   loginGoogle: '/login/google',
   register: '/register',
@@ -15,7 +16,15 @@ const routes = {
   notFound: '/not-found',
   post: '/post',
   consult: '/consulting',
-  news: '/news'
+  news: '/news',
+  manageOrder: '/manage-orders',
+  managePost: '/manage-posts',
+  manageUsers: '/manage-users',
+  manageFish: '/manage-fish',
+  managePonds: '/manage-ponds',
+  manageNews: '/manage-news',
+  approvePosts: '/approve-posts',
+  dashboard: '/dashboard'
 }
 
 export default routes
