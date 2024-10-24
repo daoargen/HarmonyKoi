@@ -3,11 +3,10 @@ import { AuthContext } from '../../context/AuthContext'
 
 import { setRefreshToken, setToken } from '../../utils/cookies'
 
-import { toast } from 'react-toastify'
 import { z } from 'zod'
 import { loginSchema } from '../../components/common/AuthForm/data/schema'
 
-import { AUTH_MESSAGES, SYSTEM_MESSAGES } from '../../utils/constants'
+import { AUTH_MESSAGES } from '../../utils/constants'
 
 import { getProfile, login } from '../../apis/users.api'
 
@@ -70,11 +69,15 @@ const LoginPage: React.FC = () => {
 
       dispatch({ type: AuthActionType.SIGN_IN, payload: user })
 
-      toast.success(AUTH_MESSAGES.LOGIN_TITLE_SUCCESS)
+      alert(AUTH_MESSAGES.LOGIN_TITLE_SUCCESS)
       navigate('/') // Redirect after login
+
+      window.location.reload()
     } catch (error: any) {
       console.log('error login: ', error)
-      toast.error(SYSTEM_MESSAGES.SOMETHING_WENT_WRONG)
+      if (error.response?.status === 401) {
+        alert('Sai mật khẩu hoặc tài khoản không tồn tại')
+      }
     }
   }
 
@@ -89,17 +92,16 @@ const LoginPage: React.FC = () => {
         <p className={Styles.signupLink}>
           Chưa có tài khoản ?
           <a onClick={() => navigate('/register')} style={{ cursor: 'pointer' }}>
-            {' '}
             Đăng kí tài khoản mới
           </a>
         </p>
         <form onSubmit={handleLogin}>
           <div className={Styles.formGroup}>
-            <Label htmlFor='email'>Email</Label>
+            <Label htmlFor='username'>Tên đăng nhập</Label>
             <Input
-              type='email'
-              id='email'
-              placeholder='Nhập địa chỉ email'
+              type='username'
+              id='username'
+              placeholder='Nhập tên đăng nhập'
               onChange={(e) => setEmail(e.target.value)}
               required
             />
@@ -122,7 +124,7 @@ const LoginPage: React.FC = () => {
           <Button id='submit' type='submit' className={Styles.loginButton}>
             Đăng nhập
           </Button>
-
+          {/* 
           <div className={Styles.divider}>Hoặc đăng nhập bằng</div>
 
           <Button
@@ -133,7 +135,7 @@ const LoginPage: React.FC = () => {
           >
             <img src='src/assets/images/googleLogo.png' alt='Google Logo' />
             Google
-          </Button>
+          </Button> */}
         </form>
       </div>
       <div className={Styles.koiImage}></div>
