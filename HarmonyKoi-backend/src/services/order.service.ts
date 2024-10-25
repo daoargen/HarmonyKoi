@@ -374,12 +374,46 @@ async function deleteOrder(id: string) {
 async function getCurrentPackage(token: string) {
   try {
     const user = await getUserFromToken(token)
-    const order = await Order.findAll({ where: { userId: user.id, isDeleted: false } })
-    if (!order) {
-      throw responseStatus.responseNotFound404("Order not found or already deleted")
+
+    // 1. Lấy tất cả các order có userId tương ứng và status là COMPLETED
+    const completedOrders = await Order.findAll({
+      where: { userId: user.id, status: "COMPLETED", isDeleted: false },
+      attributes: ["id"] // Chỉ cần lấy id của order
+    })
+
+    // 2. Lọc ra các orderId
+    const completedOrderIds = completedOrders.map((order) => order.id).filter((id): id is string => !!id)
+
+    // 3. Lọc ra các order detail có orderId trong completedOrderIds và type là PACKAGE
+    const packageOrderDetails = await OrderDetail.findAll({
+      where: {
+        orderId: {
+          [Op.in]: completedOrderIds
+        },
+        type: "PACKAGE",
+        isDeleted: false
+      },
+      order: [["createdAt", "DESC"]] // Sắp xếp theo createdAt giảm dần để lấy order detail mới nhất
+    })
+
+    // 4. Lấy order detail mới nhất (nếu có)
+    const latestPackageOrderDetail = packageOrderDetails[0]
+
+    // 5. Trả về package tương ứng (nếu có)
+    if (latestPackageOrderDetail) {
+      const packageId = latestPackageOrderDetail.packageId
+
+      if (packageId) {
+        const currentPackage = await Package.findOne({
+          where: { id: packageId, isDeleted: false }
+        })
+
+        return currentPackage // Trả về package
+      }
     }
 
-    return
+    // Nếu không tìm thấy package, có thể trả về null hoặc throw error tùy theo logic của bạn
+    return null
   } catch (error) {
     console.error(error)
     throw error
@@ -392,5 +426,6 @@ export default {
   getOrderById,
   createOrder,
   editOrder,
-  deleteOrder
+  deleteOrder,
+  getCurrentPackage
 }
