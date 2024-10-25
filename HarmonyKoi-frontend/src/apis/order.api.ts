@@ -32,7 +32,5 @@ export const getOrderHistory = async ({
 
   const queryString = params.toString()
 
-  console.log(await http.get<OrderListResponse>('/orders/user/history'))
-
-  return await http.get<OrderListResponse>(`/api/orders/user/history${queryString ? `?${queryString}` : ''}`)
+  return await http.get<OrderListResponse>(`/orders/user/history${queryString ? `?${queryString}` : ''}`)
 }
