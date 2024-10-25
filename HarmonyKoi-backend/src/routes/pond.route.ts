@@ -70,9 +70,6 @@ router.get("/:id", PondController.getPond)
  *           schema:
  *             type: object
  *             properties:
- *               elementId:
- *                 type: string
- *                 description: Element ID of the pond
  *               name:
  *                 type: string
  *                 description: Name of the pond
