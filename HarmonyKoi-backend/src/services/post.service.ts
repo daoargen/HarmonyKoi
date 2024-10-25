@@ -82,7 +82,8 @@ async function getPostById(postId: string) {
       ]
     })
     if (!post) throw responseStatus.responseNotFound404("Post not found")
-    return post
+    const formatPost = formatModelDate(post)
+    return formatPost
   } catch (error) {
     console.error(error)
     throw error
