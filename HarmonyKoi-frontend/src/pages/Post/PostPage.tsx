@@ -5,6 +5,7 @@ import styles from './PostPage.module.css'
 import { getPost } from '../../apis/post.api'
 import koiImage from '../../assets/images/PostImage.jpg'
 import { parseDate } from '../../utils/helpers'
+import Paging from '../../components/common/Paging/Paging'
 
 const BlogCard: React.FC<Post> = ({ title, content, createdAt }) => {
   const truncatedContent = content.length > 100 ? content.substring(0, 100) + '...' : content
@@ -65,11 +66,16 @@ const PostPage = () => {
   return (
     // Thêm phần return cho PostPage
     <div className={styles.blogContainer}>
-      <div className={styles.blogGrid}>
-        {posts.map((post) => (
+      {/* <div className={styles.blogGrid}> */}
+      {/* {posts.map((post) => (
           <BlogCard key={post.id} {...post} />
-        ))}
-      </div>
+        ))} */}
+      <Paging
+        data={posts}
+        itemsPerPage={9} // hoặc số lượng items mỗi trang bạn muốn
+        renderItem={(post: Post) => <BlogCard key={post.id} {...post} />}
+      />
+      {/* </div> */}
     </div>
   )
 }
