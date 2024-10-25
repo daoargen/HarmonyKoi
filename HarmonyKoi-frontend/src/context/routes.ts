@@ -2,6 +2,7 @@ const routes = {
   home: '/',
   admin: '/admin',
   member: '/member',
+  package: '/package',
   login: '/login',
   loginGoogle: '/login/google',
   register: '/register',

@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom'
 import { getPostById } from '../../../apis/post.api'
 import { Post } from '../../../types'
 import styles from './PostDetailPage.module.css'
-import { formatDate, parseDate } from '../../../utils/helpers'
+// import { formatDate, parseDate } from '../../../utils/helpers'
 import banner from '../../../assets/images/banner.gif'
 
 const PostDetailPage: React.FC = () => {

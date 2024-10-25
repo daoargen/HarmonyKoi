@@ -16,6 +16,7 @@ import AppLayout from '../App'
 import KoiFishForm from '../pages/koiFish/koiFishForm'
 import KoiFishDetail from '../pages/koiFish/KoiFishDetail' // Adjust the path as needed
 import LoginPage from '../pages/Login/LoginPage'
+import ServicePackage from '../pages/ServicePackage/ServicePackagePage'
 import AuthGuard from '../Guards/AuthGuard'
 import KoiFishByYear from '../pages/koiFish/koiFishByYear'
 import RoleBasedGuard from '../Guards/RoleBasedGuard'
@@ -64,6 +65,10 @@ const router = createBrowserRouter([
       {
         path: configs.routes.koifish,
         element: <KoiFishForm />
+      },
+      {
+        path: configs.routes.package,
+        element: <ServicePackage />
       },
       {
         path: '/koiFishes/:id', // Add the detail route here
