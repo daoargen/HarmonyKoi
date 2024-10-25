@@ -71,107 +71,68 @@ const router = createBrowserRouter([
             element: <Register />
           }
         ]
-      },
-      //MEMBER
-      {
-        element: <AuthGuard />,
-        children: [
-          {
-            path: configs.routes.manageOrder,
-            element: (
-              <RoleBasedGuard accessibleRoles={[Role.MEMBER]}>
-                <ManageOrder />
-              </RoleBasedGuard>
-            )
-          },
-          {
-            path: configs.routes.managePost,
-            element: (
-              <RoleBasedGuard accessibleRoles={[Role.MEMBER]}>
-                <ManangePost />
-              </RoleBasedGuard>
-            )
-          }
-        ]
-      },
-      //ADMIN
-      {
-        element: <AuthGuard />,
-        children: [
-          {
-            path: configs.routes.manageNews,
-            element: (
-              <RoleBasedGuard accessibleRoles={[Role.ADMIN]}>
-                <ManageNews />
-              </RoleBasedGuard>
-            )
-          },
-          {
-            path: configs.routes.approvePosts,
-            element: (
-              <RoleBasedGuard accessibleRoles={[Role.ADMIN]}>
-                <ApprovePost />
-              </RoleBasedGuard>
-            )
-          },
-          {
-            path: configs.routes.manageUsers,
-            element: (
-              <RoleBasedGuard accessibleRoles={[Role.ADMIN]}>
-                <ManageUser />
-              </RoleBasedGuard>
-            )
-          },
-          {
-            path: configs.routes.manageFish,
-            element: (
-              <RoleBasedGuard accessibleRoles={[Role.ADMIN]}>
-                <ManageFish />
-              </RoleBasedGuard>
-            )
-          },
-          {
-            path: configs.routes.dashboard,
-            element: (
-              <RoleBasedGuard accessibleRoles={[Role.ADMIN]}>
-                <Dashboard />
-              </RoleBasedGuard>
-            )
-          },
-          {
-            path: configs.routes.managePonds,
-            element: (
-              <RoleBasedGuard accessibleRoles={[Role.ADMIN]}>
-                <ManagePond />
-              </RoleBasedGuard>
-            )
-          },
-          {
-            // path: configs.routes.admin
-          }
-        ]
       }
     ]
   },
-  // {
-  //   path: configs.routes.home,
-  //   element: <Home />
-  // },
   {
-    path: '/admin/manage',
+    path: 'admin/manage',
     element: (
       <AuthGuard>
-        <ManagePage />
+        <RoleBasedGuard accessibleRoles={[Role.ADMIN]}>
+          <ManagePage />
+        </RoleBasedGuard>
       </AuthGuard>
-    )
+    ),
+    children: [
+      {
+        path: 'dashboard',
+        element: <Dashboard />
+      },
+      {
+        path: 'manage-users',
+        element: <ManageUser />
+      },
+      {
+        path: 'manage-fish',
+        element: <ManageFish />
+      },
+      {
+        path: 'manage-ponds',
+        element: <ManagePond />
+      },
+      {
+        path: 'manage-news',
+        element: <ManageNews />
+      },
+      {
+        path: 'approve-posts',
+        element: <ApprovePost />
+      }
+    ]
   },
   {
     path: '/member/manage',
     element: (
       <AuthGuard>
-        <ManagePage />
+        <RoleBasedGuard accessibleRoles={[Role.MEMBER]}>
+          <ManagePage />
+        </RoleBasedGuard>
       </AuthGuard>
-    )
+    ),
+    children: [
+      {
+        path: 'manage-posts',
+        element: (
+          <RoleBasedGuard accessibleRoles={[Role.MEMBER]}>
+            <ManangePost />
+          </RoleBasedGuard>
+        )
+      },
+      {
+        path: 'manage-orders',
+        element: <ManageOrder />
+      }
+    ]
   },
   {
     path: configs.routes.error,
