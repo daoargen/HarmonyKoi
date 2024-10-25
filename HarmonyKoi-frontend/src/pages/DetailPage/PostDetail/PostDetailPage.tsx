@@ -15,11 +15,12 @@ const PostDetailPage: React.FC = () => {
     const fetchPostDetail = async () => {
       try {
         const response = await getPostById(id!)
-        const postDetail = response.data.data
+        const postDetail = response.data
+        console.log(postDetail)
         const postWithDate = {
           ...postDetail,
-          createdAt: formatDate(parseDate(postDetail.createdAt)),
-          updatedAt: formatDate(parseDate(postDetail.updatedAt))
+          createdAt: postDetail.createdAt,
+          updatedAt: postDetail.updatedAt
         }
         setPost(postWithDate)
       } catch (error) {
@@ -38,27 +39,27 @@ const PostDetailPage: React.FC = () => {
 
   return (
     <div className={styles.postDetailContainer}>
-      <div className={styles.banner}>
-        <h1 className={styles.bannerTitle}>Chi tiết bài viết</h1>
+      <div className={styles.bannerImage}>
+        <img src={post?.imageUrl || '/placeholder.jpg'} alt={post?.title} />
       </div>
-      <header className={styles.postHeader}>
-        <h2 className={styles.postTitle}>{post?.title}</h2>
-        <div className={styles.postMeta}>
-          <span className={styles.metaItem}>Tác giả: {post?.user?.username || 'Ẩn danh'}</span>
-          <span className={styles.metaItem}>Ngày đăng: {post?.createdAt}</span>
-          <span className={styles.metaItem}>Trạng thái: {post?.status}</span>
-        </div>
-      </header>
       <div className={styles.postContent}>
-        {post?.content.split('\n').map((paragraph, index) => <p key={index}>{paragraph}</p>)}
-      </div>
-      <footer className={styles.postFooter}>
-        <div className={styles.postInfo}>
-          <span className={styles.infoItem}>Số ngày còn lại: {post?.dateRemain}</span>
-          <span className={styles.infoItem}>Hiển thị: {post?.visible ? 'Có' : 'Không'}</span>
+        <header className={styles.postHeader}>
+          <h1 className={styles.postTitle}>{post?.title}</h1>
+          <div className={styles.postMeta}>
+            <span className={styles.metaItem}>Tác giả: {post?.user?.username || 'Ẩn danh'}</span>
+            <span className={styles.metaItem}>Ngày đăng: {post?.createdAt.toUTCString()}</span>
+          </div>
+        </header>
+        <div className={styles.postBody}>
+          {post?.content.split('\n').map((paragraph, index) => <p key={index}>{paragraph}</p>)}
         </div>
-        <div className={styles.lastUpdated}>Cập nhật lần cuối: {post?.updatedAt}</div>
-      </footer>
+        <footer className={styles.postFooter}>
+          <div className={styles.postInfo}>
+            <span className={styles.infoItem}>Số ngày còn lại: {post?.dateRemain}</span>
+          </div>
+          <div className={styles.lastUpdated}>Cập nhật lần cuối: {post?.updatedAt.toUTCString()}</div>
+        </footer>
+      </div>
     </div>
   )
 }
