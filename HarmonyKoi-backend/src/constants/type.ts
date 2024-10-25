@@ -234,14 +234,11 @@ export interface UpdatePondElement {
 export interface CreatePost {
   title: string
   content: string
-  status: string | null
 }
 
 export interface UpdatePost {
-  userId?: string
   title?: string
   content?: string
-  dateRemain?: number
   status?: string
   visible?: boolean
 }

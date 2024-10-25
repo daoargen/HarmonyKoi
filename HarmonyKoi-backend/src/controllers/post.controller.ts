@@ -1,12 +1,25 @@
 import { Request, Response } from "express"
 
 import responseStatus from "~/constants/responseStatus"
-import { CreatePost } from "~/constants/type"
+import { CreatePost, UpdatePost } from "~/constants/type"
 import postService from "~/services/post.service"
 
 async function getPosts(req: Request, res: Response) {
   try {
     const { posts, pagination } = await postService.getVisiblePosts(req)
+    return res.json(responseStatus.responseData200("Get posts list successfully!", posts, pagination))
+  } catch (error) {
+    return res.json(error)
+  }
+}
+
+async function getMemberPosts(req: Request, res: Response) {
+  try {
+    const token = req.header("Authorization")?.replace("Bearer ", "")
+    if (!token) {
+      return res.json(responseStatus.responseUnauthorized401())
+    }
+    const { posts, pagination } = await postService.getMemberPosts(token, req)
     return res.json(responseStatus.responseData200("Get posts list successfully!", posts, pagination))
   } catch (error) {
     return res.json(error)
@@ -29,11 +42,10 @@ async function createPost(req: Request, res: Response) {
     if (!token) {
       return res.json(responseStatus.responseUnauthorized401())
     }
-    const { title, content, status } = req.body
+    const { title, content } = req.body
     const dataRequest: CreatePost = {
       title: title,
-      content,
-      status
+      content
     }
     const post = await postService.createPost(token, dataRequest)
     return res.json(responseStatus.responseData200("Create post successfully!", post))
@@ -45,8 +57,18 @@ async function createPost(req: Request, res: Response) {
 async function editPost(req: Request, res: Response) {
   try {
     const id = req.params.id
-    const updatedPost = req.body
-    await postService.editPost(id, updatedPost)
+    const token = req.header("Authorization")?.replace("Bearer ", "")
+    if (!token) {
+      return res.json(responseStatus.responseUnauthorized401())
+    }
+    const { title, content, status, visible } = req.body
+    const dataRequest: UpdatePost = {
+      title: title,
+      content,
+      status,
+      visible
+    }
+    await postService.editPost(id, token, dataRequest)
     return res.json(responseStatus.responseMessage200("Edit post successfully!"))
   } catch (error) {
     return res.json(error)
@@ -65,6 +87,7 @@ async function deletePost(req: Request, res: Response) {
 
 export default {
   getPosts,
+  getMemberPosts,
   getPost,
   createPost,
   editPost,
