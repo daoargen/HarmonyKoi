@@ -8,7 +8,7 @@ import { User } from "~/models/user.model"
 import { formatModelDate } from "~/utils/formatTimeModel.util"
 import { getUserFromToken } from "~/utils/getUserFromToken.util"
 
-async function getAllPosts(req: Request) {
+async function getVisiblePosts(req: Request) {
   try {
     // Xử lý tham số query và gán giá trị mặc định nếu không có
     const pageIndex = parseInt(req.query.page_index as string) || 1
@@ -82,7 +82,8 @@ async function getPostById(postId: string) {
       ]
     })
     if (!post) throw responseStatus.responseNotFound404("Post not found")
-    return post
+    const formatPost = formatModelDate(post)
+    return formatPost
   } catch (error) {
     console.error(error)
     throw error
@@ -101,7 +102,7 @@ async function createPost(token: string, newPost: CreatePost) {
       content: newPost.content,
       dateRemain: 100,
       status: newPost.status ?? "PENDING",
-      visible: true
+      visible: false
     })
     return post
   } catch (error) {
@@ -157,7 +158,7 @@ async function deletePost(id: string) {
 }
 
 export default {
-  getAllPosts,
+  getVisiblePosts,
   getPostById,
   createPost,
   editPost,
