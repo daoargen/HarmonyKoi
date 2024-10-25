@@ -7,6 +7,7 @@ import koiImage from '../../assets/images/PostImage.jpg'
 import { formatDate, parseDate } from '../../utils/helpers'
 import Paging from '../../components/common/Paging/Paging'
 import { useNavigate } from 'react-router-dom'
+import banner from '../../assets/images/banner.gif'
 
 const BlogCard: React.FC<Post> = ({ id, title, content, createdAt }) => {
   const navigate = useNavigate()
@@ -72,6 +73,9 @@ const PostPage = () => {
   return (
     // Thêm phần return cho PostPage
     <div className={styles.blogContainer}>
+      <div className={styles.bannerImage}>
+        <img src={banner} />
+      </div>
       {/* <div className={styles.blogGrid}> */}
       {/* {posts.map((post) => (
           <BlogCard key={post.id} {...post} />

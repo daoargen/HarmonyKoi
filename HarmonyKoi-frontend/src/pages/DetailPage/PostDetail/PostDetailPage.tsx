@@ -4,6 +4,7 @@ import { getPostById } from '../../../apis/post.api'
 import { Post } from '../../../types'
 import styles from './PostDetailPage.module.css'
 import { formatDate, parseDate } from '../../../utils/helpers'
+import banner from '../../../assets/images/banner.gif'
 
 const PostDetailPage: React.FC = () => {
   const { id } = useParams<{ id: string }>()
@@ -15,8 +16,8 @@ const PostDetailPage: React.FC = () => {
     const fetchPostDetail = async () => {
       try {
         const response = await getPostById(id!)
-        const postDetail = response.data
-        console.log(postDetail)
+        const postDetail = response.data.data
+        console.log(postDetail.createdAt)
         const postWithDate = {
           ...postDetail,
           createdAt: postDetail.createdAt,
@@ -40,14 +41,14 @@ const PostDetailPage: React.FC = () => {
   return (
     <div className={styles.postDetailContainer}>
       <div className={styles.bannerImage}>
-        <img src={post?.imageUrl || '/placeholder.jpg'} alt={post?.title} />
+        <img src={banner} alt={post?.title} />
       </div>
       <div className={styles.postContent}>
         <header className={styles.postHeader}>
           <h1 className={styles.postTitle}>{post?.title}</h1>
           <div className={styles.postMeta}>
             <span className={styles.metaItem}>Tác giả: {post?.user?.username || 'Ẩn danh'}</span>
-            <span className={styles.metaItem}>Ngày đăng: {post?.createdAt.toUTCString()}</span>
+            <span className={styles.metaItem}>Ngày đăng: {post?.createdAt}</span>
           </div>
         </header>
         <div className={styles.postBody}>
@@ -56,8 +57,8 @@ const PostDetailPage: React.FC = () => {
         <footer className={styles.postFooter}>
           <div className={styles.postInfo}>
             <span className={styles.infoItem}>Số ngày còn lại: {post?.dateRemain}</span>
+            <div className={styles.lastUpdated}>Cập nhật lần cuối: {post?.updatedAt}</div>
           </div>
-          <div className={styles.lastUpdated}>Cập nhật lần cuối: {post?.updatedAt.toUTCString()}</div>
         </footer>
       </div>
     </div>

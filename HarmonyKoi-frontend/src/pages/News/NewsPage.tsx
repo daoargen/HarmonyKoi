@@ -6,10 +6,15 @@ import koiImage from '../../assets/images/koiImage.jpg'
 import { getNews } from '../../apis/news.api'
 import { formatDate, parseDate } from '../../utils/helpers'
 import Paging from '../../components/common/Paging/Paging'
+import banner from '../../assets/images/banner.gif'
+import { useNavigate } from 'react-router-dom'
 
-const BlogCard: React.FC<News> = ({ tittle, content, createdAt }) => {
+const BlogCard: React.FC<News> = ({ id, tittle, content, createdAt }) => {
+  const navigate = useNavigate()
   const truncatedContent = content.length > 100 ? content.substring(0, 100) + '...' : content
-
+  const handleViewDetail = () => {
+    navigate(`/news/${id}`) // Chuyển hướng đến trang chi tiết bài viết
+  }
   return (
     <div className={styles.blogCard}>
       <img src={koiImage} alt={tittle} className={styles.blogCardImage} />
@@ -19,7 +24,7 @@ const BlogCard: React.FC<News> = ({ tittle, content, createdAt }) => {
         <div className={styles.blogCardMeta}>
           <span>{formatDate(createdAt)}</span>
         </div>
-        <Button variant='outline' className={styles.blogCardButton}>
+        <Button variant='outline' className={styles.blogCardButton} onClick={handleViewDetail}>
           Xem thêm
         </Button>
       </div>
@@ -65,6 +70,9 @@ const NewsPage = () => {
   return (
     // Thêm phần return cho PostPage
     <div className={styles.blogContainer}>
+      <div className={styles.bannerImage}>
+        <img src={banner} />
+      </div>
       {/* <div className={styles.blogGrid}> */}
       {/* {news.map((newsData) => (
         <BlogCard key={newsData.id} {...newsData} />
