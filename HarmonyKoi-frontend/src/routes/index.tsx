@@ -13,13 +13,11 @@ import PostPage from '../pages/Post/PostPage'
 import NewsPage from '../pages/News/NewsPage'
 import ConsultingPage from '../pages/Consulting/ConsultingPage'
 import AppLayout from '../App'
-<<<<<<< HEAD
 import KoiFishForm from '../pages/koiFish/koiFishForm'
 import KoiFishDetail from '../pages/koiFish/KoiFishDetail' // Adjust the path as needed
 import LoginPage from '../pages/Login/LoginPage'
 import AuthGuard from '../Guards/AuthGuard'
 import KoiFishByYear from '../pages/koiFish/koiFishByYear'
-=======
 import LoginPage from '../pages/Login/LoginPage'
 import RoleBasedGuard from '../Guards/RoleBasedGuard'
 import ManageOrder from '../pages/MemberPage/MangeOrder/MangeOrderPage'
@@ -32,8 +30,9 @@ import ManangePost from '../pages/MemberPage/MangePost/MangePostPage'
 import Dashboard from '../pages/AdminPage/Dashboard/DashboardPage'
 import { Role } from '../types/user.type'
 import AuthGuard from '../Guards/AuthGuard'
->>>>>>> 3cdbdda66d4956c74990185e2c3f314b3c73d19d
 import ManagePage from '../layouts/MainLayout/components/Manage/ManagePage/ManagePage'
+import PostDetailPage from '../pages/DetailPage/PostDetail/PostDetailPage'
+import NewsDetailPage from '../pages/DetailPage/NewsDetail/NewsDetailPage'
 
 const router = createBrowserRouter([
   {
@@ -76,6 +75,13 @@ const router = createBrowserRouter([
         path: '/koiFishForm/:yearOfBirth', // Add the detail route here
         element: <KoiFishByYear />
       },
+        path: 'posts/:id',
+        element: <PostDetailPage />
+      },
+      {
+        path: 'news/:id',
+        element: <NewsDetailPage />
+      },
       // GuestGuard
       {
         element: <GuestGuard />,
@@ -88,17 +94,6 @@ const router = createBrowserRouter([
             path: configs.routes.register,
             element: <Register />
           }
-<<<<<<< HEAD
-          // {
-          //   path: configs.routes.resetPassword,
-          //   element: (
-          //     <ResetPasswordGuard>
-          //       <ResetPassword />
-          //     </ResetPasswordGuard>
-          //   )
-          // }
-=======
->>>>>>> 3cdbdda66d4956c74990185e2c3f314b3c73d19d
         ]
       }
     ]
@@ -108,14 +103,6 @@ const router = createBrowserRouter([
   //   element: <Home />
   // },
   {
-<<<<<<< HEAD
-    path: '/admin/manage',
-    element: (
-      <AuthGuard>
-        <ManagePage />
-      </AuthGuard>
-    )
-=======
     path: 'admin/manage',
     element: (
       <AuthGuard>
@@ -150,17 +137,11 @@ const router = createBrowserRouter([
         element: <ApprovePost />
       }
     ]
->>>>>>> 3cdbdda66d4956c74990185e2c3f314b3c73d19d
   },
   {
     path: '/member/manage',
     element: (
       <AuthGuard>
-<<<<<<< HEAD
-        <ManagePage />
-      </AuthGuard>
-    )
-=======
         <RoleBasedGuard accessibleRoles={[Role.MEMBER]}>
           <ManagePage />
         </RoleBasedGuard>
@@ -180,7 +161,6 @@ const router = createBrowserRouter([
         element: <ManageOrder />
       }
     ]
->>>>>>> 3cdbdda66d4956c74990185e2c3f314b3c73d19d
   },
   {
     path: configs.routes.error,

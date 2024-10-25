@@ -15,9 +15,19 @@ export const formatDate = (date: Date): string => {
   return `${day}/${month}/${year}`
 }
 
+// utils/helpers.ts
+
 export const parseDate = (dateString: string): Date => {
-  const [time, date] = dateString.split('-')
-  const [day, month, year] = date.split('/')
-  const [hours, minutes, seconds] = time.split(':')
-  return new Date(Number(year), Number(month) - 1, Number(day), Number(hours), Number(minutes), Number(seconds))
+  const [time, date] = dateString.split('-') // Tách thời gian và ngày
+  const [hours, minutes, seconds] = time.split(':') // Tách giờ, phút, giây
+  const [day, month, year] = date.split('/') // Tách ngày, tháng, năm
+
+  return new Date(
+    Number(year),
+    Number(month) - 1, // Tháng bắt đầu từ 0
+    Number(day),
+    Number(hours),
+    Number(minutes),
+    Number(seconds)
+  )
 }
