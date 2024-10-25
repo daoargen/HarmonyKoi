@@ -1,0 +1,141 @@
+.container {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+.backgroundImage {
+  image-resolution: 1080;
+  background-size: cover;
+  display: flex;
+  width: 100%;
+  justify-content: center;
+}
+
+.breadcrumb {
+  position: absolute;
+  top: 0; /* Đặt breadcrumb lên đầu container */
+  left: 0;
+  width: 100%; /* Để breadcrumb chiếm toàn bộ chiều rộng */
+  background-color: white; /* Tạo nền mờ nếu cần */
+  padding: 10px;
+  z-index: 10;
+}
+.breadcrumb {
+  font-size: 16px;
+  margin-bottom: 20px;
+}
+
+.highlight {
+  color: #ffa500; /* You can adjust the color as per your need */
+}
+
+.tab-button1,
+.tab-button2 {
+  position: absolute;
+  border-radius: 12px;
+  border-width: 3px;
+  display: flex;
+  justify-content: center;
+  background-color: white;
+  transition: background-color 0.5s ease;
+  width: 600px;
+  padding: 10px 20px;
+  font-weight: bold;
+}
+
+.tab-button1 {
+  top: 50px; /* Điều chỉnh vị trí theo yêu cầu */
+  left: 50px;
+}
+
+.tab-button2 {
+  top: 50px; /* Điều chỉnh vị trí theo yêu cầu */
+  right: 50px;
+}
+
+.tab-button2:hover {
+  background-color: #e3931b;
+}
+.tab-button1:hover {
+  background-color: #e3931b;
+}
+
+.tab {
+  padding: 10px 20px;
+  cursor: pointer;
+  border: none;
+  background-color: #ddd;
+  color: #000;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.active-tab {
+  background-color: #f4a41c; /* Bright orange for active tab */
+  color: #fff;
+}
+
+.form-container {
+  background-color: rgb(255, 255, 255); /* White with opacity */
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  width: 600px;
+  position: absolute;
+}
+
+h2 {
+  font-size: 24px;
+  color: #f4a41c; /* Match the orange from the tab */
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+label {
+  display: block;
+  margin-bottom: 10px;
+  font-weight: bold;
+  color: #333;
+}
+
+.input {
+  width: 95%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+.radio-group {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.radio-group input {
+  margin-right: 5px;
+}
+
+.radio-group label {
+  margin-right: 15px;
+}
+
+.submit-button {
+  width: 100%;
+  padding: 10px;
+  background-color: #f4a41c; /* Match the orange from the tab */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.submit-button:hover {
+  background-color: #e3931b;
+}

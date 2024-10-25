@@ -17,6 +17,9 @@ const routes = {
   post: '/post',
   consult: '/consulting',
   news: '/news',
+<<<<<<< HEAD
+  koifish: '/koifish'
+=======
   manageOrder: '/manage-orders',
   managePost: '/manage-posts',
   manageUsers: '/manage-users',
@@ -25,6 +28,7 @@ const routes = {
   manageNews: '/manage-news',
   approvePosts: '/approve-posts',
   dashboard: '/dashboard'
+>>>>>>> 3cdbdda66d4956c74990185e2c3f314b3c73d19d
 }
 
 export default routes
