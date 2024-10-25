@@ -56,7 +56,7 @@ const Register: React.FC = () => {
           <img src='src/assets/images/googleLogo.png' alt='Google Logo' />
           Đăng ký với Google
         </Button>
-        <div className={Styles.divider}>Hoặc đăng ký bằng</div>
+        <div className={Styles.divider}>Hoặc đăng ký bằng</div> */}
         <form>
           <div className={Styles.formGroup}>
             <Label htmlFor='fullName'>Họ và tên</Label>

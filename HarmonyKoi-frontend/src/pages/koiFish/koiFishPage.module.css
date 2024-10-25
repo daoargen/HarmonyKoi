@@ -33,17 +33,18 @@ h1 {
 }
 
 .koi-card {
-  background-color: #ffffff; /* Background color for the card */
-  border-radius: 12px; /* Larger rounded corners for the cards */
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15); /* Soft shadow for a polished look */
-  padding: 15px; /* Increased padding inside the card */
-  display: flex; /* Flexbox for internal alignment */
-  flex-direction: column; /* Stack children vertically */
-  align-items: flex-start; /* Align items to the left */
-  text-align: left; /* Align text to the left */
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  padding: 15px;
+  display: flex;
+  flex-direction: column; /* Stack items vertically */
+  justify-content: space-between; /* Push button to the bottom */
+  align-items: flex-start;
+  text-align: left;
   transition:
     transform 0.3s,
-    box-shadow 0.3s; /* Smooth effect on hover */
+    box-shadow 0.3s;
 }
 
 .koi-card:hover {
@@ -53,7 +54,7 @@ h1 {
 
 .koi-image {
   width: 100%; /* Take full width of the card */
-  height: 400px; /* Fixed height for uniformity */
+  height: 500px; /* Fixed height for uniformity */
   object-fit: cover; /* Cover the area, cropping if necessary */
   border-radius: 12px; /* Larger rounded corners for the image */
   margin-bottom: 15px; /* Space below the image */
@@ -120,23 +121,22 @@ h1 {
 
 /* Details Button Styles */
 .detailsButton {
-  margin-top: 15px; /* Space above the button */
-  padding: 12px 30px; /* Increased padding for a larger button */
-  background-color: #ff4757; /* Solid background color */
-  color: white; /* White text color */
-  border: none; /* No border */
-  border-radius: 50px; /* More rounded corners for a softer look */
-  cursor: pointer; /* Pointer cursor on hover */
+  margin-top: 15px; /* Smaller margin to fit better */
+  padding: 12px 30px;
+  background-color: #ff4757;
+  color: white;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
   transition:
     background-color 0.3s,
     transform 0.2s,
-    box-shadow 0.3s; /* Smooth transitions */
-  text-align: center; /* Center the button text */
-  width: 100px; /* Full width button */
-  font-size: 1rem; /* Font size for better readability */
-  font-weight: bold; /* Bold text for emphasis */
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Shadow for depth */
-  justify-content: center;
+    box-shadow 0.3s;
+  text-align: center;
+  font-size: 1rem;
+  font-weight: bold;
+  width: 50%;
+  align-self: left; /* Center button horizontally */
 }
 
 .detailsButton:hover {

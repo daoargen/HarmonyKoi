@@ -4,20 +4,23 @@ import { Link } from 'react-router-dom'
 import { KoiFishResponse, KoiFishAttributes } from '../../types/koiFish.type'
 import styles from './koiFishPage.module.css'
 
-const ITEMS_PER_PAGE = 9 // Set the number of items per page
+const DEFAULT_ITEMS_PER_PAGE = 9 // Đặt số lượng mặc định cho mỗi trang
 
 const KoiFishDisplay: React.FC = () => {
   const [koiFishes, setKoiFishes] = useState<KoiFishAttributes[]>([])
   const [loading, setLoading] = useState<boolean>(true)
   const [error, setError] = useState<string | null>(null)
   const [currentPage, setCurrentPage] = useState<number>(1)
+  const [totalItems, setTotalItems] = useState<number>(0) // Thêm biến để lưu tổng số mục
 
   useEffect(() => {
     const fetchKoiFishes = async () => {
       try {
-        const response = await axios.get<KoiFishResponse>('http://localhost:1412/api/koiFishes')
+        const response = await axios.get<KoiFishResponse>('http://localhost:1412/api/koiFishes?page_size=30')
         if (response.data && response.data.data) {
           setKoiFishes(response.data.data)
+          setTotalItems(response.data.pagination.totalItem) // Lưu tổng số mục từ pagination
+          console.log(response.data.pagination)
         } else {
           setError('Không có dữ liệu cá koi.')
         }
@@ -39,10 +42,14 @@ const KoiFishDisplay: React.FC = () => {
     return <div>{error}</div>
   }
 
-  // Calculate the current koi fishes to display
-  const totalPages = Math.ceil(koiFishes.length / ITEMS_PER_PAGE)
-  const startIndex = (currentPage - 1) * ITEMS_PER_PAGE
-  const currentKoiFishes = koiFishes.slice(startIndex, startIndex + ITEMS_PER_PAGE)
+  if (koiFishes.length === 0) {
+    return <div>Không có dữ liệu cá koi.</div>
+  }
+
+  // Tính toán số trang dựa trên totalItems và DEFAULT_ITEMS_PER_PAGE
+  const totalPages = Math.ceil(totalItems / DEFAULT_ITEMS_PER_PAGE)
+  const startIndex = (currentPage - 1) * DEFAULT_ITEMS_PER_PAGE
+  const currentKoiFishes = koiFishes.slice(startIndex, startIndex + DEFAULT_ITEMS_PER_PAGE)
 
   const handleNextPage = () => {
     if (currentPage < totalPages) {
@@ -63,9 +70,11 @@ const KoiFishDisplay: React.FC = () => {
   const handleLastPageClick = () => {
     setCurrentPage(totalPages)
   }
+
   const handleFirstPageClick = () => {
     setCurrentPage(1)
   }
+
   return (
     <div className={styles.container}>
       <h1>Thông tin Cá Koi</h1>
@@ -83,12 +92,11 @@ const KoiFishDisplay: React.FC = () => {
       </div>
 
       {/* Pagination */}
-
       <div className={styles.pagination}>
         <button
           onClick={handleFirstPageClick}
           disabled={currentPage === 1}
-          className={styles.pageButtonfirst}
+          className={styles.pageButton}
           aria-label='First Page'
         >
           &lt;&lt;
@@ -113,8 +121,6 @@ const KoiFishDisplay: React.FC = () => {
           </button>
         ))}
 
-        {/* Last Page Button */}
-
         <button
           onClick={handleNextPage}
           disabled={currentPage === totalPages}
@@ -123,7 +129,6 @@ const KoiFishDisplay: React.FC = () => {
         >
           &gt;
         </button>
-
         <button
           onClick={handleLastPageClick}
           disabled={currentPage === totalPages}

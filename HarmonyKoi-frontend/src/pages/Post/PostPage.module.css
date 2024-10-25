@@ -39,7 +39,7 @@
 
 .blogCardImage {
   width: 100%;
-  height: 200px;
+  height: 300px;
   object-fit: cover;
 }
 
@@ -69,6 +69,10 @@
   color: #718096;
   font-size: 0.875rem;
   margin-top: auto;
+}
+
+.blogCardMeta span {
+  margin-bottom: 15px;
 }
 
 .blogCardFooter {

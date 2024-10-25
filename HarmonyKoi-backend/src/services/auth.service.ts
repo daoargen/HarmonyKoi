@@ -30,7 +30,7 @@ async function register(dataRequest: CreateUser) {
 
     const existingUser = await User.findOne({
       where: {
-        [Op.or]: [{ username: dataRequest.username }, { email: dataRequest.email }]
+        [Op.or]: [{ username: dataRequest.username }]
       }
     })
     if (existingUser) {
