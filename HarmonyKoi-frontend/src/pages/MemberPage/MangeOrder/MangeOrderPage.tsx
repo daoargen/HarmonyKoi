@@ -1,3 +1,12 @@
+<<<<<<< HEAD
+import React from 'react'
+
+const ManageOrder: React.FC = () => {
+  return <h1>Trang Order</h1>
+}
+
+export default ManageOrder
+=======
 'use client'
 
 import React, { useState, useEffect } from 'react'
@@ -189,3 +198,4 @@ const ManageOrderPage: React.FC = () => {
 }
 
 export default ManageOrderPage
+>>>>>>> 3cdbdda66d4956c74990185e2c3f314b3c73d19d

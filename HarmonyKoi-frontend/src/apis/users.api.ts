@@ -1,5 +1,9 @@
 // import { LoginFormType } from '../pages/Login/LoginPage'
+<<<<<<< HEAD
+import { RegisterFormType } from '../pages/Register/Register'
+=======
 // import { RegisterFormType } from '../pages/Register/Register'
+>>>>>>> 3cdbdda66d4956c74990185e2c3f314b3c73d19d
 import { AuthResponse } from '../types/auth.type'
 import { GoogleUrlResponse, UserResponse } from '../types/user.type'
 import { getRefreshToken } from '../utils/cookies'
