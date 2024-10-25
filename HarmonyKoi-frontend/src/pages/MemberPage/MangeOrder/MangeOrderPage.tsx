@@ -19,31 +19,29 @@ type Pagination = {
   totalPage: number
 }
 
-const mockPagination: Pagination = {
-  pageSize: 10,
-  totalItem: 4,
-  currentPage: 1,
-  maxPageSize: 100,
-  totalPage: 1
-}
-
 const ManageOrderPage: React.FC = () => {
   const [data, setData] = useState<OrderData | null>(null)
-  const [pagination, setPagination] = useState<Pagination>(mockPagination)
+  const [pagination, setPagination] = useState<Pagination>({
+    pageSize: 3,
+    totalItem: 0,
+    currentPage: 1,
+    maxPageSize: 100,
+    totalPage: 1
+  })
   const [statusFilter, setStatusFilter] = useState<'ALL' | 'PENDING' | 'COMPLETED'>('ALL')
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
     const fetchData = async () => {
+      setIsLoading(true)
       try {
         const orderResponse = await getOrderHistory({
-          pageIndex: 1, // Trang hiện tại
-          pageSize: 10
+          pageIndex: pagination.currentPage,
+          pageSize: pagination.pageSize
+          // status: statusFilter
         })
-        console.log('orderResponse:', orderResponse) // In ra cấu trúc dữ liệu
 
-        // Kiểm tra orderResponse.data.data trước khi truy cập thuộc tính
-        if (orderResponse && orderResponse.data && orderResponse.data.data) {
+        if (orderResponse && orderResponse.data) {
           setData({
             totalOrders: orderResponse.data.data.totalOrders,
             totalSpent: orderResponse.data.data.totalSpent,
@@ -59,11 +57,10 @@ const ManageOrderPage: React.FC = () => {
     }
 
     fetchData()
-  }, [])
+  }, [pagination.currentPage, pagination.pageSize, statusFilter]) // Gọi API mỗi khi pagination hoặc statusFilter thay đổi
 
   const handlePageChange = (newPage: number) => {
     setPagination((prev) => ({ ...prev, currentPage: newPage }))
-    // Here you would typically fetch new data for the selected page
   }
 
   const handlePayOrder = (orderId: string) => {

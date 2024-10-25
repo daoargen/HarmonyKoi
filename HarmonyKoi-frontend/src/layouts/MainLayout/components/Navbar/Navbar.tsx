@@ -41,8 +41,18 @@ const Navbar: React.FC = () => {
         </button>
         <ul className={`${styles.navList} ${isOpen ? styles.open : ''}`}>
           <li>
+            <Link to='/package' className={styles.navLink}>
+              Gói dịch vụ
+            </Link>
+          </li>
+          <li>
             <Link to='/consulting' className={styles.navLink}>
               Tư vấn
+            </Link>
+          </li>
+          <li>
+            <Link to='/koiFish' className={styles.navLink}>
+              Danh sách cá koi
             </Link>
           </li>
           <li>
