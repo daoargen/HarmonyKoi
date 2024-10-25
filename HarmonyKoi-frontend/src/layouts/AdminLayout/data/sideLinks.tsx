@@ -16,47 +16,47 @@ import {
   TbMessages,
   // TbRouteAltLeft,
   // TbServerOff,
-  TbSettings,
+  TbSettings
   // TbTruck,
   // TbUsers,
   // TbUserShield,
-} from "react-icons/tb";
+} from 'react-icons/tb'
 
 export interface NavLink {
-  title: string;
-  label?: string;
-  href: string;
-  icon: JSX.Element;
+  title: string
+  label?: string
+  href: string
+  icon: JSX.Element
 }
 
 export interface SideLink extends NavLink {
-  sub?: NavLink[];
+  sub?: NavLink[]
 }
 
 export const sideLinks: SideLink[] = [
   {
-    title: "Tổng Quan",
-    label: "",
-    href: "/admin",
-    icon: <TbLayoutDashboard size={18} />,
+    title: 'Tổng Quan',
+    label: '',
+    href: '/admin',
+    icon: <TbLayoutDashboard size={18} />
   },
   {
-    title: "Tạo Công Thức Mới",
-    label: "",
-    href: "/tasks",
-    icon: <TbChecklist size={18} />,
+    title: 'Tạo Công Thức Mới',
+    label: '',
+    href: '/tasks',
+    icon: <TbChecklist size={18} />
   },
   {
-    title: "Tạo Gói Nguyên Liệu",
-    label: "",
-    href: "/apps",
-    icon: <TbApps size={18} />,
+    title: 'Tạo Gói Nguyên Liệu',
+    label: '',
+    href: '/apps',
+    icon: <TbApps size={18} />
   },
   {
-    title: "Danh Sách Đơn Hàng",
-    label: "",
-    href: "/chats",
-    icon: <TbMessages size={18} />,
+    title: 'Danh Sách Đơn Hàng',
+    label: '',
+    href: '/chats',
+    icon: <TbMessages size={18} />
   },
   // {
   //   title: "Apps",
@@ -167,9 +167,9 @@ export const sideLinks: SideLink[] = [
   //   ],
   // },
   {
-    title: "Cài Đặt",
-    label: "",
-    href: "/settings",
-    icon: <TbSettings size={18} />,
-  },
-];
+    title: 'Cài Đặt',
+    label: '',
+    href: '/settings',
+    icon: <TbSettings size={18} />
+  }
+]

@@ -13,7 +13,11 @@ import PostPage from '../pages/Post/PostPage'
 import NewsPage from '../pages/News/NewsPage'
 import ConsultingPage from '../pages/Consulting/ConsultingPage'
 import AppLayout from '../App'
+import KoiFishForm from '../pages/koiFish/koiFishForm'
+import KoiFishDetail from '../pages/koiFish/KoiFishDetail' // Adjust the path as needed
 import LoginPage from '../pages/Login/LoginPage'
+import AuthGuard from '../Guards/AuthGuard'
+import KoiFishByYear from '../pages/koiFish/koiFishByYear'
 import RoleBasedGuard from '../Guards/RoleBasedGuard'
 import ManageOrder from '../pages/MemberPage/MangeOrder/MangeOrderPage'
 import ManageNews from '../pages/AdminPage/ManageNews/ManageNewsPage'
@@ -24,7 +28,6 @@ import ManageUser from '../pages/AdminPage/ManageUser/ManageUser'
 import ManangePost from '../pages/MemberPage/MangePost/MangePostPage'
 import Dashboard from '../pages/AdminPage/Dashboard/DashboardPage'
 import { Role } from '../types/user.type'
-import AuthGuard from '../Guards/AuthGuard'
 import ManagePage from '../layouts/MainLayout/components/Manage/ManagePage/ManagePage'
 import PostDetailPage from '../pages/DetailPage/PostDetail/PostDetailPage'
 import NewsDetailPage from '../pages/DetailPage/NewsDetail/NewsDetailPage'
@@ -59,6 +62,18 @@ const router = createBrowserRouter([
         element: <ConsultingPage />
       },
       {
+        path: configs.routes.koifish,
+        element: <KoiFishForm />
+      },
+      {
+        path: '/koiFishes/:id', // Add the detail route here
+        element: <KoiFishDetail />
+      },
+      {
+        path: '/koiFishForm/:yearOfBirth', // Add the detail route here
+        element: <KoiFishByYear />
+      },
+      {
         path: 'posts/:id',
         element: <PostDetailPage />
       },
@@ -66,7 +81,6 @@ const router = createBrowserRouter([
         path: 'news/:id',
         element: <NewsDetailPage />
       },
-
       // GuestGuard
       {
         element: <GuestGuard />,
@@ -75,7 +89,6 @@ const router = createBrowserRouter([
             path: configs.routes.login,
             element: <Login />
           },
-
           {
             path: configs.routes.register,
             element: <Register />
@@ -84,6 +97,10 @@ const router = createBrowserRouter([
       }
     ]
   },
+  // {
+  //   path: configs.routes.home,
+  //   element: <Home />
+  // },
   {
     path: 'admin/manage',
     element: (

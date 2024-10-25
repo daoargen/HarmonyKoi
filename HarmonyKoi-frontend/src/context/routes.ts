@@ -18,6 +18,7 @@ const routes = {
   post: '/post',
   consult: '/consulting',
   news: '/news',
+  koifish: '/koifish',
   manageOrder: '/manage-orders',
   managePost: '/manage-posts',
   manageUsers: '/manage-users',

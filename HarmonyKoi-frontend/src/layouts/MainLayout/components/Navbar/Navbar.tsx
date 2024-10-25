@@ -51,6 +51,11 @@ const Navbar: React.FC = () => {
             </Link>
           </li>
           <li>
+            <Link to='/koiFish' className={styles.navLink}>
+              Danh sách cá koi
+            </Link>
+          </li>
+          <li>
             <Link to='/post' className={styles.navLink}>
               Bài viết
             </Link>
