@@ -4,11 +4,17 @@ import { Post } from '../../types'
 import styles from './PostPage.module.css'
 import { getPost } from '../../apis/post.api'
 import koiImage from '../../assets/images/PostImage.jpg'
-import { parseDate } from '../../utils/helpers'
+import { formatDate, parseDate } from '../../utils/helpers'
 import Paging from '../../components/common/Paging/Paging'
+import { useNavigate } from 'react-router-dom'
 
-const BlogCard: React.FC<Post> = ({ title, content, createdAt }) => {
+const BlogCard: React.FC<Post> = ({ id, title, content, createdAt }) => {
+  const navigate = useNavigate()
   const truncatedContent = content.length > 100 ? content.substring(0, 100) + '...' : content
+
+  const handleViewDetail = () => {
+    navigate(`/posts/${id}`) // Chuyển hướng đến trang chi tiết bài viết
+  }
 
   return (
     <div className={styles.blogCard}>
@@ -17,9 +23,9 @@ const BlogCard: React.FC<Post> = ({ title, content, createdAt }) => {
         <h2 className={styles.blogCardTitle}>{title}</h2>
         <p className={styles.blogCardDescription}>{truncatedContent}</p> {/* Hiển thị nội dung đã cắt bớt */}
         <div className={styles.blogCardMeta}>
-          <span>{createdAt.toUTCString()}</span>
+          <span>{formatDate(createdAt)}</span>
         </div>
-        <Button variant='outline' className={styles.blogCardButton}>
+        <Button variant='outline' className={styles.blogCardButton} onClick={handleViewDetail}>
           Xem thêm
         </Button>
       </div>

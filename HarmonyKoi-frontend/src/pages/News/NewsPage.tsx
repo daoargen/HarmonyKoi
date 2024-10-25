@@ -4,7 +4,7 @@ import { News } from '../../types'
 import styles from './NewsPage.module.css'
 import koiImage from '../../assets/images/koiImage.jpg'
 import { getNews } from '../../apis/news.api'
-import { parseDate } from '../../utils/helpers'
+import { formatDate, parseDate } from '../../utils/helpers'
 import Paging from '../../components/common/Paging/Paging'
 
 const BlogCard: React.FC<News> = ({ tittle, content, createdAt }) => {
@@ -17,7 +17,7 @@ const BlogCard: React.FC<News> = ({ tittle, content, createdAt }) => {
         <h2 className={styles.blogCardTitle}>{tittle}</h2>
         <p className={styles.blogCardDescription}>{truncatedContent}</p> {/* Hiển thị nội dung đã cắt bớt */}
         <div className={styles.blogCardMeta}>
-          <span>{createdAt.toUTCString()}</span>
+          <span>{formatDate(createdAt)}</span>
         </div>
         <Button variant='outline' className={styles.blogCardButton}>
           Xem thêm

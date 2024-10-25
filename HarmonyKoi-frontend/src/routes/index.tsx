@@ -26,6 +26,7 @@ import Dashboard from '../pages/AdminPage/Dashboard/DashboardPage'
 import { Role } from '../types/user.type'
 import AuthGuard from '../Guards/AuthGuard'
 import ManagePage from '../layouts/MainLayout/components/Manage/ManagePage/ManagePage'
+import PostDetailPage from '../pages/DetailPage/PostDetail/PostDetailPage'
 
 const router = createBrowserRouter([
   {
@@ -55,6 +56,10 @@ const router = createBrowserRouter([
       {
         path: configs.routes.consult,
         element: <ConsultingPage />
+      },
+      {
+        path: 'posts/:id',
+        element: <PostDetailPage />
       },
 
       // GuestGuard
