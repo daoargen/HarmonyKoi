@@ -57,8 +57,7 @@ async function getNewById(newsId: string) {
       where: { id: newsId, isDeleted: false }
     })
     if (!news) throw responseStatus.responseNotFound404("New not found")
-    const formatNews = formatModelDate(news)
-    return formatNews
+    return news
   } catch (error) {
     console.error(error)
     throw error
