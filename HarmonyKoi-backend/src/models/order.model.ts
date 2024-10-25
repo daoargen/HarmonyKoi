@@ -16,14 +16,6 @@ export const Order = sequelize.define<OrderInstance>(tableName, {
     type: DataTypes.UUID,
     allowNull: false
   },
-  packageId: {
-    type: DataTypes.UUID,
-    allowNull: true
-  },
-  postId: {
-    type: DataTypes.UUID,
-    allowNull: true
-  },
   status: {
     type: DataTypes.ENUM("PENDING", "PROCESSING", "SHIPPED", "CANCELLED", "COMPLETED"),
     allowNull: false
@@ -40,21 +32,9 @@ Order.belongsTo(User, {
   as: "user"
 })
 
-Order.belongsTo(Package, {
-  foreignKey: "packageId",
-  as: "package"
-})
-
-Order.belongsTo(Post, {
-  foreignKey: "postId",
-  as: "post"
-})
-
 export interface OrderAttributes {
   id?: string
   userId: string
-  packageId: string | null
-  postId: string | null
   status: "PENDING" | "PROCESSING" | "SHIPPED" | "CANCELLED" | "COMPLETED"
   totalAmount: number
   isDeleted?: boolean
