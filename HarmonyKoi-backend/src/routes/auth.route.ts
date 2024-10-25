@@ -39,7 +39,7 @@ const router = express.Router()
  *               role:
  *                 type: string
  *                 enum: ["LECTURER", "SUPPORTER", "CONTENT_CREATOR", "MANAGER", "ADMIN"]
- *                 description: If not provided, the default role is "ADULT"
+ *                 description: If not provided, the default role is "MEMBER"
  *     responses:
  *       200:
  *         description: Return messgae "Please check your email to confirm registration"

@@ -20,54 +20,52 @@ async function register(dataRequest: CreateUser) {
   try {
     if (!isValidUsername(dataRequest.username)) {
       throw responseStatus.responseBadRequest400("Invalid username: Only allow letters, numbers, and underscores")
-    } // Kiểm tra regex tên người dùng
+    }
 
     if (!isValidPassword(dataRequest.password)) {
       throw responseStatus.responseBadRequest400(
         "Invalid password: Must be at least 8 characters long, include an uppercase letter, a lowercase letter, a number, and a special character"
       )
-    } // Kiểm tra regex mật khẩu
+    }
 
     const existingUser = await User.findOne({
       where: {
-        [Op.or]: [{ username: dataRequest.username }, { email: dataRequest.email }]
+        [Op.or]: [{ username: dataRequest.username }]
       }
-    }) // Kiểm tra tên người dùng hoặc email đã tồn tại chưa
+    })
     if (existingUser) {
       throw responseStatus.responseConflict409("Username or email already exists")
     }
 
-    const hashedPassword = await hashPassword(dataRequest.password) // Mã hóa mật khẩu
+    const hashedPassword = await hashPassword(dataRequest.password)
 
-    const data = {
+    const user = await User.create({
       email: dataRequest.email,
       username: dataRequest.username,
       password: hashedPassword,
-      role: dataRequest.role as Role,
-      dob: dataRequest.dob,
-      gender: dataRequest.gender,
-      iat: Date.now() // Thêm trường iat để xác định thời gian tạo
+      role: dataRequest.role as Role
+    })
+
+    if (!user.id) {
+      throw responseStatus.responseInternalError500("Failed to create user")
     }
 
-    const encryptedData = encrypt(data) // Mã hóa dữ liệu
+    await UserDetail.create({
+      userId: user.id,
+      phone: null,
+      firstName: "",
+      lastName: "",
+      dob: dataRequest.dob,
+      gender: dataRequest.gender,
+      avatarUrl: `https://avatar.iran.liara.run/public/boy?username=${user.username}`
+    })
 
-    const confirmLink = `${process.env.SERVER_URL}/api/auth/confirm-register?code=${encryptedData}` // Tạo liên kết xác nhận tài khoản
-    const emailHeader = "Confirm register account at Koine"
-    const emailBody = `
-      <div style="max-width: 600px; margin: 20px auto; padding: 20px; border: 2px solid #007bff; border-radius: 8px; background-color: #fff; font-family: 'Arial', sans-serif;">
-          <h2 style="color: #007bff;">Koine - Nền tảng giáo dục giới tính cho trẻ em</h2>
-          <p style="margin-bottom: 20px;">Click this link to register your account at Koine:</p>
-      <a href="${confirmLink}" style="display: inline-block; padding: 10px 20px; text-decoration: none; background-color: #007bff; color: #fff; border-radius: 5px;" target="_blank">Link active your account</a>
-      </div>
-      `
-    await sendEmail(data.email, emailHeader, emailBody)
-
-    return "Please check your email to confirm registration"
+    return "User registered successfully" // Trả về thông báo đăng ký thành công
   } catch (error) {
     logNonCustomError(error)
     throw error
   }
-} // Register new account
+}
 
 async function confirmRegister(code: string) {
   try {
@@ -104,7 +102,7 @@ async function confirmRegister(code: string) {
     logNonCustomError(error)
     throw error
   }
-} // Confirm register adult account
+} // Confirm register MEMBER account
 
 async function login(loginKey: string, password: string, res: Response) {
   try {
@@ -257,40 +255,41 @@ async function changePassword(token: string, currentPassword: string, newPasswor
 } // Change password user
 
 async function getRefreshToken(refreshToken: string, res: Response) {
-  if (!refreshTokens.includes(refreshToken)) {
-    throw responseStatus.responseUnauthorized401("Invalid token")
-  }
-
-  jwt.verify(refreshToken, process.env.SECRET as Secret, (err: VerifyErrors | null, user: any) => {
-    if (err) {
-      throw responseStatus.responseUnauthorized401("Invalid token")
+  return new Promise<JWTResponse>((resolve, reject) => {
+    if (!refreshTokens.includes(refreshToken)) {
+      return reject(responseStatus.responseUnauthorized401("Invalid token"))
     }
-    refreshTokens.filter((token) => token !== refreshToken)
-    const newAccessToken = generateAccessToken(user)
-    const newRefreshToken = generateRefreshToken(user)
-    refreshTokens.push(newRefreshToken)
-    res.cookie("refreshToken", newRefreshToken, {
-      httpOnly: true,
-      secure: false,
-      path: "/",
-      sameSite: "strict"
+
+    jwt.verify(refreshToken, process.env.SECRET as Secret, (err: VerifyErrors | null, user: any) => {
+      if (err) {
+        return reject(responseStatus.responseUnauthorized401("Invalid token"))
+      }
+      refreshTokens.filter((token) => token !== refreshToken)
+      const newAccessToken = generateAccessToken(user)
+      const newRefreshToken = generateRefreshToken(user)
+      refreshTokens.push(newRefreshToken)
+      res.cookie("refreshToken", newRefreshToken, {
+        httpOnly: true,
+        secure: false,
+        path: "/",
+        sameSite: "strict"
+      })
+
+      const jwtResponse: JWTResponse = {
+        accessToken: newAccessToken,
+        refreshToken: refreshToken,
+        expiresAt: new Date(new Date().setHours(new Date().getHours() + parseInt(expiresIn.substring(0, 1)))),
+        account: {
+          id: "",
+          email: "",
+          username: "",
+          role: user.role
+        } as Account
+      }
+      resolve(jwtResponse) // Resolve the promise with jwtResponse
     })
-
-    const jwtResponse: JWTResponse = {
-      accessToken: newAccessToken,
-      refreshToken: refreshToken,
-      expiresAt: new Date(new Date().setHours(new Date().getHours() + parseInt(expiresIn.substring(0, 1)))),
-      account: {
-        id: "",
-        email: "",
-        username: "",
-        role: user.role
-      } as Account
-    }
-    return jwtResponse
   })
-} // Get refresh token
-
+}
 const generateAccessToken = (user: UserInstance) => {
   return sign(
     {
