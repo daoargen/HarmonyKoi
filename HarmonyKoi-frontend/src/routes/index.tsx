@@ -13,11 +13,26 @@ import PostPage from '../pages/Post/PostPage'
 import NewsPage from '../pages/News/NewsPage'
 import ConsultingPage from '../pages/Consulting/ConsultingPage'
 import AppLayout from '../App'
+<<<<<<< HEAD
 import KoiFishForm from '../pages/koiFish/koiFishForm'
 import KoiFishDetail from '../pages/koiFish/KoiFishDetail' // Adjust the path as needed
 import LoginPage from '../pages/Login/LoginPage'
 import AuthGuard from '../Guards/AuthGuard'
 import KoiFishByYear from '../pages/koiFish/koiFishByYear'
+=======
+import LoginPage from '../pages/Login/LoginPage'
+import RoleBasedGuard from '../Guards/RoleBasedGuard'
+import ManageOrder from '../pages/MemberPage/MangeOrder/MangeOrderPage'
+import ManageNews from '../pages/AdminPage/ManageNews/ManageNewsPage'
+import ManageFish from '../pages/AdminPage/MangeFish/ManageFish'
+import ApprovePost from '../pages/AdminPage/ApprovePost/ApprovePostPage'
+import ManagePond from '../pages/AdminPage/ManagePond/ManagePondPage'
+import ManageUser from '../pages/AdminPage/ManageUser/ManageUser'
+import ManangePost from '../pages/MemberPage/MangePost/MangePostPage'
+import Dashboard from '../pages/AdminPage/Dashboard/DashboardPage'
+import { Role } from '../types/user.type'
+import AuthGuard from '../Guards/AuthGuard'
+>>>>>>> 3cdbdda66d4956c74990185e2c3f314b3c73d19d
 import ManagePage from '../layouts/MainLayout/components/Manage/ManagePage/ManagePage'
 
 const router = createBrowserRouter([
@@ -73,6 +88,7 @@ const router = createBrowserRouter([
             path: configs.routes.register,
             element: <Register />
           }
+<<<<<<< HEAD
           // {
           //   path: configs.routes.resetPassword,
           //   element: (
@@ -81,6 +97,8 @@ const router = createBrowserRouter([
           //     </ResetPasswordGuard>
           //   )
           // }
+=======
+>>>>>>> 3cdbdda66d4956c74990185e2c3f314b3c73d19d
         ]
       }
     ]
@@ -90,20 +108,79 @@ const router = createBrowserRouter([
   //   element: <Home />
   // },
   {
+<<<<<<< HEAD
     path: '/admin/manage',
     element: (
       <AuthGuard>
         <ManagePage />
       </AuthGuard>
     )
+=======
+    path: 'admin/manage',
+    element: (
+      <AuthGuard>
+        <RoleBasedGuard accessibleRoles={[Role.ADMIN]}>
+          <ManagePage />
+        </RoleBasedGuard>
+      </AuthGuard>
+    ),
+    children: [
+      {
+        path: 'dashboard',
+        element: <Dashboard />
+      },
+      {
+        path: 'manage-users',
+        element: <ManageUser />
+      },
+      {
+        path: 'manage-fish',
+        element: <ManageFish />
+      },
+      {
+        path: 'manage-ponds',
+        element: <ManagePond />
+      },
+      {
+        path: 'manage-news',
+        element: <ManageNews />
+      },
+      {
+        path: 'approve-posts',
+        element: <ApprovePost />
+      }
+    ]
+>>>>>>> 3cdbdda66d4956c74990185e2c3f314b3c73d19d
   },
   {
     path: '/member/manage',
     element: (
       <AuthGuard>
+<<<<<<< HEAD
         <ManagePage />
       </AuthGuard>
     )
+=======
+        <RoleBasedGuard accessibleRoles={[Role.MEMBER]}>
+          <ManagePage />
+        </RoleBasedGuard>
+      </AuthGuard>
+    ),
+    children: [
+      {
+        path: 'manage-posts',
+        element: (
+          <RoleBasedGuard accessibleRoles={[Role.MEMBER]}>
+            <ManangePost />
+          </RoleBasedGuard>
+        )
+      },
+      {
+        path: 'manage-orders',
+        element: <ManageOrder />
+      }
+    ]
+>>>>>>> 3cdbdda66d4956c74990185e2c3f314b3c73d19d
   },
   {
     path: configs.routes.error,

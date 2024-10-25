@@ -138,19 +138,13 @@ export interface UpdateNew {
 
 // Order
 export interface CreateOrder {
-  userId: string
+  koiFishId: string | null
   packageId: string | null
-  postId: string | null
-  status: "PENDING" | "PROCESSING" | "SHIPPED" | "CANCELLED" | "COMPLETED"
-  totalAmount: number
+  type: "PACKAGE" | "KOIFISH"
 }
 
 export interface UpdateOrder {
-  userId?: string
-  packageId?: string | null
-  postId?: string | null
   status?: "PENDING" | "PROCESSING" | "SHIPPED" | "CANCELLED" | "COMPLETED"
-  totalAmount?: number
 }
 
 export interface CreateOrderDetail {
@@ -204,17 +198,10 @@ export interface UpdatePatternType {
 // Payment
 export interface CreatePayment {
   orderId: string
-  paymentCode: string
   amount: number
-  payDate: Date
-  payStatus: "PENDING" | "COMPLETED" | "CANCEL"
 }
 
 export interface UpdatePayment {
-  orderId?: string
-  paymentCode?: string
-  amount?: number
-  payDate?: Date
   payStatus?: "PENDING" | "COMPLETED" | "CANCEL"
 }
 
@@ -281,4 +268,9 @@ export interface CreateVeriety {
 export interface UpdateVeriety {
   name?: string
   description?: string | null
+}
+
+export interface handleSepayWebhook {
+  content: string // Nội dung chuyển khoản
+  transferAmount: number // Số tiền giao dịch
 }

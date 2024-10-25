@@ -6,7 +6,7 @@ import postService from "~/services/post.service"
 
 async function getPosts(req: Request, res: Response) {
   try {
-    const { posts, pagination } = await postService.getAllPosts(req)
+    const { posts, pagination } = await postService.getVisiblePosts(req)
     return res.json(responseStatus.responseData200("Get posts list successfully!", posts, pagination))
   } catch (error) {
     return res.json(error)

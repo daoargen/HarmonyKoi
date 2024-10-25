@@ -12,6 +12,19 @@ async function getOrders(req: Request, res: Response) {
   }
 }
 
+async function getOrderHistory(req: Request, res: Response) {
+  try {
+    const token = req.header("Authorization")?.replace("Bearer ", "")
+    if (!token) {
+      return res.json(responseStatus.responseUnauthorized401())
+    }
+    const { orders, pagination } = await orderService.getOrderHistory(token, req)
+    return res.json(responseStatus.responseData200("Get orders list successfully!", orders, pagination))
+  } catch (error) {
+    return res.json(error)
+  }
+}
+
 async function getOrder(req: Request, res: Response) {
   try {
     const id = req.params.id
@@ -24,8 +37,12 @@ async function getOrder(req: Request, res: Response) {
 
 async function createOrder(req: Request, res: Response) {
   try {
+    const token = req.header("Authorization")?.replace("Bearer ", "")
+    if (!token) {
+      return res.json(responseStatus.responseUnauthorized401())
+    }
     const newOrder = req.body
-    const order = await orderService.createOrder(newOrder)
+    const order = await orderService.createOrder(token, newOrder)
     return res.json(responseStatus.responseData200("Create order successfully!", order))
   } catch (error) {
     return res.json(error)
@@ -55,6 +72,7 @@ async function deleteOrder(req: Request, res: Response) {
 
 export default {
   getOrders,
+  getOrderHistory,
   getOrder,
   createOrder,
   editOrder,

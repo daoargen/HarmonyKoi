@@ -43,6 +43,40 @@ router.get("/", authMiddleware.verifyMinimumRole(Role.ADMIN), OrderController.ge
 
 /**
  * @swagger
+ * /api/orders/user/history:
+ *   get:
+ *     tags:
+ *       - order
+ *     summary: Api for get orders
+ *     parameters:
+ *       - in: query
+ *         name: page_index
+ *         schema:
+ *           type: integer
+ *         description: Page number
+ *       - in: query
+ *         name: page_size
+ *         schema:
+ *           type: integer
+ *         description: Number of items per page
+ *       - in: query
+ *         name: keyword
+ *         schema:
+ *           type: string
+ *         description: Keyword to search in user's username, package name, or post title
+ *       - in: query
+ *         name: status
+ *         schema:
+ *           type: string
+ *         description: Order status to filter by (PENDING, PROCESSING, SHIPPED, CANCELLED, COMPLETED)
+ *     responses:
+ *       200:
+ *         description: Returns a list of orders
+ */
+router.get("/user/history", authMiddleware.verifyToken, OrderController.getOrderHistory)
+
+/**
+ * @swagger
  * /api/orders/{id}:
  *   get:
  *     tags:
@@ -75,22 +109,16 @@ router.get("/:id", OrderController.getOrder)
  *           schema:
  *             type: object
  *             properties:
- *               userId:
+ *               koiFishId:
  *                 type: string
- *                 description: User ID of the order
+ *                 description: Koi Fish ID of the order (can be null)
  *               packageId:
  *                 type: string
  *                 description: Package ID of the order (can be null)
- *               postId:
+ *               type:
  *                 type: string
- *                 description: Post ID of the order (can be null)
- *               status:
- *                 type: string
- *                 enum: [PENDING, PROCESSING, SHIPPED, CANCELLED, COMPLETED]
- *                 description: Status of the order
- *               totalAmount:
- *                 type: number
- *                 description: Total amount of the order
+ *                 enum: [PACKAGE, KOIFISH]
+ *                 description: Type of the order (PACKAGE or KOIFISH)
  *     responses:
  *       201:
  *         description: Order created successfully
