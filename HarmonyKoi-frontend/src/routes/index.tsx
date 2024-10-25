@@ -18,7 +18,6 @@ import KoiFishDetail from '../pages/koiFish/KoiFishDetail' // Adjust the path as
 import LoginPage from '../pages/Login/LoginPage'
 import AuthGuard from '../Guards/AuthGuard'
 import KoiFishByYear from '../pages/koiFish/koiFishByYear'
-import LoginPage from '../pages/Login/LoginPage'
 import RoleBasedGuard from '../Guards/RoleBasedGuard'
 import ManageOrder from '../pages/MemberPage/MangeOrder/MangeOrderPage'
 import ManageNews from '../pages/AdminPage/ManageNews/ManageNewsPage'
@@ -29,7 +28,6 @@ import ManageUser from '../pages/AdminPage/ManageUser/ManageUser'
 import ManangePost from '../pages/MemberPage/MangePost/MangePostPage'
 import Dashboard from '../pages/AdminPage/Dashboard/DashboardPage'
 import { Role } from '../types/user.type'
-import AuthGuard from '../Guards/AuthGuard'
 import ManagePage from '../layouts/MainLayout/components/Manage/ManagePage/ManagePage'
 import PostDetailPage from '../pages/DetailPage/PostDetail/PostDetailPage'
 import NewsDetailPage from '../pages/DetailPage/NewsDetail/NewsDetailPage'
@@ -75,6 +73,7 @@ const router = createBrowserRouter([
         path: '/koiFishForm/:yearOfBirth', // Add the detail route here
         element: <KoiFishByYear />
       },
+      {
         path: 'posts/:id',
         element: <PostDetailPage />
       },
