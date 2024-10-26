@@ -8,6 +8,8 @@ import { User } from "~/models/user.model"
 import { formatModelDate } from "~/utils/formatTimeModel.util"
 import { getUserFromToken } from "~/utils/getUserFromToken.util"
 
+import orderService from "./order.service"
+
 async function getVisiblePosts(req: Request) {
   try {
     // Xử lý tham số query và gán giá trị mặc định nếu không có
@@ -15,10 +17,10 @@ async function getVisiblePosts(req: Request) {
     const pageSize = parseInt(req.query.page_size as string) || 10
     const keyword = req.query.keyword as string
     const status = req.query.status as string
-    const visible = req.query.visible as string
 
     const whereCondition: any = {
-      isDeleted: false
+      isDeleted: false,
+      visible: true
     }
 
     if (keyword) {
@@ -33,8 +35,62 @@ async function getVisiblePosts(req: Request) {
       whereCondition.status = status
     }
 
-    if (visible) {
-      whereCondition.visible = visible === "true" // Convert string to boolean
+    const { count, rows: posts } = await Post.findAndCountAll({
+      where: whereCondition,
+      limit: pageSize,
+      offset: (pageIndex - 1) * pageSize,
+      order: [["createdAt", "DESC"]],
+      include: [
+        {
+          model: User,
+          as: "user",
+          attributes: ["username"]
+        }
+      ]
+    })
+
+    const formattedPosts = posts.map((post) => formatModelDate(post.dataValues))
+
+    const totalPage = Math.ceil(count / pageSize)
+    const pagination = {
+      pageSize,
+      totalItem: count,
+      currentPage: pageIndex,
+      maxPageSize: 100,
+      totalPage
+    }
+
+    return { posts: formattedPosts, pagination }
+  } catch (error) {
+    console.error(error)
+    throw error
+  }
+}
+
+async function getMemberPosts(token: string, req: Request) {
+  try {
+    // Xử lý tham số query và gán giá trị mặc định nếu không có
+    const pageIndex = parseInt(req.query.page_index as string) || 1
+    const pageSize = parseInt(req.query.page_size as string) || 10
+    const keyword = req.query.keyword as string
+    const status = req.query.status as string
+
+    const user = await getUserFromToken(token)
+
+    const whereCondition: any = {
+      isDeleted: false,
+      userId: user.id
+    }
+
+    if (keyword) {
+      whereCondition[Op.or] = [
+        { title: { [Op.like]: `%${keyword}%` } },
+        { content: { [Op.like]: `%${keyword}%` } } // Search by user's username
+      ]
+    }
+
+    if (status) {
+      whereCondition.status = status
     }
 
     const { count, rows: posts } = await Post.findAndCountAll({
@@ -100,7 +156,7 @@ async function createPost(token: string, newPost: CreatePost) {
       title: newPost.title,
       content: newPost.content,
       dateRemain: 100,
-      status: newPost.status ?? "PENDING",
+      status: "PENDING",
       visible: false
     })
     return post
@@ -110,7 +166,7 @@ async function createPost(token: string, newPost: CreatePost) {
   }
 }
 
-async function editPost(id: string, updatedPost: UpdatePost) {
+async function editPost(id: string, token: string, updatedPost: UpdatePost) {
   try {
     const post = await Post.findOne({
       where: { id, isDeleted: false }
@@ -120,14 +176,30 @@ async function editPost(id: string, updatedPost: UpdatePost) {
       throw responseStatus.responseNotFound404("Post not found")
     }
 
-    await post.update({
-      userId: updatedPost.userId || post.userId,
-      title: updatedPost.title || post.title,
-      content: updatedPost.content || post.content,
-      dateRemain: updatedPost.dateRemain || post.dateRemain,
-      status: updatedPost.status || post.status,
-      visible: updatedPost.visible !== undefined ? updatedPost.visible : post.visible
-    })
+    const user = await getUserFromToken(token)
+    const userPackage = await orderService.getCurrentPackage(token)
+
+    // Kiểm tra giới hạn bài đăng
+    if (updatedPost.visible === true) {
+      if (!userPackage) {
+        throw responseStatus.responeCustom(402, "Bạn cần mua gói để thực hiện hành động này.")
+      } else {
+        const posts = await Post.findAll({
+          where: { userId: user.id, visible: true, isDeleted: false }
+        })
+
+        if (posts.length >= userPackage.amountPost) {
+          throw responseStatus.responeCustom(402, "Bạn đã đạt giới hạn bài đăng cho gói hiện tại.")
+        }
+      }
+    }
+
+    post.title = updatedPost.title || post.title
+    post.content = updatedPost.content || post.content
+    post.status = updatedPost.status || post.status
+    post.visible = updatedPost.visible || post.visible
+
+    await post.save()
 
     return post
   } catch (error) {
@@ -158,6 +230,7 @@ async function deletePost(id: string) {
 
 export default {
   getVisiblePosts,
+  getMemberPosts,
   getPostById,
   createPost,
   editPost,
