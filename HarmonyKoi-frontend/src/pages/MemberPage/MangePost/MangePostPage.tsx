@@ -37,6 +37,7 @@ const PostItem: React.FC<{ post: Post; onDelete: (id: string) => void; onToggleV
     <tr className={styles.postItem}>
       <td className={styles.postTitle}>{truncateText(post.title, 50)}</td>
       <td className={styles.postContent}>{truncateText(post.content, 100)}</td>
+      <td className={styles.postContent}>{post.status}</td>
       <td>{formatDate(parseDate(post.createdAt))}</td>
       <td className={styles.actions}>
         <Button variant='ghost' onClick={handleToggleVisible} className={styles.visibleButton}>
@@ -120,6 +121,7 @@ const ManagePostPage: React.FC = () => {
           <tr>
             <th>Tiêu đề</th>
             <th>Nội dung</th>
+            <th>Trạng thái</th>
             <th>Ngày đăng</th>
             <th>Thao tác</th>
           </tr>
