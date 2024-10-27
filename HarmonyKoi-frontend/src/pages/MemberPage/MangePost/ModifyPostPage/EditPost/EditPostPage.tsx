@@ -21,6 +21,7 @@ const EditPostPage: React.FC = () => {
     const fetchPost = async () => {
       try {
         const response = await getPostById(id!)
+        console.log(response.data)
         setPost(response.data.data)
       } catch (err) {
         setError('Không thể tải bài viết')
@@ -43,7 +44,7 @@ const EditPostPage: React.FC = () => {
           visible: post.visible
         })
         console.log(response)
-        navigate('/manage-post')
+        navigate('/member/manage/manage-posts')
       } catch (err) {
         setError('Không thể cập nhật bài viết')
       } finally {
