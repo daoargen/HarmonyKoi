@@ -320,9 +320,9 @@ async function createOrder(token: string, newOrder: CreateOrder) {
       amount: order.totalAmount
     }
 
-    await paymentService.createPayment(newPayment)
+    const payment = await paymentService.createPayment(newPayment)
 
-    return order
+    return { order, payment }
   } catch (error) {
     console.error(error)
     throw error
