@@ -14,6 +14,7 @@ const routes = {
   orders: '/orders',
   about: '/about',
   error: '*',
+  editPost: '/edit-post/:id',
   notFound: '/not-found',
   post: '/post',
   consult: '/consulting',

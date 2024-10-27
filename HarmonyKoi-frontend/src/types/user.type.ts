@@ -37,10 +37,6 @@ export type UserResponse = SuccessResponse<{
   user: User
 }>
 
-export type GoogleUrlResponse = SuccessResponse<{
-  url: string
-}>
-
 export type VerifyTokenForgotPasswordResponse = SuccessResponse<{
   success: boolean
 }>

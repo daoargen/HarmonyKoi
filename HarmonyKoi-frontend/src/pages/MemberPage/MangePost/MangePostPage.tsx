@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { Button } from '../../../components/ui/button'
 import { Post } from '../../../types'
-import { deletePostById, getPost } from '../../../apis/post.api'
+import { deletePostById, getPostByMember, updatePostVisible } from '../../../apis/post.api'
 import styles from './ManagePostPage.module.css'
 import { useNavigate } from 'react-router-dom'
-import { PlusCircle, Edit, Trash2 } from 'lucide-react'
+import { PlusCircle, Edit, Trash2, Eye, EyeOff } from 'lucide-react'
 import { formatDate, parseDate } from '../../../utils/helpers'
-import { Eye, EyeOff } from 'lucide-react' // Import icons
 
 const PostItem: React.FC<{ post: Post; onDelete: (id: string) => void; onToggleVisible: (id: string) => void }> = ({
   post,
@@ -43,7 +42,7 @@ const PostItem: React.FC<{ post: Post; onDelete: (id: string) => void; onToggleV
         <Button variant='ghost' onClick={handleToggleVisible} className={styles.visibleButton}>
           {post.visible ? <Eye size={16} /> : <EyeOff size={16} />} {/* Hiển thị icon dựa trên visible */}
         </Button>
-        <Button variant='outline' onClick={handleEdit} className={styles.editButton}>
+        <Button variant='link' onClick={handleEdit} className={styles.editButton}>
           <Edit size={16} />
         </Button>
         <Button variant='destructive' onClick={handleDelete} className={styles.deleteButton}>
@@ -63,9 +62,8 @@ const ManagePostPage: React.FC = () => {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const response = await getPost()
-        const visiblePosts = response.data.data.filter((post: Post) => post.visible)
-        setPosts(visiblePosts)
+        const response = await getPostByMember()
+        setPosts(response.data.data)
       } catch (err) {
         setError('Không thể tải danh sách bài viết')
       } finally {
@@ -87,11 +85,19 @@ const ManagePostPage: React.FC = () => {
 
   const handleToggleVisible = async (id: string) => {
     try {
-      const updatedPosts = posts.map((post) => (post.id === id ? { ...post, visible: !post.visible } : post))
-      setPosts(updatedPosts) // Cập nhật state trước để UI phản hồi ngay lập tức
+      const postToUpdate = posts.find((post) => post.id === id)
 
-      // Gọi API để cập nhật visible ở backend (nếu cần)
-      // await updatePostVisible(id, !posts.find(p => p.id === id)?.visible); // Ví dụ gọi API
+      if (!postToUpdate) return
+
+      const newVisibleState = !postToUpdate.visible
+
+      // Gọi API để cập nhật trạng thái visible trên backend
+      await updatePostVisible(id, newVisibleState)
+
+      // Nếu API thành công, cập nhật UI
+      setPosts(posts.map((post) => (post.id === id ? { ...post, visible: newVisibleState } : post)))
+
+      console.log(posts.map((post) => (post.id === id ? { ...post, visible: newVisibleState } : post)))
     } catch (error) {
       setError('Lỗi khi cập nhật trạng thái hiển thị.')
     }
@@ -104,7 +110,7 @@ const ManagePostPage: React.FC = () => {
     <div className={styles.managePostContainer}>
       <header className={styles.header}>
         <h1 className={styles.title}>Quản lý bài viết</h1>
-        <Button onClick={() => navigate('/add-post')} variant='default' className={styles.addButton}>
+        <Button onClick={() => navigate('/add-post')} variant='link' className={styles.addButton}>
           <PlusCircle size={20} />
           Thêm bài viết mới
         </Button>

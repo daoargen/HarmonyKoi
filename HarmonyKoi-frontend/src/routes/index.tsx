@@ -28,6 +28,8 @@ import ManagePond from '../pages/AdminPage/ManagePond/ManagePondPage'
 import ManageUser from '../pages/AdminPage/ManageUser/ManageUser'
 import ManangePost from '../pages/MemberPage/MangePost/MangePostPage'
 import Dashboard from '../pages/AdminPage/Dashboard/DashboardPage'
+import AddPostPage from '../pages/MemberPage/MangePost/ModifyPostPage/AddPost/AddPostPage'
+import EditPostPage from '../pages/MemberPage/MangePost/ModifyPostPage/EditPost/EditPostPage'
 import { Role } from '../types/user.type'
 import ManagePage from '../layouts/MainLayout/components/Manage/ManagePage/ManagePage'
 import PostDetailPage from '../pages/DetailPage/PostDetail/PostDetailPage'
@@ -85,6 +87,14 @@ const router = createBrowserRouter([
       {
         path: 'news/:id',
         element: <NewsDetailPage />
+      },
+      {
+        path: '/add-post',
+        element: <AddPostPage />
+      },
+      {
+        path: configs.routes.editPost,
+        element: <EditPostPage />
       },
       // GuestGuard
       {
