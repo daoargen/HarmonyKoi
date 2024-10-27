@@ -188,7 +188,7 @@ async function editPost(id: string, token: string, updatedPost: UpdatePost) {
           where: { userId: user.id, visible: true, isDeleted: false }
         })
 
-        if (post.status === "APPROVED") {
+        if (post.status !== "APPROVED") {
           throw responseStatus.responeCustom(402, "Bài viết chưa được duyệt bởi admin")
         }
 
