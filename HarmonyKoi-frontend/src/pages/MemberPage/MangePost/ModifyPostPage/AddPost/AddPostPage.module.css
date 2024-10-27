@@ -1,0 +1,193 @@
+/* General Container */
+.addPostContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #f7fafc;
+  padding: 20px;
+}
+
+/* Card Styling */
+.addPostCard {
+  width: 100%;
+  max-width: 680px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+  padding: 32px; /* Tăng padding cho khoảng cách rộng rãi hơn */
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.addPostCard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+}
+
+/* Title Styling */
+.title {
+  font-size: 28px;
+  color: #2d3748;
+  text-align: center;
+  margin-bottom: 32px; /* Khoảng cách lớn hơn để tách biệt tiêu đề */
+  font-weight: 700;
+}
+
+/* Back Button */
+.backButton {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 16px;
+  color: #718096;
+  transition: color 0.3s ease;
+}
+
+.backButton:hover {
+  color: #3182ce;
+}
+
+/* Form Group Styling */
+.formGroup {
+  margin-bottom: 24px;
+}
+
+.label {
+  font-weight: 600;
+  margin-bottom: 10px;
+  color: #4a5568;
+  font-size: 15px;
+}
+
+.input,
+.textarea {
+  width: 100%;
+  border: 2px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 12px;
+  font-size: 16px;
+  box-sizing: border-box;
+  transition:
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.input:focus,
+.textarea:focus {
+  border-color: #63b3ed;
+  box-shadow: 0 0 0 3px rgba(99, 179, 237, 0.4);
+}
+
+.textarea {
+  min-height: 160px;
+  resize: vertical;
+}
+
+/* Create Button */
+.createButton {
+  width: 100%;
+  padding: 14px;
+  font-size: 17px;
+  font-weight: bold;
+  background-color: #3182ce;
+  color: #ffffff;
+  border-radius: 8px;
+  transition:
+    background-color 0.3s ease,
+    transform 0.2s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.createButton:hover {
+  background-color: #2b6cb0;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(50, 115, 220, 0.2);
+}
+
+.createButton:disabled {
+  background-color: #a0aec0;
+  cursor: not-allowed;
+}
+
+/* Error Message */
+.error {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #e53e3e;
+  background-color: #fff5f5;
+  border: 1px solid #fed7d7;
+  border-radius: 8px;
+  padding: 15px;
+  margin-bottom: 20px;
+  font-size: 14px;
+  animation: shake 0.4s cubic-bezier(0.36, 0.07, 0.19, 0.97);
+}
+
+.error svg {
+  flex-shrink: 0;
+}
+
+@keyframes shake {
+  10%,
+  90% {
+    transform: translate3d(-1px, 0, 0);
+  }
+  20%,
+  80% {
+    transform: translate3d(2px, 0, 0);
+  }
+  30%,
+  50%,
+  70% {
+    transform: translate3d(-4px, 0, 0);
+  }
+  40%,
+  60% {
+    transform: translate3d(4px, 0, 0);
+  }
+}
+
+/* Loading Spinner */
+.spinner {
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top: 3px solid #ffffff;
+  width: 18px;
+  height: 18px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .addPostCard {
+    max-width: 100%;
+    padding: 24px; /* Giảm padding cho màn hình nhỏ */
+  }
+
+  .title {
+    font-size: 24px;
+  }
+
+  .backButton {
+    top: 12px;
+    left: 12px;
+  }
+}
