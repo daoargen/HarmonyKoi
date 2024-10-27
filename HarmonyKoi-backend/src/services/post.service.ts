@@ -188,6 +188,10 @@ async function editPost(id: string, token: string, updatedPost: UpdatePost) {
           where: { userId: user.id, visible: true, isDeleted: false }
         })
 
+        if (post.status === "APPROVED") {
+          throw responseStatus.responeCustom(402, "Bài viết chưa được duyệt bởi admin")
+        }
+
         if (posts.length >= userPackage.amountPost) {
           throw responseStatus.responeCustom(402, "Bạn đã đạt giới hạn bài đăng cho gói hiện tại.")
         }
@@ -197,10 +201,11 @@ async function editPost(id: string, token: string, updatedPost: UpdatePost) {
     post.title = updatedPost.title || post.title
     post.content = updatedPost.content || post.content
     post.status = updatedPost.status || post.status
-    post.visible = updatedPost.visible || post.visible
+    post.visible = updatedPost.visible ?? post.visible
 
     await post.save()
 
+    console.log(post)
     return post
   } catch (error) {
     console.error(error)
