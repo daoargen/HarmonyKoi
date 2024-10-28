@@ -49,19 +49,6 @@ async function getAllKoiFishes(req: Request) {
           attributes: ["koiFishId"]
         }).then((results) => results.map((result) => result.koiFishId))
 
-        if (koiFishIdsWithElement.length === 0) {
-          return {
-            koiFishes: [],
-            pagination: {
-              pageSize: 10,
-              totalItem: 0,
-              currentPage: 1,
-              maxPageSize: 100,
-              totalPage: 0
-            }
-          }
-        }
-
         whereCondition.id = {
           [Op.in]: koiFishIdsWithElement
         }
