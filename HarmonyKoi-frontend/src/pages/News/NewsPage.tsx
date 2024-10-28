@@ -79,11 +79,11 @@ const NewsPage = () => {
       ))} */}
       {/* </div> */}
 
-      <Paging
-        data={news}
-        itemsPerPage={9} // hoặc số lượng items mỗi trang bạn muốn
-        renderItem={(newsData: News) => <BlogCard key={newsData.id} {...newsData} />}
-      />
+      {news.length > 0 ? (
+        <Paging data={news} itemsPerPage={9} renderItem={(news: News) => <BlogCard key={news.id} {...news} />} />
+      ) : (
+        <div className={styles.noPostsMessage}>Không có tin tức nào</div>
+      )}
     </div>
   )
 }

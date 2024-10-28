@@ -80,11 +80,11 @@ const PostPage = () => {
       {/* {posts.map((post) => (
           <BlogCard key={post.id} {...post} />
         ))} */}
-      <Paging
-        data={posts}
-        itemsPerPage={9} // hoặc số lượng items mỗi trang bạn muốn
-        renderItem={(post: Post) => <BlogCard key={post.id} {...post} />}
-      />
+      {posts.length > 0 ? (
+        <Paging data={posts} itemsPerPage={9} renderItem={(post: Post) => <BlogCard key={post.id} {...post} />} />
+      ) : (
+        <div className={styles.noPostsMessage}>Không có bài viết nào</div>
+      )}
       {/* </div> */}
     </div>
   )

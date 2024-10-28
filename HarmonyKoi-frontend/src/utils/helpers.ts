@@ -18,16 +18,20 @@ export const formatDate = (date: Date): string => {
 // utils/helpers.ts
 
 export const parseDate = (dateString: string): Date => {
-  const [time, date] = dateString.split('-') // Tách thời gian và ngày
-  const [hours, minutes, seconds] = time.split(':') // Tách giờ, phút, giây
-  const [day, month, year] = date.split('/') // Tách ngày, tháng, năm
+  try {
+    // Thử parse theo ISO 8601 trước
+    const isoDate = new Date(dateString)
+    if (!isNaN(isoDate.getTime())) {
+      return isoDate
+    }
 
-  return new Date(
-    Number(year),
-    Number(month) - 1, // Tháng bắt đầu từ 0
-    Number(day),
-    Number(hours),
-    Number(minutes),
-    Number(seconds)
-  )
+    // Nếu không phải ISO 8601, thử parse theo định dạng cũ
+    const [time, date] = dateString.split('-')
+    const [day, month, year] = date.split('/')
+    const [hours, minutes, seconds] = time.split(':')
+    return new Date(Number(year), Number(month) - 1, Number(day), Number(hours), Number(minutes), Number(seconds))
+  } catch (error) {
+    console.error('Invalid date string:', dateString)
+    return new Date() // Hoặc giá trị mặc định khác
+  }
 }
