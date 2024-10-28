@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Button } from '../../../components/ui/button'
-import { Post } from '../../../types'
+import { Post } from '../../../types/post.type'
 import { deletePostById, getPostByMember, updatePostVisible } from '../../../apis/post.api'
 import styles from './ManagePostPage.module.css'
 import { useNavigate } from 'react-router-dom'

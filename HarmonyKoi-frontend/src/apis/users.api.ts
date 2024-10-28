@@ -1,7 +1,7 @@
 // import { LoginFormType } from '../pages/Login/LoginPage'
 // import { RegisterFormType } from '../pages/Register/Register'
 import { AuthResponse } from '../types/auth.type'
-import { GoogleUrlResponse, UserResponse } from '../types/user.type'
+import { UserResponse } from '../types/user.type'
 import { getRefreshToken } from '../utils/cookies'
 import http from '../utils/http'
 
@@ -22,7 +22,7 @@ export const login = async (data: { loginKey: string; password: string }) =>
 
 export const getProfile = async () => await http.get<UserResponse>('/users/profile')
 
-export const getGoogleAuthUrl = () => http.get<GoogleUrlResponse>('/login/google')
+// export const getGoogleAuthUrl = () => http.get<GoogleUrlResponse>('/login/google')
 
 export const loginWithGoogle = (code: string | null, signal?: AbortSignal) =>
   http.post<AuthResponse>('/login/google', { code }, { signal })
