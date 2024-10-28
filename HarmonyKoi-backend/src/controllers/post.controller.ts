@@ -26,6 +26,16 @@ async function getMemberPosts(req: Request, res: Response) {
   }
 }
 
+async function getPendingPosts(req: Request, res: Response) {
+  try {
+    console.log("pen")
+    const { posts, pagination } = await postService.getPendingPosts(req)
+    return res.json(responseStatus.responseData200("Get posts list successfully!", posts, pagination))
+  } catch (error) {
+    return res.json(error)
+  }
+}
+
 async function getPost(req: Request, res: Response) {
   try {
     const id = req.params.id
@@ -88,6 +98,7 @@ async function deletePost(req: Request, res: Response) {
 export default {
   getPosts,
   getMemberPosts,
+  getPendingPosts,
   getPost,
   createPost,
   editPost,

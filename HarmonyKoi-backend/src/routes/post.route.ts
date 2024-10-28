@@ -87,6 +87,45 @@ router.get("/member", authMiddleware.verifyToken, PostController.getMemberPosts)
 
 /**
  * @swagger
+ * /api/posts/admin:
+ *   get:
+ *     tags:
+ *       - post
+ *     summary: Api for get member posts
+ *     parameters:
+ *       - in: query
+ *         name: page_index
+ *         schema:
+ *           type: integer
+ *         description: Page number
+ *       - in: query
+ *         name: page_size
+ *         schema:
+ *           type: integer
+ *         description: Number of items per page
+ *       - in: query
+ *         name: keyword
+ *         schema:
+ *           type: string
+ *         description: Keyword to search in post titles, content, or user's username
+ *       - in: query
+ *         name: status
+ *         schema:
+ *           type: string
+ *         description: Post status to filter by
+ *       - in: query
+ *         name: visible
+ *         schema:
+ *           type: string
+ *         description: Filter by visibility (true or false)
+ *     responses:
+ *       200:
+ *         description: Returns a list of posts
+ */
+router.get("/admin", authMiddleware.verifyToken, PostController.getPendingPosts)
+
+/**
+ * @swagger
  * /api/posts/{id}:
  *   get:
  *     tags:
