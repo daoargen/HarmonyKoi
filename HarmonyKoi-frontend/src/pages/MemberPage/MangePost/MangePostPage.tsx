@@ -75,7 +75,7 @@ const ManagePostPage: React.FC = () => {
   const navigate = useNavigate()
 
   const [currentPage, setCurrentPage] = useState(1)
-  const itemsPerPage = 2
+  const itemsPerPage = 10
 
   useEffect(() => {
     const fetchPosts = async () => {
