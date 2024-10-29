@@ -5,6 +5,9 @@ import { getPostByAdmin, updatePostStatus } from '../../../apis/post.api'
 import styles from './ApprovePostPage.module.css'
 import { Check, X, ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from 'lucide-react'
 import { formatDate, parseDate } from '../../../utils/helpers'
+import { motion, AnimatePresence } from 'framer-motion'
+import { toast, ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 interface PostDetailPopupProps {
   post: Post
@@ -15,8 +18,14 @@ interface PostDetailPopupProps {
 
 const PostDetailPopup: React.FC<PostDetailPopupProps> = ({ post, onClose, onApprove, onReject }) => {
   return (
-    <div className={styles.popupOverlay}>
-      <div className={styles.popup}>
+    <motion.div className={styles.popupOverlay} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+      <motion.div
+        className={styles.popup}
+        initial={{ scale: 0.8, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        exit={{ scale: 0.8, opacity: 0 }}
+        transition={{ type: 'spring', damping: 15, stiffness: 300 }}
+      >
         <button className={styles.closeButton} onClick={onClose}>
           X
         </button>
@@ -38,8 +47,8 @@ const PostDetailPopup: React.FC<PostDetailPopupProps> = ({ post, onClose, onAppr
             Từ chối
           </Button>
         </div>
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   )
 }
 
@@ -92,8 +101,9 @@ const ApprovePostPage: React.FC = () => {
       await updatePostStatus(id, 'APPROVED')
       setPosts(posts.filter((post) => post.id !== id))
       setSelectedPost(null)
+      toast.success('Bài viết đã được duyệt thành công!')
     } catch (error) {
-      setError('Lỗi khi duyệt bài viết.')
+      toast.error('Lỗi khi duyệt bài viết.')
     }
   }
 
@@ -102,8 +112,9 @@ const ApprovePostPage: React.FC = () => {
       await updatePostStatus(id, 'REJECTED')
       setPosts(posts.filter((post) => post.id !== id))
       setSelectedPost(null)
+      toast.info('Bài viết đã bị từ chối.')
     } catch (error) {
-      setError('Lỗi khi từ chối bài viết.')
+      toast.error('Lỗi khi từ chối bài viết.')
     }
   }
 
@@ -168,14 +179,17 @@ const ApprovePostPage: React.FC = () => {
           <ChevronsRight size={16} />
         </Button>
       </div>
-      {selectedPost && (
-        <PostDetailPopup
-          post={selectedPost}
-          onClose={() => setSelectedPost(null)}
-          onApprove={handleApprove}
-          onReject={handleReject}
-        />
-      )}
+      <AnimatePresence>
+        {selectedPost && (
+          <PostDetailPopup
+            post={selectedPost}
+            onClose={() => setSelectedPost(null)}
+            onApprove={handleApprove}
+            onReject={handleReject}
+          />
+        )}
+      </AnimatePresence>
+      <ToastContainer position='bottom-right' autoClose={3000} />
     </div>
   )
 }

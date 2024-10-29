@@ -110,6 +110,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 1000;
 }
 
 .popup {
@@ -192,4 +193,26 @@
     width: 95%;
     padding: 16px;
   }
+}
+
+/* Toast Notification Styles */
+:global(.Toastify__toast-container) {
+  width: 320px;
+}
+
+:global(.Toastify__toast) {
+  font-family: 'Arial', sans-serif;
+  border-radius: 4px;
+}
+
+:global(.Toastify__toast--success) {
+  background-color: #22c55e;
+}
+
+:global(.Toastify__toast--error) {
+  background-color: #ef4444;
+}
+
+:global(.Toastify__toast--info) {
+  background-color: #3b82f6;
 }

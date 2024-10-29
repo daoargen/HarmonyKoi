@@ -113,7 +113,7 @@ const ManagePostPage: React.FC = () => {
 
       setPosts(posts.map((post) => (post.id === id ? { ...post, visible: newVisibleState } : post)))
     } catch (error) {
-      setError('Lỗi khi cập nhật trạng thái hiển thị.')
+      setError('Hãy đợi quản trị viên duyệt bài của bạn')
     }
   }
 
