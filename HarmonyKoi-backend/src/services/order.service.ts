@@ -218,7 +218,10 @@ async function getOrderById(orderId: string) {
       where: { id: orderId, isDeleted: false }
     })
     if (!order) throw responseStatus.responseNotFound404("Order not found")
-    return order
+    const payment = await Payment.findOne({
+      where: { orderId: orderId, isDeleted: false }
+    })
+    return { order, payment }
   } catch (error) {
     console.error(error)
     throw error
@@ -257,7 +260,7 @@ async function createOrder(token: string, newOrder: CreateOrder) {
       })
 
       if (existingOrder) {
-        throw responseStatus.responseConflict409("Order already exists")
+        return await getOrderById(existingOrder.id!)
       }
     }
 
@@ -322,7 +325,7 @@ async function createOrder(token: string, newOrder: CreateOrder) {
 
     const payment = await paymentService.createPayment(newPayment)
 
-    return { order, payment }
+    return await getOrderById(order.id!)
   } catch (error) {
     console.error(error)
     throw error
