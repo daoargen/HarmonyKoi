@@ -2,8 +2,11 @@
 
 import React, { useState, useEffect } from 'react'
 import styles from './ManageOrderPage.module.css'
-import { getOrderHistory } from '../../../apis/order.api'
+import { deleteOrder, getOrderHistory } from '../../../apis/order.api'
 import { Order } from '../../../types/order.type'
+import PaymentButton from '../../../components/common/PaymentModal/PaymentModal'
+import { X } from 'lucide-react'
+import { toast, ToastContainer } from 'react-toastify'
 
 type OrderData = {
   totalOrders: number
@@ -19,6 +22,41 @@ type Pagination = {
   totalPage: number
 }
 
+interface CancelModalProps {
+  isOpen: boolean
+  onClose: () => void
+  onConfirm: () => void
+  orderAmount: number
+}
+
+const CancelModal: React.FC<CancelModalProps> = ({ isOpen, onClose, onConfirm, orderAmount }) => {
+  if (!isOpen) return null
+
+  return (
+    <div className={styles.modalOverlay}>
+      <div className={styles.modalContent}>
+        <button onClick={onClose} className={styles.closeButton}>
+          <X size={20} />
+        </button>
+        <h3 className={styles.modalTitle}>Xác nhận hủy đơn hàng</h3>
+        <div className={styles.modalBody}>
+          <p>Bạn có chắc chắn muốn hủy đơn hàng này?</p>
+          <p className={styles.modalPrice}>Số tiền: {orderAmount.toLocaleString()} VND</p>
+          <p className={styles.modalWarning}>Lưu ý: Hành động này không thể hoàn tác!</p>
+        </div>
+        <div className={styles.modalFooter}>
+          <button onClick={onConfirm} className={styles.confirmButton}>
+            Xác nhận hủy
+          </button>
+          <button onClick={onClose} className={styles.cancelButton}>
+            Đóng
+          </button>
+        </div>
+      </div>
+    </div>
+  )
+}
+
 const ManageOrderPage: React.FC = () => {
   const [data, setData] = useState<OrderData | null>(null)
   const [pagination, setPagination] = useState<Pagination>({
@@ -30,47 +68,63 @@ const ManageOrderPage: React.FC = () => {
   })
   const [statusFilter, setStatusFilter] = useState<'ALL' | 'PENDING' | 'COMPLETED'>('ALL')
   const [isLoading, setIsLoading] = useState(true)
+  const [cancelModalOpen, setCancelModalOpen] = useState(false)
+  const [selectedOrder, setSelectedOrder] = useState<Order | null>(null)
+  const [isCancelling, setIsCancelling] = useState(false)
+
+  const fetchData = async () => {
+    setIsLoading(true)
+    try {
+      const orderResponse = await getOrderHistory({
+        pageIndex: pagination.currentPage,
+        pageSize: pagination.pageSize
+      })
+
+      if (orderResponse && orderResponse.data) {
+        setData({
+          totalOrders: orderResponse.data.data.totalOrders,
+          totalSpent: orderResponse.data.data.totalSpent,
+          formatOrders: orderResponse.data.data.formatOrders
+        })
+        setPagination(orderResponse.data.pagination)
+      }
+    } catch (error) {
+      console.error('Lỗi khi lấy thông tin order:', error)
+      toast.error('Không thể tải danh sách đơn hàng')
+    } finally {
+      setIsLoading(false)
+    }
+  }
 
   useEffect(() => {
-    const fetchData = async () => {
-      setIsLoading(true)
-      try {
-        const orderResponse = await getOrderHistory({
-          pageIndex: pagination.currentPage,
-          pageSize: pagination.pageSize
-          // status: statusFilter
-        })
-
-        if (orderResponse && orderResponse.data) {
-          setData({
-            totalOrders: orderResponse.data.data.totalOrders,
-            totalSpent: orderResponse.data.data.totalSpent,
-            formatOrders: orderResponse.data.data.formatOrders
-          })
-          setPagination(orderResponse.data.pagination)
-        }
-      } catch (error) {
-        console.error('Lỗi khi lấy thông tin order:', error)
-      } finally {
-        setIsLoading(false)
-      }
-    }
-
     fetchData()
-  }, [pagination.currentPage, pagination.pageSize, statusFilter]) // Gọi API mỗi khi pagination hoặc statusFilter thay đổi
+  }, [pagination.currentPage, pagination.pageSize, statusFilter])
 
   const handlePageChange = (newPage: number) => {
     setPagination((prev) => ({ ...prev, currentPage: newPage }))
   }
 
-  const handlePayOrder = (orderId: string) => {
-    // Implement pay logic here
-    console.log(`Paying order ${orderId}`)
+  const handleCancelOrder = (order: Order) => {
+    setSelectedOrder(order)
+    setCancelModalOpen(true)
   }
 
-  const handleCancelOrder = (orderId: string) => {
-    // Implement cancel logic here
-    console.log(`Cancelling order ${orderId}`)
+  const handleConfirmCancel = async () => {
+    if (!selectedOrder) return
+
+    setIsCancelling(true)
+    try {
+      await deleteOrder(selectedOrder.id)
+      toast.success('Đã hủy đơn hàng thành công')
+      fetchData() // Refresh the data
+    } catch (error) {
+      console.error('Lỗi khi hủy đơn hàng:', error)
+      toast.error('Không thể hủy đơn hàng')
+    } finally {
+      setIsCancelling(false)
+      setCancelModalOpen(false)
+      setSelectedOrder(null)
+    }
   }
 
   return (
@@ -107,7 +161,6 @@ const ManageOrderPage: React.FC = () => {
             <table className={styles.table}>
               <thead className={styles.tableHead}>
                 <tr>
-                  <th className={styles.th}>Order ID</th>
                   <th className={styles.th}>Status</th>
                   <th className={styles.th}>Total Amount</th>
                   <th className={styles.th}>Created At</th>
@@ -119,7 +172,6 @@ const ManageOrderPage: React.FC = () => {
               <tbody className={styles.tableBody}>
                 {data.formatOrders.map((order) => (
                   <tr key={order.id}>
-                    <td className={styles.td}>{order.id.slice(0, 8)}...</td>
                     <td className={styles.td}>
                       <span
                         className={`${styles.status} ${
@@ -134,12 +186,16 @@ const ManageOrderPage: React.FC = () => {
                     <td className={styles.td}>{order.user.username}</td>
                     <td className={styles.td}>{order.payment.paymentCode}</td>
                     <td className={styles.td}>
-                      <button onClick={() => handlePayOrder(order.id)} className={styles.payButton}>
-                        Pay
-                      </button>
-                      <button onClick={() => handleCancelOrder(order.id)} className={styles.cancelButton}>
-                        Cancel
-                      </button>
+                      <div className={styles.actionButtons}>
+                        <PaymentButton />
+                        <button
+                          onClick={() => handleCancelOrder(order)}
+                          className={styles.cancelButton}
+                          disabled={order.status === 'COMPLETED' || isCancelling}
+                        >
+                          Cancel
+                        </button>
+                      </div>
                     </td>
                   </tr>
                 ))}
@@ -181,6 +237,14 @@ const ManageOrderPage: React.FC = () => {
           </div>
         </>
       )}
+      <CancelModal
+        isOpen={cancelModalOpen}
+        onClose={() => setCancelModalOpen(false)}
+        onConfirm={handleConfirmCancel}
+        orderAmount={selectedOrder?.totalAmount || 0}
+      />
+
+      <ToastContainer position='bottom-right' autoClose={3000} />
     </div>
   )
 }
