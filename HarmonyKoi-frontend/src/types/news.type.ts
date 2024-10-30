@@ -5,7 +5,7 @@ export interface News {
   tittle: string
   content: string
   isDeleted: boolean
-  createdAt: Date
-  updatedAt: Date
+  createdAt: string
+  updatedAt: string
 }
 export type NewsResponse = SuccessResponse<News[]>

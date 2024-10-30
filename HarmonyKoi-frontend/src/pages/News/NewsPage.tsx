@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { Button } from '../../components/ui/button'
-import { News } from '../../types'
+import { News } from '../../types/news.type'
 import styles from './NewsPage.module.css'
 import koiImage from '../../assets/images/koiImage.jpg'
 import { getNews } from '../../apis/news.api'
-import { formatDate, parseDate } from '../../utils/helpers'
+// import { formatDate, parseDate } from '../../utils/helpers'
 import Paging from '../../components/common/Paging/Paging'
 import banner from '../../assets/images/banner.gif'
 import { useNavigate } from 'react-router-dom'
@@ -22,7 +22,7 @@ const BlogCard: React.FC<News> = ({ id, tittle, content, createdAt }) => {
         <h2 className={styles.blogCardTitle}>{tittle}</h2>
         <p className={styles.blogCardDescription}>{truncatedContent}</p> {/* Hiển thị nội dung đã cắt bớt */}
         <div className={styles.blogCardMeta}>
-          <span>{formatDate(createdAt)}</span>
+          <span>{createdAt}</span>
         </div>
         <Button variant='outline' className={styles.blogCardButton} onClick={handleViewDetail}>
           Xem thêm
@@ -45,12 +45,7 @@ const NewsPage = () => {
 
         const fetchNews: News[] = response.data.data
 
-        const newsWithData = fetchNews.map((newsData) => ({
-          ...newsData,
-          createdAt: parseDate(newsData.createdAt),
-          updatedAt: parseDate(newsData.updatedAt)
-        }))
-        setNews(newsWithData)
+        setNews(fetchNews)
       } catch (err) {
         setError(err)
       } finally {

@@ -11,8 +11,8 @@ export interface Post {
   status: PostStatus
   visible: boolean
   isDeleted: boolean
-  createdAt: Date
-  updatedAt: Date
+  createdAt: string
+  updatedAt: string
   user: {
     username: string
   } | null

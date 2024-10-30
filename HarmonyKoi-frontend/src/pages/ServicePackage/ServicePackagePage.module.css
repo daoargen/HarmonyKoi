@@ -11,6 +11,135 @@
   margin-bottom: 2rem;
 }
 
+/* Previous styles remain the same until modalOverlay */
+
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  animation: fadeIn 0.2s ease-out;
+}
+
+.modalContent {
+  background: #fff;
+  padding: 24px;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  width: 90%;
+  max-width: 400px;
+  position: relative;
+  animation: slideIn 0.3s ease-out;
+}
+
+.closeButton {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: none;
+  border: none;
+  color: #64748b;
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s ease;
+}
+
+.closeButton:hover {
+  color: #475569;
+}
+
+.modalTitle {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #1e293b;
+  margin-bottom: 16px;
+  padding-right: 24px;
+}
+
+.modalBody {
+  margin-bottom: 24px;
+  color: #475569;
+}
+
+.modalPrice {
+  margin-top: 12px;
+  font-weight: 500;
+  color: #3498db;
+}
+
+.modalFooter {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+.confirmButton {
+  padding: 8px 16px;
+  background-color: #3498db;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.confirmButton:hover {
+  background-color: #2980b9;
+}
+
+.cancelButton {
+  padding: 8px 16px;
+  background-color: #e2e8f0;
+  color: #475569;
+  border: none;
+  border-radius: 6px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.cancelButton:hover {
+  background-color: #cbd5e1;
+  color: #1e293b;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Rest of the previous styles remain the same */
+
+.buyButton:disabled {
+  background-color: #94a3b8;
+  cursor: not-allowed;
+}
+
 .packageGrid {
   display: flex;
   justify-content: space-between;
