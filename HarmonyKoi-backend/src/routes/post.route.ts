@@ -164,6 +164,9 @@ router.get("/:id", PostController.getPost)
  *               content:
  *                 type: string
  *                 description: Content of the post
+ *               imageUrl:
+ *                 type: string
+ *                 description: imageUrl of the post
  *     responses:
  *       201:
  *         description: Post created successfully
@@ -225,6 +228,9 @@ router.post("/", authMiddleware.verifyToken, PostController.createPost)
  *               content:
  *                 type: string
  *                 description: Content of the post
+ *               imageUrl:
+ *                 type: string
+ *                 description: imageUrl of the post
  *               status:
  *                 type: string
  *                 description: Status of the post
