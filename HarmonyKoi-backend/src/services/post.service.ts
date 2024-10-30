@@ -212,6 +212,7 @@ async function createPost(token: string, newPost: CreatePost) {
       userId: user.id,
       title: newPost.title,
       content: newPost.content,
+      imageUrl: newPost.imageUrl,
       dateRemain: 100,
       status: "PENDING",
       visible: false
@@ -257,12 +258,15 @@ async function editPost(id: string, token: string, updatedPost: UpdatePost) {
 
     post.title = updatedPost.title || post.title
     post.content = updatedPost.content || post.content
-    post.status = updatedPost.status || post.status
+    post.imageUrl = updatedPost.imageUrl || post.imageUrl
+    if (updatedPost.title || updatedPost.content) {
+      post.status = "PENDING"
+    } else if (updatedPost.status) {
+      post.status = updatedPost.status
+    }
     post.visible = updatedPost.visible ?? post.visible
 
     await post.save()
-
-    console.log(post)
     return post
   } catch (error) {
     console.error(error)

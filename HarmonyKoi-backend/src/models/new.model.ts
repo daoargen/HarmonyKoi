@@ -18,6 +18,10 @@ export const New = sequelize.define<NewInstance>(tableName, {
     type: DataTypes.STRING,
     allowNull: false
   },
+  imageUrl: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
   ...SQLModel
 })
 
@@ -25,6 +29,7 @@ export interface NewAttributes {
   id?: string
   tittle: string
   content: string
+  imageUrl: string
   isDeleted?: boolean
 }
 

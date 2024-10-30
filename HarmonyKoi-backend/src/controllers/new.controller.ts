@@ -1,7 +1,7 @@
 import { Request, Response } from "express"
 
 import responseStatus from "~/constants/responseStatus"
-import { CreateNew } from "~/constants/type"
+import { CreateNew, UpdateNew } from "~/constants/type"
 import newService from "~/services/new.service"
 
 async function getNews(req: Request, res: Response) {
@@ -25,10 +25,11 @@ async function getNew(req: Request, res: Response) {
 
 async function createNew(req: Request, res: Response) {
   try {
-    const { tittle, content } = req.body
+    const { tittle, content, imageUrl } = req.body
     const dataRequest: CreateNew = {
       tittle,
-      content
+      content,
+      imageUrl
     }
     const news = await newService.createNew(dataRequest)
     return res.json(responseStatus.responseData200("Create new successfully!", news))
@@ -40,8 +41,13 @@ async function createNew(req: Request, res: Response) {
 async function editNew(req: Request, res: Response) {
   try {
     const id = req.params.id
-    const updatedNew = req.body
-    await newService.editNew(id, updatedNew)
+    const { tittle, content, imageUrl } = req.body
+    const dataRequest: UpdateNew = {
+      tittle,
+      content,
+      imageUrl
+    }
+    await newService.editNew(id, dataRequest)
     return res.json(responseStatus.responseMessage200("Edit new successfully!"))
   } catch (error) {
     return res.json(error)

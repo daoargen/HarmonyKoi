@@ -52,10 +52,11 @@ async function createPost(req: Request, res: Response) {
     if (!token) {
       return res.json(responseStatus.responseUnauthorized401())
     }
-    const { title, content } = req.body
+    const { title, content, imageUrl } = req.body
     const dataRequest: CreatePost = {
       title: title,
-      content
+      content,
+      imageUrl
     }
     const post = await postService.createPost(token, dataRequest)
     return res.json(responseStatus.responseData200("Create post successfully!", post))
@@ -71,10 +72,11 @@ async function editPost(req: Request, res: Response) {
     if (!token) {
       return res.json(responseStatus.responseUnauthorized401())
     }
-    const { title, content, status, visible } = req.body
+    const { title, content, imageUrl, status, visible } = req.body
     const dataRequest: UpdatePost = {
       title: title,
       content,
+      imageUrl,
       status,
       visible
     }

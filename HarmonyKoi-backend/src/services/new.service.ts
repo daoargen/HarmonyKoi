@@ -68,7 +68,8 @@ async function createNew(newNew: CreateNew) {
   try {
     const news = await New.create({
       tittle: newNew.tittle,
-      content: newNew.content
+      content: newNew.content,
+      imageUrl: newNew.imageUrl
     })
     return news
   } catch (error) {
@@ -88,12 +89,10 @@ async function editNew(id: string, updatedNew: UpdateNew) {
       throw responseStatus.responseNotFound404("New not found")
     }
 
-    // Cập nhật các trường được cung cấp trong updatedNew
-    await news.update({
-      tittle: updatedNew.tittle || news.tittle,
-      content: updatedNew.content || news.content
-    })
-
+    news.tittle = updatedNew.tittle || news.tittle
+    news.content = updatedNew.content || news.content
+    news.imageUrl = updatedNew.imageUrl || news.imageUrl
+    await news.save()
     return news
   } catch (error) {
     console.error(error)
