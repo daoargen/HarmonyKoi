@@ -1,4 +1,4 @@
-import { OrderListResponse } from '../types/order.type'
+import { Order, OrderListResponse } from '../types/order.type'
 import http from '../utils/http'
 
 export const getOrderHistory = async ({
@@ -34,3 +34,8 @@ export const getOrderHistory = async ({
 
   return await http.get<OrderListResponse>(`/orders/user/history${queryString ? `?${queryString}` : ''}`)
 }
+
+export const deleteOrder = async (id: string) => await http.delete<Order>(`/orders/${id}`)
+
+export const createOrderPackage = async (order: { packageId: string; type: 'PACKAGE' }) =>
+  await http.post<Order>('/orders', order)
