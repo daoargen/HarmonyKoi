@@ -38,14 +38,20 @@ const EditPostPage: React.FC = () => {
   const handleUpdatePost = async () => {
     if (post) {
       setIsSubmitting(true)
+      const updatedStatus = post.status === 'APPROVED' || post.status === 'REJECTED' ? 'PENDING' : post.status // Reset status to PENDING
       try {
         await updatePost(post.id, {
           title: post.title,
           content: post.content,
-          status: post.status,
+          status: updatedStatus,
           visible: post.visible
         })
-        toast.success('Bài viết đã được cập nhật thành công')
+        if (updatedStatus === 'PENDING') {
+          toast.success('Cập nhật thành công. Đợi quản trị viên duyệt bài.') // Thông báo nếu chuyển về PENDING
+        } else {
+          toast.success('Bài viết đã được cập nhật thành công.')
+        }
+
         navigate('/member/manage/manage-posts')
       } catch (err) {
         setError('Không thể cập nhật bài viết')
