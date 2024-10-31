@@ -213,6 +213,7 @@ async function createPost(token: string, newPost: CreatePost) {
       title: newPost.title,
       content: newPost.content,
       imageUrl: newPost.imageUrl,
+      rejectReason: newPost.rejectReason,
       dateRemain: 100,
       status: "PENDING",
       visible: false
@@ -264,6 +265,7 @@ async function editPost(id: string, token: string, updatedPost: UpdatePost) {
     } else if (updatedPost.status) {
       post.status = updatedPost.status
     }
+    post.rejectReason = updatedPost.rejectReason || post.rejectReason
     post.visible = updatedPost.visible ?? post.visible
 
     await post.save()

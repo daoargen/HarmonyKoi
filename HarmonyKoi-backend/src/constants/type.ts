@@ -237,12 +237,14 @@ export interface CreatePost {
   title: string
   content: string
   imageUrl: string
+  rejectReason?: string
 }
 
 export interface UpdatePost {
   title?: string
   content?: string
-  imageUrl: string
+  imageUrl?: string
+  rejectReason?: string
   status?: string
   visible?: boolean
 }
