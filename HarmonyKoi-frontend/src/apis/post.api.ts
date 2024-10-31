@@ -22,3 +22,8 @@ export const updatePost = async (
 export const updatePostVisible = async (id: string, visible: boolean) => await http.put(`/posts/${id}`, { visible })
 
 export const updatePostStatus = async (id: string, status: PostStatus) => await http.put(`/posts/${id}`, { status })
+
+export const createReject = async (id: string, post: { rejectReason: string | null }) =>
+  await http.put(`/posts/${id}`, post)
+
+// export const getRejectReason = async (id: string) => await

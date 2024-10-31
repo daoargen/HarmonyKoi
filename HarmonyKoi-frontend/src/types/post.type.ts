@@ -7,6 +7,8 @@ export interface Post {
   userId: string
   title: string
   content: string
+  imageUrl: string
+  rejectReason: string | null
   dateRemain: number
   status: PostStatus
   visible: boolean

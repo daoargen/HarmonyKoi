@@ -4,6 +4,7 @@ import { Post } from '../../../types/post.type'
 import { deletePostById, getPostByMember, updatePostVisible } from '../../../apis/post.api'
 import styles from './ManagePostPage.module.css'
 import { useNavigate } from 'react-router-dom'
+import 'react-toastify/dist/ReactToastify.css'
 import {
   PlusCircle,
   Edit,
@@ -49,6 +50,7 @@ const PostItem: React.FC<{ post: Post; onDelete: (id: string) => void; onToggleV
       <td className={styles.postTitle}>{truncateText(post.title, 50)}</td>
       <td className={styles.postContent}>{truncateText(post.content, 100)}</td>
       <td className={styles.postStatus}>{post.status}</td>
+      <td className={styles.postContent}>{post.rejectReason}</td>
       <td className={styles.postDate}>{formatDate(parseDate(post.createdAt))}</td>
       <td className={styles.actions}>
         <Button
@@ -143,6 +145,7 @@ const ManagePostPage: React.FC = () => {
               <th>Tiêu đề</th>
               <th>Nội dung</th>
               <th>Trạng thái</th>
+              <th>Lý do</th>
               <th>Ngày đăng</th>
               <th>Thao tác</th>
             </tr>
