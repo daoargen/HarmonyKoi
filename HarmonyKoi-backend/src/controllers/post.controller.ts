@@ -72,11 +72,12 @@ async function editPost(req: Request, res: Response) {
     if (!token) {
       return res.json(responseStatus.responseUnauthorized401())
     }
-    const { title, content, imageUrl, status, visible } = req.body
+    const { title, content, imageUrl, rejectReason, status, visible } = req.body
     const dataRequest: UpdatePost = {
       title: title,
       content,
       imageUrl,
+      rejectReason,
       status,
       visible
     }

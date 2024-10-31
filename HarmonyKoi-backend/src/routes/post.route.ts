@@ -231,6 +231,9 @@ router.post("/", authMiddleware.verifyToken, PostController.createPost)
  *               imageUrl:
  *                 type: string
  *                 description: imageUrl of the post
+ *               rejectReason:
+ *                 type: string
+ *                 description: rejectReason of the post
  *               status:
  *                 type: string
  *                 description: Status of the post
