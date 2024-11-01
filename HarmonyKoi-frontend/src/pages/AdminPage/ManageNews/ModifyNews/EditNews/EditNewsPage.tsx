@@ -1,19 +1,19 @@
 import React, { useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
-import { getPostById, updatePost } from '../../../../../apis/post.api'
-import { Post } from '../../../../../types/post.type'
+import { getNewsById, updateNews } from '../../../../../apis/news.api'
+import { News } from '../../../../../types/news.type'
 import { Button } from '../../../../../components/ui/button'
 import { Input } from '../../../../../components/ui/input'
 import { Textarea } from '../../../../../components/ui/textarea'
 import { Card, CardHeader, CardTitle, CardContent, CardFooter } from '../../../../../components/ui/card'
 import { AlertCircle, ArrowLeft, Save, Eye, EyeOff } from 'lucide-react'
-import styles from './EditPostPage.module.css'
+import styles from './EditNewsPage.module.css'
 import { toast, ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
-const EditPostPage: React.FC = () => {
+const EditNewsPage: React.FC = () => {
   const { id } = useParams<{ id: string }>()
-  const [post, setPost] = useState<Post | null>(null)
+  const [news, setNews] = useState<News | null>(null)
   const [imageUrl, setImageUrl] = useState('')
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
@@ -21,13 +21,13 @@ const EditPostPage: React.FC = () => {
   const navigate = useNavigate()
 
   useEffect(() => {
-    const fetchPost = async () => {
+    const fetchNews = async () => {
       try {
-        const response = await getPostById(id!)
-        if (post?.imageUrl) {
-          setImageUrl(post.imageUrl) // Initialize imageUrl state
+        const response = await getNewsById(id!)
+        if (news?.imageUrl) {
+          setImageUrl(news.imageUrl) // Initialize imageUrl state
         }
-        setPost(response.data.data)
+        setNews(response.data.data)
       } catch (err) {
         setError('Không thể tải bài viết')
         toast.error('Không thể tải bài viết')
@@ -36,28 +36,25 @@ const EditPostPage: React.FC = () => {
       }
     }
 
-    fetchPost()
-  }, [id, post?.imageUrl])
+    fetchNews()
+  }, [id, news?.imageUrl])
 
-  const handleUpdatePost = async () => {
-    if (post) {
+  const handleUpdateNews = async () => {
+    if (news) {
       setIsSubmitting(true)
-      const updatedStatus = post.status === 'APPROVED' || post.status === 'REJECTED' ? 'PENDING' : post.status // Reset status to PENDING
+      //   const updatedStatus = news.status === 'APPROVED' || news.status === 'REJECTED' ? 'PENDING' : news.status // Reset status to PENDING
       try {
-        await updatePost(post.id, {
-          title: post.title,
-          content: post.content,
-          imageurl: post.imageUrl,
-          status: updatedStatus,
-          visible: post.visible
+        await updateNews(news.id, {
+          tittle: news.tittle,
+          content: news.content,
+          imageUrl: news.imageUrl
+          //   status: updatedStatus,
+          //   visible: news.visible
         })
-        if (updatedStatus === 'PENDING') {
-          toast.success('Cập nhật thành công. Đợi quản trị viên duyệt bài.') // Thông báo nếu chuyển về PENDING
-        } else {
-          toast.success('Bài viết đã được cập nhật thành công.')
-        }
 
-        navigate('/member/manage/manage-posts')
+        toast.success('Bài viết đã được cập nhật thành công.')
+
+        navigate('/admin/manage/manage-news')
       } catch (err) {
         setError('Không thể cập nhật bài viết')
         toast.error('Không thể cập nhật bài viết')
@@ -71,34 +68,34 @@ const EditPostPage: React.FC = () => {
     const { name, value } = e.target
     if (name === 'imageUrl') {
       setImageUrl(value) // Update imageUrl state directly
-    } else if (post) {
-      setPost({ ...post, [name]: value })
+    } else if (news) {
+      setNews({ ...news, [name]: value })
     }
-    // setPost((prevPost) => (prevPost ? { ...prevPost, [name]: value } : null))
+    // setNews((prevNews) => (prevNews ? { ...prevNews, [name]: value } : null))
   }
 
-  const handleVisibilityToggle = () => {
-    setPost((prevPost) => {
-      if (prevPost) {
-        const newVisibility = !prevPost.visible
-        toast.info(`Bài viết đã được ${newVisibility ? 'hiển thị' : 'ẩn'}`)
-        return { ...prevPost, visible: newVisibility }
-      }
-      return null
-    })
-  }
+  //   const handleVisibilityToggle = () => {
+  //     setNews((prevNews) => {
+  //       if (prevNews) {
+  //         const newVisibility = !prevNews.visible
+  //         toast.info(`Bài viết đã được ${newVisibility ? 'hiển thị' : 'ẩn'}`)
+  //         return { ...prevNews, visible: newVisibility }
+  //       }
+  //       return null
+  //     })
+  //   }
 
   if (loading) return <div className={styles.loading}>Đang tải...</div>
 
   return (
-    <div className={styles.editPostContainer}>
-      <Card className={styles.editPostCard}>
+    <div className={styles.editNewsContainer}>
+      <Card className={styles.editNewsCard}>
         <CardHeader>
           <Button variant='ghost' className={styles.backButton} onClick={() => navigate(-1)}>
             <ArrowLeft size={20} />
             Quay lại
           </Button>
-          <CardTitle className={styles.title}>Chỉnh sửa bài viết</CardTitle>
+          <CardTitle className={styles.title}>Chỉnh sửa tin tức</CardTitle>
         </CardHeader>
         <CardContent>
           {error && (
@@ -115,10 +112,10 @@ const EditPostPage: React.FC = () => {
               type='text'
               id='title'
               name='title'
-              value={post?.title || ''}
+              value={news?.tittle || ''}
               onChange={handleChange}
               className={styles.input}
-              placeholder='Nhập tiêu đề bài viết'
+              placeholder='Nhập tiêu đề tin tức'
             />
           </div>
           <div className={styles.formGroup}>
@@ -128,10 +125,10 @@ const EditPostPage: React.FC = () => {
             <Textarea
               id='content'
               name='content'
-              value={post?.content || ''}
+              value={news?.content || ''}
               onChange={handleChange}
               className={styles.textarea}
-              placeholder='Nhập nội dung bài viết'
+              placeholder='Nhập nội dung tin tức'
             />
           </div>
           <div className={styles.formGroup}>
@@ -148,9 +145,9 @@ const EditPostPage: React.FC = () => {
               placeholder='Nhập URL hình ảnh'
             />
           </div>
-          <div className={styles.visibilityToggle}>
+          {/* <div className={styles.visibilityToggle}>
             <Button variant='outline' onClick={handleVisibilityToggle} className={styles.visibilityButton}>
-              {post?.visible ? (
+              {news?.visible ? (
                 <>
                   <Eye size={20} />
                   Hiển thị
@@ -162,10 +159,10 @@ const EditPostPage: React.FC = () => {
                 </>
               )}
             </Button>
-          </div>
+          </div> */}
         </CardContent>
         <CardFooter>
-          <Button onClick={handleUpdatePost} className={styles.updateButton} disabled={isSubmitting}>
+          <Button onClick={handleUpdateNews} className={styles.updateButton} disabled={isSubmitting}>
             {isSubmitting ? (
               <>
                 <div className={styles.spinner}></div>
@@ -185,4 +182,4 @@ const EditPostPage: React.FC = () => {
   )
 }
 
-export default EditPostPage
+export default EditNewsPage

@@ -34,6 +34,8 @@ import { Role } from '../types/user.type'
 import ManagePage from '../layouts/MainLayout/components/Manage/ManagePage/ManagePage'
 import PostDetailPage from '../pages/DetailPage/PostDetail/PostDetailPage'
 import NewsDetailPage from '../pages/DetailPage/NewsDetail/NewsDetailPage'
+import EditNewsPage from '../pages/AdminPage/ManageNews/ModifyNews/EditNews/EditNewsPage'
+import AddNewsPage from '../pages/AdminPage/ManageNews/ModifyNews/AddNews/AddNewsPage'
 
 const router = createBrowserRouter([
   {
@@ -95,6 +97,14 @@ const router = createBrowserRouter([
       {
         path: configs.routes.editPost,
         element: <EditPostPage />
+      },
+      {
+        path: '/add-news',
+        element: <AddNewsPage />
+      },
+      {
+        path: configs.routes.editNews,
+        element: <EditNewsPage />
       },
       // GuestGuard
       {

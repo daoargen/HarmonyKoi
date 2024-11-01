@@ -43,9 +43,11 @@ export const createOrderPackage = async (order: { packageId: string; type: 'PACK
 export const checkExistingOrder = async (id: string) => {
   try {
     const response = await http.get(`/packages/${id}`)
-    return response.data.data // Trả về true nếu đơn hàng tồn tại, false nếu không
+    return response.data // Trả về true nếu đơn hàng tồn tại, false nếu không
   } catch (error) {
     console.error('Error checking existing order:', error)
     return false // Hoặc xử lý lỗi theo cách khác
   }
 }
+
+export const getOrderId = async (id: string) => await http.get<Order>(`/orders/${id}`)

@@ -1,4 +1,4 @@
-.managePostContainer {
+.manageNewsContainer {
   padding: 24px;
   background-color: #f8fafc;
   min-height: 100vh;
@@ -37,20 +37,20 @@ h1 {
   overflow-x: auto;
 }
 
-.postList {
+.newsList {
   width: 100%;
   border-collapse: separate;
   border-spacing: 0;
 }
 
-.postList th,
-.postList td {
+.newsList th,
+.newsList td {
   padding: 16px;
   text-align: left;
   border-bottom: 1px solid #e2e8f0;
 }
 
-.postList th {
+.newsList th {
   background-color: #f1f5f9;
   font-weight: 600;
   color: #475569;
@@ -59,7 +59,7 @@ h1 {
   letter-spacing: 0.05em;
 }
 
-.postTitle {
+.newsTitle {
   font-weight: 500;
   color: #2c3e50;
   max-width: 200px;
@@ -68,7 +68,7 @@ h1 {
   text-overflow: ellipsis;
 }
 
-.postContent {
+.newsContent {
   max-width: 300px;
   white-space: nowrap;
   overflow: hidden;
@@ -76,11 +76,11 @@ h1 {
   color: #64748b;
 }
 
-.postStatus {
+.newsStatus {
   font-weight: 500;
 }
 
-.postDate {
+.newsDate {
   color: #64748b;
   font-size: 14px;
 }
@@ -157,8 +157,8 @@ h1 {
     justify-content: center;
   }
 
-  .postList th,
-  .postList td {
+  .newsList th,
+  .newsList td {
     padding: 12px;
   }
 }
@@ -311,7 +311,7 @@ h1 {
   text-align: center;
 }
 
-.postImage {
+.newsImage {
   max-width: 100%;
   max-height: 300px;
   object-fit: contain;

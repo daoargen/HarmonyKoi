@@ -1,7 +1,8 @@
 'use client'
 
-import React, { useState } from 'react'
+import { useState } from 'react'
 import styles from './PaymentModal.module.css'
+import { getPayment } from '../../../apis/payment.api'
 
 interface PaymentInfo {
   accountNumber: string
@@ -21,7 +22,9 @@ export default function PaymentButton() {
   }
 
   const handlePayment = () => {
+    const response = getPayment()
     // Implement payment logic here
+    console.log(response)
     console.log('Processing payment...')
     setIsOpen(false)
   }
