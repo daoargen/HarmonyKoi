@@ -7,7 +7,6 @@ import { Order } from '../../../types/order.type'
 import PaymentButton from '../../../components/common/PaymentModal/PaymentModal'
 import { X } from 'lucide-react'
 import { toast, ToastContainer } from 'react-toastify'
-import { getPayment, getPaymentById } from '../../../apis/payment.api'
 
 type OrderData = {
   totalOrders: number
@@ -194,8 +193,7 @@ const ManageOrderPage: React.FC = () => {
                     <td className={styles.td}>
                       <div className={styles.actionButtons}>
                         {/* <button onClick={() => handlePayment(order)}> click </button> */}
-
-                        <PaymentButton />
+                        <PaymentButton amount={order.totalAmount} description={order.payment.paymentCode} />
                         <button
                           onClick={() => handleCancelOrder(order)}
                           className={styles.cancelButton}

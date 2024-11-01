@@ -19,7 +19,7 @@ const BlogCard: React.FC<Post> = ({ id, title, content, createdAt, imageUrl }) =
 
   return (
     <div className={styles.blogCard}>
-      <img src={koiImage} alt={title} className={styles.blogCardImage} />
+      <img src={imageUrl} alt={title} className={styles.blogCardImage} />
       <div className={styles.blogCardContent}>
         <h2 className={styles.blogCardTitle}>{title}</h2>
         <p className={styles.blogCardDescription}>{truncatedContent}</p> {/* Hiển thị nội dung đã cắt bớt */}
