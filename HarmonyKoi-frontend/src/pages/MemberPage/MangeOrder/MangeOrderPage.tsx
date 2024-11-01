@@ -2,11 +2,12 @@
 
 import React, { useState, useEffect } from 'react'
 import styles from './ManageOrderPage.module.css'
-import { deleteOrder, getOrderHistory } from '../../../apis/order.api'
+import { deleteOrder, getOrderHistory, getOrderId } from '../../../apis/order.api'
 import { Order } from '../../../types/order.type'
 import PaymentButton from '../../../components/common/PaymentModal/PaymentModal'
 import { X } from 'lucide-react'
 import { toast, ToastContainer } from 'react-toastify'
+import { getPayment, getPaymentById } from '../../../apis/payment.api'
 
 type OrderData = {
   totalOrders: number
@@ -100,11 +101,16 @@ const ManageOrderPage: React.FC = () => {
     fetchData()
   }, [pagination.currentPage, pagination.pageSize, statusFilter])
 
+  const handlePayment = async (order: Order) => {
+    const response = await getOrderId(order.id)
+    console.log(response.data.data.payment)
+  }
+
   const handlePageChange = (newPage: number) => {
     setPagination((prev) => ({ ...prev, currentPage: newPage }))
   }
 
-  const handleCancelOrder = (order: Order) => {
+  const handleCancelOrder = async (order: Order) => {
     setSelectedOrder(order)
     setCancelModalOpen(true)
   }
@@ -187,6 +193,8 @@ const ManageOrderPage: React.FC = () => {
                     <td className={styles.td}>{order.payment.paymentCode}</td>
                     <td className={styles.td}>
                       <div className={styles.actionButtons}>
+                        {/* <button onClick={() => handlePayment(order)}> click </button> */}
+
                         <PaymentButton />
                         <button
                           onClick={() => handleCancelOrder(order)}

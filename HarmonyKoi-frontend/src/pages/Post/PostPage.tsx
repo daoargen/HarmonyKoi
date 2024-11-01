@@ -9,7 +9,7 @@ import Paging from '../../components/common/Paging/Paging'
 import { useNavigate } from 'react-router-dom'
 import banner from '../../assets/images/banner.gif'
 
-const BlogCard: React.FC<Post> = ({ id, title, content, createdAt }) => {
+const BlogCard: React.FC<Post> = ({ id, title, content, createdAt, imageUrl }) => {
   const navigate = useNavigate()
   const truncatedContent = content.length > 100 ? content.substring(0, 100) + '...' : content
 

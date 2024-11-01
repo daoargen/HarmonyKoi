@@ -3,46 +3,46 @@ import { Button } from '../../../../../components/ui/button'
 import { Input } from '../../../../../components/ui/input'
 import { Textarea } from '../../../../../components/ui/textarea'
 import { Card, CardHeader, CardTitle, CardContent, CardFooter } from '../../../../../components/ui/card'
-import { createPost } from '../../../../../apis/post.api'
-import styles from './AddPostPage.module.css'
+import { createNews } from '../../../../../apis/news.api'
+import styles from './AddnewsPage.module.css'
 import { useNavigate } from 'react-router-dom'
 import { AlertCircle, ArrowLeft, Send } from 'lucide-react'
 
-const AddPostPage: React.FC = () => {
-  const [title, setTitle] = useState('')
+const AddNewsPage: React.FC = () => {
+  const [tittle, setTitle] = useState('')
   const [content, setContent] = useState('')
   const [imageUrl, setImageUrl] = useState('')
   const [error, setError] = useState<string | null>(null)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const navigate = useNavigate()
 
-  const handleCreatePost = async () => {
-    if (!title || !content) {
+  const handleCreateNews = async () => {
+    if (!tittle || !content) {
       setError('Vui lòng nhập đầy đủ tiêu đề và nội dung')
       return
     }
 
     setIsSubmitting(true)
     try {
-      await createPost({ title, content, imageUrl })
-      alert('Tạo bài viết thành công, hãy đợi quản trị viên duyệt bài')
-      navigate('/member/manage/manage-posts')
+      await createNews({ tittle, content, imageUrl })
+      alert('Tạo tin tức thành công')
+      navigate('/admin/manage/manage-news')
     } catch (err) {
-      setError('Không thể tạo bài viết')
+      setError('Không thể tạo tin tức')
     } finally {
       setIsSubmitting(false)
     }
   }
 
   return (
-    <div className={styles.addPostContainer}>
-      <Card className={styles.addPostCard}>
+    <div className={styles.addNewsContainer}>
+      <Card className={styles.addNewsCard}>
         <CardHeader>
           <Button variant='ghost' className={styles.backButton} onClick={() => navigate(-1)}>
             <ArrowLeft size={20} />
             Quay lại
           </Button>
-          <CardTitle className={styles.title}>Thêm bài viết mới</CardTitle>
+          <CardTitle className={styles.tittle}>Thêm tin tức mới</CardTitle>
         </CardHeader>
         <CardContent>
           {error && (
@@ -52,16 +52,16 @@ const AddPostPage: React.FC = () => {
             </div>
           )}
           <div className={styles.formGroup}>
-            <label htmlFor='title' className={styles.label}>
+            <label htmlFor='tittle' className={styles.label}>
               Tiêu đề
             </label>
             <Input
               type='text'
-              id='title'
-              value={title}
+              id='tittle'
+              value={tittle}
               onChange={(e) => setTitle(e.target.value)}
               className={styles.input}
-              placeholder='Nhập tiêu đề bài viết'
+              placeholder='Nhập tiêu đề tin tức'
             />
           </div>
           <div className={styles.formGroup}>
@@ -73,7 +73,7 @@ const AddPostPage: React.FC = () => {
               value={content}
               onChange={(e) => setContent(e.target.value)}
               className={styles.textarea}
-              placeholder='Nhập nội dung bài viết'
+              placeholder='Nhập nội dung tin tức'
             />
           </div>
           <div className={styles.formGroup}>
@@ -91,7 +91,7 @@ const AddPostPage: React.FC = () => {
           </div>
         </CardContent>
         <CardFooter>
-          <Button onClick={handleCreatePost} className={styles.createButton} disabled={isSubmitting}>
+          <Button onClick={handleCreateNews} className={styles.createButton} disabled={isSubmitting}>
             {isSubmitting ? (
               <>
                 <div className={styles.spinner}></div>
@@ -100,7 +100,7 @@ const AddPostPage: React.FC = () => {
             ) : (
               <>
                 <Send size={20} />
-                Tạo bài viết
+                Tạo tin tức
               </>
             )}
           </Button>
@@ -110,4 +110,4 @@ const AddPostPage: React.FC = () => {
   )
 }
 
-export default AddPostPage
+export default AddNewsPage

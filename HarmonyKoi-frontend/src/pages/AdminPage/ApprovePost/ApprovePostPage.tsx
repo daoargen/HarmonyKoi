@@ -47,7 +47,9 @@ const RejectReasonPopup: React.FC<RejectReasonPopupProps> = ({ post, onClose, on
               <X />
             </button>
           </div>
-          <p className={styles.rejectReasonPostTitle}>Bài viết: {post.title}</p>
+          <p className={styles.rejectReasonPostTitle}>
+            <strong className={styles.rejectReasonTitleStrong}>Bài viết: {post.title}</strong>
+          </p>
           <div className={styles.rejectReasonContent}>
             <textarea
               placeholder='Nhập lý do từ chối'

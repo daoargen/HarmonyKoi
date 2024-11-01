@@ -16,6 +16,11 @@ export interface Order {
   payment: Payment
 }
 
+export interface PaymentButtonProps {
+  amount: number
+  description: string
+}
+
 export interface OrderListResponse {
   timestamp: string
   statusCode: number
