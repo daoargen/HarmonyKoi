@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import styles from './PaymentModal.module.css'
-import { getPayment } from '../../../apis/payment.api'
+import { completePayment, getPayment } from '../../../apis/payment.api'
 
 interface PaymentInfo {
   accountNumber: string
@@ -11,19 +11,23 @@ interface PaymentInfo {
   description: string
 }
 
-export default function PaymentButton() {
+interface PaymentButtonProps {
+  amount: number
+  description: string
+}
+
+export default function PaymentButton({ amount, description }: PaymentButtonProps) {
   const [isOpen, setIsOpen] = useState<boolean>(false)
 
   const paymentInfo: PaymentInfo = {
     accountNumber: '0765423178',
     bank: 'MBbank',
-    amount: 100000,
-    description: 'Ủng hộ quỹ bảo trợ trẻ em'
+    amount: amount,
+    description: description
   }
 
   const handlePayment = () => {
-    const response = getPayment()
-    // Implement payment logic here
+    const response = completePayment(description, amount)
     console.log(response)
     console.log('Processing payment...')
     setIsOpen(false)

@@ -5,5 +5,5 @@ export const getPayment = async () => await http.get<Payment>('/payments')
 
 export const getPaymentById = async (id: string) => await http.get<Payment>(`/payments/${id}`)
 
-export const completePayment = async (pay: { content: string; transferAmount: number }) =>
-  await http.post('/payments/webhook', pay)
+export const completePayment = async (content: string, transferAmount: number) =>
+  await http.post('/payments/webhook', { content, transferAmount })
