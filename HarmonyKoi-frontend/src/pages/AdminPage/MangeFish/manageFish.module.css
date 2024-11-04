@@ -1,0 +1,95 @@
+/* manageFish.module.css */
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+  text-align: center;
+  color: #333;
+  position: sticky; /* Giữ tiêu đề cố định tại vị trí */
+  top: 0; /* Đặt nó ở trên cùng */
+  background-color: #f9f9f9; /* Để tránh ảnh hưởng của cuộn */
+  z-index: 1; /* Để đảm bảo tiêu đề không bị che khuất */
+}
+
+button {
+  background-color: #007bff; /* Bootstrap primary color */
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 15px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin-right: 10px;
+}
+
+button:hover {
+  background-color: #0056b3; /* Darker shade on hover */
+}
+
+.fishTable {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.fishTable th,
+.fishTable td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.fishTable th {
+  background-color: #007bff; /* Header color */
+  color: white;
+}
+
+.fishTable tr:hover {
+  background-color: #f1f1f1; /* Row highlight on hover */
+}
+
+.error {
+  color: red;
+  text-align: center;
+  font-weight: bold;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.pagination button {
+  margin: 0 5px;
+}
+
+.pagination span {
+  font-weight: bold;
+  margin: 0 10px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .container {
+    padding: 15px;
+  }
+
+  button {
+    padding: 8px 12px;
+    margin-right: 5px;
+  }
+
+  .fishTable th,
+  .fishTable td {
+    padding: 10px;
+  }
+}

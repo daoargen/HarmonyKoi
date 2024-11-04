@@ -34,6 +34,8 @@ import { Role } from '../types/user.type'
 import ManagePage from '../layouts/MainLayout/components/Manage/ManagePage/ManagePage'
 import PostDetailPage from '../pages/DetailPage/PostDetail/PostDetailPage'
 import NewsDetailPage from '../pages/DetailPage/NewsDetail/NewsDetailPage'
+import CreateFish from '../pages/AdminPage/MangeFish/createFish/createFish'
+import UpdateFish from '../pages/AdminPage/MangeFish/updateFish/updateFish'
 
 const router = createBrowserRouter([
   {
@@ -80,6 +82,7 @@ const router = createBrowserRouter([
         path: '/koiFishForm/:yearOfBirth', // Add the detail route here
         element: <KoiFishByYear />
       },
+
       {
         path: 'posts/:id',
         element: <PostDetailPage />
@@ -91,6 +94,14 @@ const router = createBrowserRouter([
       {
         path: '/add-post',
         element: <AddPostPage />
+      },
+      {
+        path: '/manage-fish/create-fish',
+        element: <CreateFish />
+      },
+      {
+        path: '/manage-fish/update-fish/:id',
+        element: <UpdateFish />
       },
       {
         path: configs.routes.editPost,
@@ -138,6 +149,7 @@ const router = createBrowserRouter([
         path: 'manage-fish',
         element: <ManageFish />
       },
+
       {
         path: 'manage-ponds',
         element: <ManagePond />
