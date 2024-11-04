@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import styles from './ManageSidebar.module.css'
-import { Role } from '../../../../../types/user.type'
+import { Role } from '../../types/user.type'
 
 interface ManageSidebarProps {
   userRole: Role
@@ -16,7 +16,6 @@ const ManageSidebar: React.FC<ManageSidebarProps> = ({ userRole }) => {
   const adminItems = [
     { title: 'Quản lý người dùng', link: '/manageAdmin/manage-users' },
     { title: 'Quản lý cá', link: '/manage-fish' },
-    { title: 'Quản lý hồ', link: '/manage-ponds' },
     { title: 'Quản lý tin tức', link: '/manage-news' },
     { title: 'Duyệt bài viết', link: '/approve-posts' }
   ]
