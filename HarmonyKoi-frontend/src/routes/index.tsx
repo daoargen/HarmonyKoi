@@ -24,7 +24,6 @@ import ManageOrder from '../pages/MemberPage/MangeOrder/MangeOrderPage'
 import ManageNews from '../pages/AdminPage/ManageNews/ManageNewsPage'
 import ManageFish from '../pages/AdminPage/MangeFish/ManageFish'
 import ApprovePost from '../pages/AdminPage/ApprovePost/ApprovePostPage'
-import ManagePond from '../pages/AdminPage/ManagePond/ManagePondPage'
 import ManageUser from '../pages/AdminPage/ManageUser/ManageUser'
 import ManangePost from '../pages/MemberPage/MangePost/MangePostPage'
 import Dashboard from '../pages/AdminPage/Dashboard/DashboardPage'
@@ -147,10 +146,6 @@ const router = createBrowserRouter([
       {
         path: 'manage-fish',
         element: <ManageFish />
-      },
-      {
-        path: 'manage-ponds',
-        element: <ManagePond />
       },
       {
         path: 'manage-news',

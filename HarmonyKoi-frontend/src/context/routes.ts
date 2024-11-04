@@ -25,7 +25,6 @@ const routes = {
   managePost: '/manage-posts',
   manageUsers: '/manage-users',
   manageFish: '/manage-fish',
-  managePonds: '/manage-ponds',
   manageNews: '/manage-news',
   approvePosts: '/approve-posts',
   dashboard: '/dashboard'
