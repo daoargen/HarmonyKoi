@@ -19,7 +19,6 @@ const ManageSidebar: React.FC<ManageSidebarProps> = ({ userRole }) => {
   const adminItems = [
     { title: 'Quản lý người dùng', link: `${baseLink}/manage-users` },
     { title: 'Quản lý cá', link: `${baseLink}/manage-fish` },
-    { title: 'Quản lý hồ', link: `${baseLink}/manage-ponds` },
     { title: 'Quản lý tin tức', link: `${baseLink}/manage-news` },
     { title: 'Duyệt bài viết', link: `${baseLink}/approve-posts` }
   ]

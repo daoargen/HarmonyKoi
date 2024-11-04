@@ -41,7 +41,7 @@ const PostDetailPage: React.FC = () => {
   return (
     <div className={styles.postDetailContainer}>
       <div className={styles.bannerImage}>
-        <img src={banner} alt={post?.title} />
+        <img src={post.imageUrl} alt={post?.title} />
       </div>
       <div className={styles.postContent}>
         <header className={styles.postHeader}>
