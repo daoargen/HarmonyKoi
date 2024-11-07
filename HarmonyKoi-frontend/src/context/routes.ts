@@ -27,7 +27,9 @@ const routes = {
   manageFish: '/manage-fish',
   manageNews: '/manage-news',
   approvePosts: '/approve-posts',
-  dashboard: '/dashboard'
+  dashboard: '/dashboard',
+  CreateFish: '/createFish',
+  UpdateFish: '/update-fish'
 }
 
 export default routes
