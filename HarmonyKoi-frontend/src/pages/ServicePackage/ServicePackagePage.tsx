@@ -1,10 +1,10 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useState } from 'react'
 import { Package } from '../../types/package.type'
 import { getPackage, getPackageById } from '../../apis/package.api'
 import { createOrderPackage } from '../../apis/order.api'
-import styles from './ServicePackagePage.module.css'
 import { useNavigate } from 'react-router-dom'
-import { X } from 'lucide-react'
+import { X, Clock, FileText, CreditCard } from 'lucide-react'
 
 interface ConfirmModalProps {
   isOpen: boolean
@@ -18,24 +18,35 @@ const ConfirmModal: React.FC<ConfirmModalProps> = ({ isOpen, onClose, onConfirm,
   if (!isOpen) return null
 
   return (
-    <div className={styles.modalOverlay}>
-      <div className={styles.modalContent}>
-        <button onClick={onClose} className={styles.closeButton}>
-          <X size={20} />
-        </button>
-        <h3 className={styles.modalTitle}>Xác nhận mua gói</h3>
-        <div className={styles.modalBody}>
-          <p>
-            Bạn có chắc chắn muốn mua gói <strong>{packageName}</strong>?
-          </p>
-          <p className={styles.modalPrice}>Giá: {packagePrice.toLocaleString()} VND</p>
-        </div>
-        <div className={styles.modalFooter}>
-          <button onClick={onConfirm} className={styles.confirmButton}>
-            Xác nhận
+    <div className='fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50'>
+      <div className='bg-white rounded-lg p-8 max-w-md w-full'>
+        <div className='flex justify-between items-center mb-6'>
+          <h3 className='text-2xl font-bold text-gray-900'>Xác nhận mua gói</h3>
+          <button
+            onClick={onClose}
+            className='text-gray-400 hover:text-gray-500 transition-colors bg-transparent hover:bg-transparent'
+          >
+            <X size={24} />
           </button>
-          <button onClick={onClose} className={styles.cancelButton}>
+        </div>
+        <div className='mb-10'>
+          <p className='text-gray-700 mb-2'>
+            Bạn có chắc chắn muốn mua gói <strong className='text-blue-600'>{packageName}</strong>?
+          </p>
+          <p className='text-2xl font-bold text-gray-900'>Giá: {packagePrice.toLocaleString()} VND</p>
+        </div>
+        <div className='flex justify-between space-x-4'>
+          <button
+            onClick={onClose}
+            className='w-full px-4 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300 transition-colors'
+          >
             Hủy
+          </button>
+          <button
+            onClick={onConfirm}
+            className='w-full px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors'
+          >
+            Xác nhận
           </button>
         </div>
       </div>
@@ -48,7 +59,16 @@ const PackageCard: React.FC<Package> = ({ name, description, duration, amountPos
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [isProcessing, setIsProcessing] = useState(false)
 
+  const isAuthenticated = localStorage.getItem('user') // Hoặc kiểm tra trạng thái xác thực ở đây
+
   const handleBuy = async () => {
+    if (!isAuthenticated) {
+      // Nếu chưa đăng nhập, thông báo và chuyển hướng đến trang login
+      alert('Vui lòng đăng nhập để mua gói dịch vụ!')
+      navigate('/login')
+      return
+    }
+
     setIsModalOpen(true)
   }
 
@@ -56,14 +76,9 @@ const PackageCard: React.FC<Package> = ({ name, description, duration, amountPos
     setIsProcessing(true)
     try {
       const packageDetail = await getPackageById(id)
-
-      console.log(packageDetail)
-      // Tạo đơn hàng sử dụng packageId từ packageDetail
       await createOrderPackage({ packageId: packageDetail.data.data.id, type: 'PACKAGE' })
-      // await createOrderPackage({ packageId, type: 'PACKAGE' })
       setIsModalOpen(false)
       alert('Tạo đơn hàng thành công')
-
       navigate('/member/manage/manage-orders')
     } catch (error) {
       console.error('Lỗi khi tạo đơn hàng:', error)
@@ -74,29 +89,37 @@ const PackageCard: React.FC<Package> = ({ name, description, duration, amountPos
   }
 
   return (
-    <>
-      <div className={styles.packageCard}>
-        <h2 className={styles.packageTitle}>{name}</h2>
-        <div className={styles.packageDescriptionWrapper}>
-          <p className={styles.packageDescription}>{description}</p>
+    <div>
+      <div className='bg-white rounded-lg shadow-lg overflow-hidden transition-transform duration-300 hover:scale-105'>
+        <div className='bg-gradient-to-r from-blue-500 to-blue-600 p-6'>
+          <h2 className='text-2xl font-bold text-white mb-2'>{name}</h2>
+          <p className='text-blue-100 h-20 overflow-y-auto'>{description}</p>
         </div>
-        <ul className={styles.packageFeatures}>
-          <li>
-            <span className={styles.featureLabel}>Thời hạn:</span>
-            <span className={styles.featureValue}>{duration} ngày</span>
-          </li>
-          <li>
-            <span className={styles.featureLabel}>Số lượng bài đăng:</span>
-            <span className={styles.featureValue}>{amountPost}</span>
-          </li>
-          <li>
-            <span className={styles.featureLabel}>Giá:</span>
-            <span className={styles.featureValue}>{price.toLocaleString()} VND</span>
-          </li>
-        </ul>
-        <button className={styles.buyButton} onClick={handleBuy} disabled={isProcessing}>
-          {isProcessing ? 'Đang xử lý...' : 'Mua ngay'}
-        </button>
+        <div className='p-6'>
+          <ul className='space-y-4 mb-6'>
+            <li className='flex items-center'>
+              <Clock className='text-blue-500 mr-2' size={20} />
+              <span className='text-gray-700'>Thời hạn: {duration} ngày</span>
+            </li>
+            <li className='flex items-center'>
+              <FileText className='text-blue-500 mr-2' size={20} />
+              <span className='text-gray-700'>Số lượng bài đăng: {amountPost}</span>
+            </li>
+            <li className='flex items-center'>
+              <CreditCard className='text-blue-500 mr-2' size={20} />
+              <span className='text-gray-700'>Giá: {price.toLocaleString()} VND</span>
+            </li>
+          </ul>
+          <button
+            className={`w-full py-3 rounded-md text-white font-semibold transition-colors ${
+              isProcessing ? 'bg-gray-400 cursor-not-allowed' : 'bg-blue-600 hover:bg-blue-700'
+            }`}
+            onClick={handleBuy}
+            disabled={isProcessing}
+          >
+            {isProcessing ? 'Đang xử lý...' : 'Mua ngay'}
+          </button>
+        </div>
       </div>
 
       <ConfirmModal
@@ -106,17 +129,27 @@ const PackageCard: React.FC<Package> = ({ name, description, duration, amountPos
         packageName={name}
         packagePrice={price}
       />
-    </>
+    </div>
   )
 }
 
-// Rest of the PackagePage component remains the same
 const PackagePage: React.FC = () => {
   const [packages, setPackages] = useState<Package[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<any>(null)
+  const navigate = useNavigate()
+
+  // Kiểm tra xem người dùng đã đăng nhập chưa
+  const isAuthenticated = localStorage.getItem('token') // Ví dụ kiểm tra token trong localStorage
 
   useEffect(() => {
+    // if (!isAuthenticated) {
+    //   // Nếu chưa đăng nhập, thông báo và chuyển hướng đến trang đăng nhập
+    //   alert('Vui lòng đăng nhập để tiếp tục!')
+    //   navigate('/login')
+    //   return
+    // }
+
     const fetchPackages = async () => {
       try {
         const response = await getPackage()
@@ -132,17 +165,28 @@ const PackagePage: React.FC = () => {
   }, [])
 
   if (loading) {
-    return <div className={styles.loading}>Loading...</div>
+    return (
+      <div className='flex items-center justify-center h-screen'>
+        <div className='animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-blue-500'></div>
+      </div>
+    )
   }
 
   if (error) {
-    return <div className={styles.error}>Error: {error.message}</div>
+    return (
+      <div className='flex items-center justify-center h-screen'>
+        <div className='bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative' role='alert'>
+          <strong className='font-bold'>Error!</strong>
+          <span className='block sm:inline'> {error.message}</span>
+        </div>
+      </div>
+    )
   }
 
   return (
-    <div className={styles.container}>
-      <h1 className={styles.title}>Các Gói Dịch Vụ</h1>
-      <div className={styles.packageGrid}>
+    <div className='container mx-auto px-4 py-12 mt-[82px]'>
+      <h1 className='text-4xl font-bold text-center text-gray-800 mb-12'>Các Gói Dịch Vụ</h1>
+      <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8'>
         {packages.map((pkg) => (
           <PackageCard key={pkg.id} {...pkg} />
         ))}

@@ -11,12 +11,13 @@ export interface User {
   id: string
   userId: string
   phone: string | null
-  firstName: string
-  lastName: string
+  email: string
+  username: string
+  role: Role
   dob: string // Ngày sinh (Date of Birth) có thể để kiểu `string` dạng "YYYY-MM-DD"
   gender: 'MALE' | 'FEMALE' | 'OTHER' // Nếu có thêm giới tính khác
   avatarUrl: string
-  user: UserAccount // Thông tin tài khoản bên trong đối tượng user
+  UserAccount: UserAccount // Thông tin tài khoản bên trong đối tượng user
 }
 
 export interface UserRegister {
@@ -36,6 +37,8 @@ export enum Role {
 export type UserResponse = SuccessResponse<{
   user: User
 }>
+
+export type Users = SuccessResponse<User[]>
 
 export type VerifyTokenForgotPasswordResponse = SuccessResponse<{
   success: boolean
