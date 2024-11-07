@@ -11,6 +11,7 @@ import { AlertCircle, ArrowLeft, Send } from 'lucide-react'
 const AddPostPage: React.FC = () => {
   const [title, setTitle] = useState('')
   const [content, setContent] = useState('')
+  const [imageUrl, setImageUrl] = useState('')
   const [error, setError] = useState<string | null>(null)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const navigate = useNavigate()
@@ -23,7 +24,7 @@ const AddPostPage: React.FC = () => {
 
     setIsSubmitting(true)
     try {
-      await createPost({ title, content })
+      await createPost({ title, content, imageUrl })
       alert('Tạo bài viết thành công, hãy đợi quản trị viên duyệt bài')
       navigate('/member/manage/manage-posts')
     } catch (err) {
@@ -73,6 +74,19 @@ const AddPostPage: React.FC = () => {
               onChange={(e) => setContent(e.target.value)}
               className={styles.textarea}
               placeholder='Nhập nội dung bài viết'
+            />
+          </div>
+          <div className={styles.formGroup}>
+            <label htmlFor='imageUrl' className={styles.label}>
+              URL hình ảnh
+            </label>
+            <Input
+              type='text'
+              id='imageUrl'
+              value={imageUrl}
+              onChange={(e) => setImageUrl(e.target.value)}
+              className={styles.input}
+              placeholder='Nhập URL hình ảnh'
             />
           </div>
         </CardContent>

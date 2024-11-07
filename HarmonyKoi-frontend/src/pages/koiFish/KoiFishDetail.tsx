@@ -47,7 +47,17 @@ const KoiFishDetail: React.FC = () => {
           {koiFish &&
             Object.keys(koiFish).map((key) => {
               if (
-                !['id', 'variety', 'name', 'imageUrl', 'veriety', 'isDeleted', 'createdAt', 'updatedAt'].includes(key)
+                ![
+                  'id',
+                  'variety',
+                  'name',
+                  'imageUrl',
+                  'veriety',
+                  'isDeleted',
+                  'createdAt',
+                  'updatedAt',
+                  'varietyId' // Exclude varietyId here
+                ].includes(key)
               ) {
                 const value = koiFish[key as keyof KoiFishAttributes]
                 if (key === 'variety' && typeof value === 'object') {

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Package } from '../../types/package.type'
 import { getPackage, getPackageById } from '../../apis/package.api'
-import { checkExistingOrder, createOrderPackage } from '../../apis/order.api'
+import { createOrderPackage } from '../../apis/order.api'
 import styles from './ServicePackagePage.module.css'
 import { useNavigate } from 'react-router-dom'
 import { X } from 'lucide-react'
@@ -55,15 +55,9 @@ const PackageCard: React.FC<Package> = ({ name, description, duration, amountPos
   const handleConfirmPurchase = async () => {
     setIsProcessing(true)
     try {
-      const existingOrder = await checkExistingOrder(id) // Kiểm tra đơn hàng đã tồn tại
-
-      if (existingOrder) {
-        alert('Bạn đã có gói này hoặc chưa thanh toán. Vui lòng chọn gói khác.')
-        setIsModalOpen(false)
-        return // Dừng xử lý nếu đơn hàng đã tồn tại
-      }
-
       const packageDetail = await getPackageById(id)
+
+      console.log(packageDetail)
       // Tạo đơn hàng sử dụng packageId từ packageDetail
       await createOrderPackage({ packageId: packageDetail.data.data.id, type: 'PACKAGE' })
       // await createOrderPackage({ packageId, type: 'PACKAGE' })

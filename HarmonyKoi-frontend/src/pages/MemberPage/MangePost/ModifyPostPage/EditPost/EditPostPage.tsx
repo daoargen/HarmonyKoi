@@ -14,6 +14,7 @@ import 'react-toastify/dist/ReactToastify.css'
 const EditPostPage: React.FC = () => {
   const { id } = useParams<{ id: string }>()
   const [post, setPost] = useState<Post | null>(null)
+  const [imageUrl, setImageUrl] = useState('')
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -23,6 +24,9 @@ const EditPostPage: React.FC = () => {
     const fetchPost = async () => {
       try {
         const response = await getPostById(id!)
+        if (post?.imageUrl) {
+          setImageUrl(post.imageUrl) // Initialize imageUrl state
+        }
         setPost(response.data.data)
       } catch (err) {
         setError('Không thể tải bài viết')
@@ -33,7 +37,7 @@ const EditPostPage: React.FC = () => {
     }
 
     fetchPost()
-  }, [id])
+  }, [id, post?.imageUrl])
 
   const handleUpdatePost = async () => {
     if (post) {
@@ -43,6 +47,7 @@ const EditPostPage: React.FC = () => {
         await updatePost(post.id, {
           title: post.title,
           content: post.content,
+          imageurl: post.imageUrl,
           status: updatedStatus,
           visible: post.visible
         })
@@ -64,7 +69,12 @@ const EditPostPage: React.FC = () => {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target
-    setPost((prevPost) => (prevPost ? { ...prevPost, [name]: value } : null))
+    if (name === 'imageUrl') {
+      setImageUrl(value) // Update imageUrl state directly
+    } else if (post) {
+      setPost({ ...post, [name]: value })
+    }
+    // setPost((prevPost) => (prevPost ? { ...prevPost, [name]: value } : null))
   }
 
   const handleVisibilityToggle = () => {
@@ -122,6 +132,20 @@ const EditPostPage: React.FC = () => {
               onChange={handleChange}
               className={styles.textarea}
               placeholder='Nhập nội dung bài viết'
+            />
+          </div>
+          <div className={styles.formGroup}>
+            <label htmlFor='imageUrl' className={styles.label}>
+              URL hình ảnh
+            </label>
+            <Input
+              type='text'
+              id='imageUrl'
+              name='imageUrl' // Add name attribute
+              value={imageUrl} // Bind to imageUrl state
+              onChange={handleChange}
+              className={styles.input}
+              placeholder='Nhập URL hình ảnh'
             />
           </div>
           <div className={styles.visibilityToggle}>

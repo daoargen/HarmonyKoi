@@ -9,7 +9,7 @@ import Paging from '../../components/common/Paging/Paging'
 import { useNavigate } from 'react-router-dom'
 import banner from '../../assets/images/banner.gif'
 
-const BlogCard: React.FC<Post> = ({ id, title, content, createdAt }) => {
+const BlogCard: React.FC<Post> = ({ id, title, content, createdAt, imageUrl }) => {
   const navigate = useNavigate()
   const truncatedContent = content.length > 100 ? content.substring(0, 100) + '...' : content
 
@@ -19,7 +19,7 @@ const BlogCard: React.FC<Post> = ({ id, title, content, createdAt }) => {
 
   return (
     <div className={styles.blogCard}>
-      <img src={koiImage} alt={title} className={styles.blogCardImage} />
+      <img src={imageUrl} alt={title} className={styles.blogCardImage} />
       <div className={styles.blogCardContent}>
         <h2 className={styles.blogCardTitle}>{title}</h2>
         <p className={styles.blogCardDescription}>{truncatedContent}</p> {/* Hiển thị nội dung đã cắt bớt */}

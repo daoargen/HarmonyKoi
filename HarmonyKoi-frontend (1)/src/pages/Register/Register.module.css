@@ -1,0 +1,161 @@
+.registerContainer {
+  display: flex;
+  height: 100vh;
+}
+
+.registerForm {
+  width: 50%;
+  max-width: 400px;
+  margin: auto;
+  padding: 2rem;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.logo img {
+  height: 50px; /* Tăng kích thước logo */
+  width: auto;
+  max-width: 150px;
+  object-fit: contain;
+  border: 2px solid var(--border-color);
+  border-radius: 8px;
+}
+
+.logo span {
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+h1 {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.loginLink {
+  font-size: 0.875rem;
+  color: #6b7280;
+  margin-bottom: 1.5rem;
+}
+
+.loginLink a {
+  color: #2563eb;
+  text-decoration: none;
+}
+
+.loginLink a:hover {
+  text-decoration: underline;
+}
+
+.googleButton {
+  width: 100%;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.googleButton img {
+  margin-right: 0.5rem;
+  height: 30px;
+  width: 30px;
+}
+
+.divider {
+  text-align: center;
+  font-size: 0.875rem;
+  color: #6b7280;
+  margin-bottom: 1rem;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+}
+.formGroup label {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 0.875rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  color: #4b5563;
+}
+
+.formGroup input {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+  font-size: 1rem;
+  transition: border-color 0.2s ease;
+}
+
+.termsCheckbox {
+  display: flex;
+  align-items: center;
+}
+
+.termsCheckbox input {
+  margin-right: 0.5rem;
+}
+
+.termsCheckbox label {
+  font-size: 0.875rem;
+  color: #6b7280;
+}
+
+.termsCheckbox a {
+  color: #2563eb;
+  text-decoration: none;
+}
+
+.termsCheckbox a:hover {
+  text-decoration: underline;
+}
+
+.submitButton {
+  width: 100%;
+  background-color: #2563eb;
+  color: white;
+  padding: 0.75rem;
+  border: none;
+  border-radius: 4px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.koiImage {
+  width: 50%;
+  background-image: url('src/assets/images/loginImage.jpg');
+  background-size: cover;
+  background-position: center;
+}
+
+@media (max-width: 768px) {
+  .registerontainer {
+    flex-direction: column;
+  }
+
+  .registerForm,
+  .koiImage {
+    width: 100%;
+  }
+
+  .koiImage {
+    height: 200px;
+  }
+}
