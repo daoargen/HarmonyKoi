@@ -1,0 +1,115 @@
+.navbar {
+  background-color: var(--color-blue-gray); /* Dùng màu xanh xám nhạt */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+.logoImage {
+  height: 50px; /* Tăng kích thước logo */
+  width: auto;
+  max-width: 150px;
+  object-fit: contain;
+  border: 2px solid var(--border-color);
+  border-radius: 8px;
+}
+
+.navList {
+  display: flex;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
+
+.navLink {
+  color: var(--color-yellow-light); /* Dùng màu vàng nhạt cho text */
+  font-size: 1.2rem;
+  font-weight: bold;
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  transition: color 0.3s ease;
+}
+
+.navLink:hover {
+  color: var(--color-green-light); /* Đổi màu text khi hover sang xanh lá nhạt */
+}
+
+.loginButton {
+  background-color: var(--color-yellow-light); /* Dùng màu vàng nhạt cho nút */
+  color: var(--color-blue-gray); /* Màu chữ là xanh xám */
+  padding: 0.5rem 1rem;
+  font-size: 1.2rem;
+  font-weight: bold;
+  border-radius: 4px;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+.loginButton:hover {
+  background-color: var(--color-green-light); /* Đổi màu nền khi hover sang xanh lá nhạt */
+}
+
+.menuButton {
+  display: none;
+}
+
+.avatarImage {
+  width: 30px; /* Điều chỉnh kích thước theo ý muốn */
+  height: 30px;
+  border-radius: 50%; /* Hình tròn */
+  object-fit: cover; /* Giữ tỉ lệ ảnh */
+}
+
+.avatar {
+  width: 30px; /* Điều chỉnh kích thước tùy ý */
+  height: 30px;
+  border-radius: 50%; /* Hình tròn */
+}
+
+.avatarButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.profileContainer {
+  display: flex;
+  align-items: center; /* Canh giữa theo chiều dọc */
+}
+
+.logoutButton {
+  margin-left: 10px; /* Khoảng cách giữa avatar và nút */
+  /* Thêm style khác cho nút tùy ý */
+}
+
+.profileContainer {
+  display: flex;
+  align-items: center;
+  position: relative; /* Add this */
+}
+
+.navList.open {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background-color: #b0c4de;
+  padding: 1rem;
+}

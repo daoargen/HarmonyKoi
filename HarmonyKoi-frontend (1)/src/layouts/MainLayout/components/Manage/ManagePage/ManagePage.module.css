@@ -1,0 +1,22 @@
+.manageContainer {
+  display: flex;
+  flex-direction: row;
+  min-height: 100vh;
+  background-color: #f0f0f0;
+}
+
+.content {
+  flex: 1;
+  padding: 20px;
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  margin: 20px;
+  min-width: 0; /* Đảm bảo không bị tràn */
+}
+
+h1 {
+  font-size: 28px;
+  color: #333;
+  margin-bottom: 20px;
+}
