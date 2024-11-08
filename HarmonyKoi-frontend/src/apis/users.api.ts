@@ -1,7 +1,7 @@
 // import { LoginFormType } from '../pages/Login/LoginPage'
 // import { RegisterFormType } from '../pages/Register/Register'
 import { AuthResponse } from '../types/auth.type'
-import { User, UserResponse, Users } from '../types/user.type'
+import { User, UserResponse } from '../types/user.type'
 import { getRefreshToken } from '../utils/cookies'
 import http from '../utils/http'
 
