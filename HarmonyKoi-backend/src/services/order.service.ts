@@ -255,7 +255,8 @@ async function createOrder(token: string, newOrder: CreateOrder) {
       // Tìm order đầu tiên trong danh sách orderIds
       const existingOrder = await Order.findOne({
         where: {
-          id: filteredOrderIds[0]
+          id: filteredOrderIds[0],
+          status: "PENDING"
         }
       })
 
