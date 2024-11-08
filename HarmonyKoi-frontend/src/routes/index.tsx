@@ -24,7 +24,7 @@ import ManageOrder from '../pages/MemberPage/MangeOrder/MangeOrderPage'
 import ManageNews from '../pages/AdminPage/ManageNews/ManageNewsPage'
 import ManageFish from '../pages/AdminPage/MangeFish/ManageFish'
 import ApprovePost from '../pages/AdminPage/ApprovePost/ApprovePostPage'
-import ManageUser from '../pages/AdminPage/ManageUser/ManageUser'
+import ManageUser from '../pages/AdminPage/ManageUser/UserPageManagement'
 import ManangePost from '../pages/MemberPage/MangePost/MangePostPage'
 import Dashboard from '../pages/AdminPage/Dashboard/DashboardPage'
 import AddPostPage from '../pages/MemberPage/MangePost/ModifyPostPage/AddPost/AddPostPage'
@@ -39,7 +39,6 @@ import UpdateFish from '../pages/AdminPage/MangeFish/updateFish/updateFish'
 
 import EditNewsPage from '../pages/AdminPage/ManageNews/ModifyNews/EditNews/EditNewsPage'
 import AddNewsPage from '../pages/AdminPage/ManageNews/ModifyNews/AddNews/AddNewsPage'
-
 
 const router = createBrowserRouter([
   {
