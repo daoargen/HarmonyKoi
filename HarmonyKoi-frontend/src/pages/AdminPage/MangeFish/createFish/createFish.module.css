@@ -61,7 +61,7 @@ button {
 }
 
 button[type='submit'] {
-  background-color: #28a745; /* Green background for submit */
+  background-color: #007bff; /* Green background for submit */
   color: white; /* White text */
 }
 

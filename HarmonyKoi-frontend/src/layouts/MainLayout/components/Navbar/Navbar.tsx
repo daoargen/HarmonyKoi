@@ -71,7 +71,7 @@ const Navbar: React.FC = () => {
                 <button onClick={toggleSidebar} className={styles.avatarButton}>
                   <img src={user.avatarUrl} alt='User Avatar' className={styles.avatar} />
                 </button>
-                <Sidebar isOpen={isSidebarOpen} onClose={toggleSidebar} userRole={user.role} />
+                <Sidebar isOpen={isSidebarOpen} onClose={toggleSidebar} userRole={user.user.role} />
               </div>
             ) : (
               <Link to='/login' className={styles.loginButton}>

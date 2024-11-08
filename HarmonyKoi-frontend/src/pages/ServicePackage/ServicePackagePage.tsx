@@ -136,20 +136,9 @@ const PackageCard: React.FC<Package> = ({ name, description, duration, amountPos
 const PackagePage: React.FC = () => {
   const [packages, setPackages] = useState<Package[]>([])
   const [loading, setLoading] = useState(true)
-  const [error, setError] = useState<any>(null)
-  const navigate = useNavigate()
-
-  // Kiểm tra xem người dùng đã đăng nhập chưa
-  const isAuthenticated = localStorage.getItem('token') // Ví dụ kiểm tra token trong localStorage
+  const [error, setError] = useState<any>(null) // Ví dụ kiểm tra token trong localStorage
 
   useEffect(() => {
-    // if (!isAuthenticated) {
-    //   // Nếu chưa đăng nhập, thông báo và chuyển hướng đến trang đăng nhập
-    //   alert('Vui lòng đăng nhập để tiếp tục!')
-    //   navigate('/login')
-    //   return
-    // }
-
     const fetchPackages = async () => {
       try {
         const response = await getPackage()
