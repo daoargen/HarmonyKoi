@@ -17,7 +17,7 @@ export interface User {
   dob: string // Ngày sinh (Date of Birth) có thể để kiểu `string` dạng "YYYY-MM-DD"
   gender: 'MALE' | 'FEMALE' | 'OTHER' // Nếu có thêm giới tính khác
   avatarUrl: string
-  UserAccount: UserAccount // Thông tin tài khoản bên trong đối tượng user
+  user: UserAccount // Thông tin tài khoản bên trong đối tượng user
 }
 
 export interface UserRegister {
