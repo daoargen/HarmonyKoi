@@ -33,8 +33,10 @@ import { Role } from '../types/user.type'
 import ManagePage from '../layouts/MainLayout/components/Manage/ManagePage/ManagePage'
 import PostDetailPage from '../pages/DetailPage/PostDetail/PostDetailPage'
 import NewsDetailPage from '../pages/DetailPage/NewsDetail/NewsDetailPage'
+
 import CreateFish from '../pages/AdminPage/MangeFish/createFish/createFish'
 import UpdateFish from '../pages/AdminPage/MangeFish/updateFish/updateFish'
+
 import EditNewsPage from '../pages/AdminPage/ManageNews/ModifyNews/EditNews/EditNewsPage'
 import AddNewsPage from '../pages/AdminPage/ManageNews/ModifyNews/AddNews/AddNewsPage'
 
