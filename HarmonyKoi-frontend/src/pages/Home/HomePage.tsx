@@ -78,7 +78,7 @@ const HeroSection = () => (
       >
         Nền tảng tư vấn và mua bán cá hàng đầu
       </motion.p>
-      <motion.div
+      {/* <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, delay: 0.4 }}
@@ -86,7 +86,7 @@ const HeroSection = () => (
         <Button size='lg' className='bg-blue-600 hover:bg-blue-700 text-white'>
           Khám phá ngay
         </Button>
-      </motion.div>
+      </motion.div> */}
     </div>
   </section>
 )
