@@ -2,14 +2,14 @@ import React, { useEffect, useState } from 'react'
 import { Button } from '../../components/ui/button'
 import { News } from '../../types/news.type'
 import styles from './NewsPage.module.css'
-import koiImage from '../../assets/images/NewsImage.jpg'
+// import koiImage from '../../assets/images/NewsImage.jpg'
 import { getNews } from '../../apis/news.api'
 // import { formatDate, parseDate } from '../../utils/helpers'
 import Paging from '../../components/common/Paging/Paging'
 import banner from '../../assets/images/banner.gif'
 import { useNavigate } from 'react-router-dom'
 
-const BlogCard: React.FC<News> = ({ id, tittle, content, imageUrl, createdAt }) => {
+export const BlogCard: React.FC<News> = ({ id, tittle, content, imageUrl, createdAt }) => {
   const navigate = useNavigate()
   const truncatedContent = content.length > 100 ? content.substring(0, 100) + '...' : content
   const handleViewDetail = () => {

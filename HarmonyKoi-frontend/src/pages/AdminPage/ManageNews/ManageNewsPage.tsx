@@ -4,7 +4,7 @@ import { News } from '../../../types/news.type' // Cần tạo kiểu `News` n�
 import { deleteNewsById, getNews } from '../../../apis/news.api'
 import styles from './ManageNewsPage.module.css'
 import { useNavigate } from 'react-router-dom'
-import newsImage from '../../../assets/images/NewsImage.jpg'
+// import newsImage from '../../../assets/images/NewsImage.jpg'
 import 'react-toastify/dist/ReactToastify.css'
 import {
   PlusCircle,
@@ -44,7 +44,7 @@ const NewsDetailPopup: React.FC<NewsDetailPopupProps> = ({ news, onClose }) => {
         <h2 className={styles.popupTitle}>{news.tittle}</h2>
         {/* {news.imageUrl && ( */}
         <div className={styles.imageContainer}>
-          <img src={newsImage} alt={news.tittle} className={styles.newsImage} />
+          <img src={news.imageUrl} alt={news.tittle} className={styles.newsImage} />
         </div>
         {/* )} */}
         <div className={styles.popupContent}>

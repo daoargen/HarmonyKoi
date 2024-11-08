@@ -1,10 +1,8 @@
-// KoiFishByYear.tsx
-
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import { Link, useParams } from 'react-router-dom'
-import { KoiFishResponse, KoiFishAttributes } from '../../types/koiFish.type'
-import styles from './koiFishPage.module.css'
+import { KoiFishResponse, KoiFishAttributes } from '../../../types/koiFish.type'
+import styles from '../koiFishPage/koiFishPage.module.css'
 
 const ITEMS_PER_PAGE = 9 // Set the number of items per page
 
@@ -17,6 +15,7 @@ const KoiFishByYear: React.FC = () => {
 
   useEffect(() => {
     const fetchKoiFishes = async () => {
+      setLoading(true) // Ensure loading state is triggered on page change
       try {
         const response = await axios.get<KoiFishResponse>(
           `http://localhost:1412/api/koiFishes?yearOfBirth=${yearOfBirth}`
@@ -37,15 +36,15 @@ const KoiFishByYear: React.FC = () => {
   }, [yearOfBirth])
 
   if (loading) {
-    return <div>Đang tải dữ liệu...</div>
+    return <div className={styles.loading}>Đang tải dữ liệu...</div>
   }
 
   if (error) {
-    return <div>{error}</div>
+    return <div className={styles.error}>{error}</div>
   }
 
   if (koiFishes.length === 0) {
-    return <div>Không có dữ liệu cá koi cho năm sinh này.</div>
+    return <div className={styles.error}>Không có dữ liệu cá koi cho năm sinh này.</div>
   }
 
   // Calculate the current koi fishes to display

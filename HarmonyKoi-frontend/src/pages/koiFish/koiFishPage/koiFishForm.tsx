@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
-import { KoiFishResponse, KoiFishAttributes } from '../../types/koiFish.type'
+import { KoiFishResponse, KoiFishAttributes } from '../../../types/koiFish.type'
 import styles from './koiFishPage.module.css'
 
 const DEFAULT_ITEMS_PER_PAGE = 9 // Đặt số lượng mặc định cho mỗi trang

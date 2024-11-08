@@ -40,6 +40,9 @@ export const deleteOrder = async (id: string) => await http.delete<Order>(`/orde
 export const createOrderPackage = async (order: { packageId: string; type: 'PACKAGE' }) =>
   await http.post<Order>('/orders', order)
 
+export const createKoiOrderPackage = async (order: { koiFishId: string | undefined; type: 'KOIFISH' }) =>
+  await http.post<Order>('/orders', order)
+
 export const checkExistingOrder = async (id: string) => {
   try {
     const response = await http.get(`/packages/${id}`)

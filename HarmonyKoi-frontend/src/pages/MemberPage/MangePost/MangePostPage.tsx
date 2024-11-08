@@ -4,7 +4,7 @@ import { Post } from '../../../types/post.type'
 import { deletePostById, getPostByMember, updatePostVisible } from '../../../apis/post.api'
 import styles from './ManagePostPage.module.css'
 import { useNavigate } from 'react-router-dom'
-import koiImage from '../../../assets/images/PostImage.jpg'
+// import koiImage from '../../../assets/images/PostImage.jpg'
 import 'react-toastify/dist/ReactToastify.css'
 import {
   PlusCircle,
@@ -44,7 +44,7 @@ const PostDetailPopup: React.FC<PostDetailPopupProps> = ({ post, onClose }) => {
         <h2 className={styles.popupTitle}>{post.title}</h2>
         {post.imageUrl && (
           <div className={styles.imageContainer}>
-            <img src={koiImage} alt={post.title} className={styles.postImage} />
+            <img src={post.imageUrl} alt={post.title} className={styles.postImage} />
           </div>
         )}
         <div className={styles.popupContent}>
