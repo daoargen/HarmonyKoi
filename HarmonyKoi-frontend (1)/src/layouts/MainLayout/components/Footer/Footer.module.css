@@ -1,0 +1,65 @@
+/* src/components/Footer/Footer.module.css */
+
+.footer {
+  background-color: var(--color-blue-gray);
+  padding: 2rem;
+  color: var(--color-yellow-light);
+  text-align: left;
+}
+
+.container {
+  display: flex;
+  justify-content: space-between;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.about,
+.contact {
+  width: 45%;
+}
+
+.about h3,
+.contact h3 {
+  color: var(--color-yellow-light);
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+}
+
+.about p,
+.contact p {
+  margin: 0.5rem 0;
+  line-height: 1.6;
+}
+
+.about ul {
+  list-style: disc;
+  padding-left: 1.5rem;
+  margin: 1rem 0;
+}
+
+.about li {
+  margin-bottom: 0.5rem;
+}
+
+.bottomBar {
+  text-align: center;
+  background-color: var(--color-blue-light);
+  color: var(--color-green-light);
+  padding: 1rem;
+}
+
+.bottomBar p {
+  margin: 0;
+  font-size: 1.1rem;
+  color: var(--color-text);
+}
+
+.bottomBar a {
+  color: var(--color-text);
+  text-decoration: none;
+}
+
+.bottomBar a:hover {
+  text-decoration: underline;
+}
