@@ -1,4 +1,5 @@
 import { Request } from "express"
+import moment from "moment"
 import { Op } from "sequelize"
 
 import responseStatus from "~/constants/responseStatus"
@@ -256,7 +257,8 @@ async function createOrder(token: string, newOrder: CreateOrder) {
       const existingOrder = await Order.findOne({
         where: {
           id: filteredOrderIds[0],
-          status: "PENDING"
+          status: "PENDING",
+          isDeleted: false
         }
       })
 
@@ -424,6 +426,34 @@ async function getCurrentPackage(token: string) {
   }
 }
 
+async function cancelPendingOrders() {
+  try {
+    const pendingOrders = await Order.findAll({
+      where: {
+        status: "PENDING",
+        isDeleted: false
+      }
+    })
+
+    for (const order of pendingOrders) {
+      try {
+        const payment = await Payment.findOne({
+          where: { orderId: order.id, isDeleted: false }
+        })
+        if (payment) {
+          await paymentService.cancelPayment(payment.id!)
+          console.log(`Đã hủy đơn hàng ${order.id} và thanh toán ${payment.id}`)
+        } else {
+          console.warn(`Không tìm thấy thanh toán cho đơn hàng ${order.id}`)
+        }
+      } catch (error) {
+        console.error(`Lỗi khi hủy đơn hàng ${order.id}:`, error)
+      }
+    }
+  } catch (error) {
+    console.error(error)
+  }
+}
 export default {
   getAllOrders,
   getOrderHistory,
@@ -431,5 +461,6 @@ export default {
   createOrder,
   editOrder,
   deleteOrder,
-  getCurrentPackage
+  getCurrentPackage,
+  cancelPendingOrders
 }
