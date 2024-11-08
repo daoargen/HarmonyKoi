@@ -16,7 +16,7 @@ export interface Order {
   payment: Payment
 }
 
-export interface PaymentButtonProps {
+export interface PaymentInfomation {
   amount: number
   description: string
 }

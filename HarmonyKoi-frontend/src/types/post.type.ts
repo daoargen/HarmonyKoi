@@ -1,5 +1,4 @@
 import { SuccessResponse } from './response.type'
-import koiImage from '../../assets/images/PostImage.jpg'
 
 export type PostStatus = 'PENDING' | 'APPROVED' | 'REJECTED'
 
@@ -8,7 +7,7 @@ export interface Post {
   userId: string
   title: string
   content: string
-  imageUrl: typeof koiImage
+  imageUrl: string
   rejectReason: string | null
   dateRemain: number
   status: PostStatus

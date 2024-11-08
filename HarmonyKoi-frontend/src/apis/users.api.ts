@@ -1,13 +1,17 @@
 // import { LoginFormType } from '../pages/Login/LoginPage'
 // import { RegisterFormType } from '../pages/Register/Register'
 import { AuthResponse } from '../types/auth.type'
-import { UserResponse } from '../types/user.type'
+import { User, UserResponse, Users } from '../types/user.type'
 import { getRefreshToken } from '../utils/cookies'
 import http from '../utils/http'
 
 export const getMeQueryKey = 'me'
 
 export const getGoogleUrlQueryKey = 'googleAuthUrl'
+
+export const getAllUsers = async () => await http.get<UserResponse>('/users')
+
+export const getUser = async (id: string) => await http.get<User>(`/users/${id}`)
 
 export const registerUser = async (data: {
   email: string
@@ -21,6 +25,8 @@ export const login = async (data: { loginKey: string; password: string }) =>
   await http.post<AuthResponse>('/auth/login', data)
 
 export const getProfile = async () => await http.get<UserResponse>('/users/profile')
+
+export const deleteUser = async (id: string) => await http.delete<User>(`/users/${id}`)
 
 // export const getGoogleAuthUrl = () => http.get<GoogleUrlResponse>('/login/google')
 
