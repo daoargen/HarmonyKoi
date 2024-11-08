@@ -11,6 +11,7 @@ import mainRouter from "~/routes/index"
 import swaggerDocs from "~/swagger/swagger"
 
 import { syncModels } from "./databases/syncModels"
+import { initializeSchedulers } from "./services/scheduleTask.service"
 
 const start = async () => {
   try {
@@ -41,6 +42,8 @@ const start = async () => {
       console.log(`Swagger on ${process.env.SERVER_URL}/api`)
       swaggerDocs(app, String(PORT))
     })
+
+    initializeSchedulers()
   } catch (error) {
     console.log(error)
     process.exit(1)
