@@ -1,141 +1,97 @@
 .container {
   position: relative;
-  min-height: 100vh;
+  width: 100%;
+  min-height: 100vh; /* Ensures the container takes the full height of the viewport */
   display: flex;
   justify-content: center;
   align-items: center;
-  position: relative;
+  overflow: hidden; /* Prevents any content overflow */
 }
+
 .backgroundImage {
-  image-resolution: 1080;
-  background-size: cover;
-  display: flex;
-  width: 100%;
-  justify-content: center;
-}
-
-.breadcrumb {
-  position: absolute;
-  top: 0; /* Đặt breadcrumb lên đầu container */
+  position: absolute; /* Positioned behind all content */
+  top: 0;
+  margin-top: 40px;
   left: 0;
-  width: 100%; /* Để breadcrumb chiếm toàn bộ chiều rộng */
-  background-color: white; /* Tạo nền mờ nếu cần */
-  padding: 10px;
-  z-index: 10;
+  width: 100%;
+  height: 100vh; /* Make sure the background image fills the entire viewport height */
+  object-fit: cover; /* Ensure the image covers the entire screen without distortion */
+  z-index: -1; /* Ensure it stays behind the content */
 }
+
 .breadcrumb {
-  font-size: 16px;
-  margin-bottom: 20px;
-}
-
-.highlight {
-  color: #ffa500; /* You can adjust the color as per your need */
-}
-
-.tab-button1,
-.tab-button2 {
   position: absolute;
-  border-radius: 12px;
-  border-width: 3px;
-  display: flex;
-  justify-content: center;
-  background-color: white;
-  transition: background-color 0.5s ease;
-  width: 600px;
+  top: 10px; /* Small padding from the top */
+  left: 0;
+  width: 100%;
   padding: 10px 20px;
+  font-size: 14px;
+  color: #333;
   font-weight: bold;
+  background-color: rgba(255, 255, 255, 0.7); /* Semi-transparent background */
+  z-index: 10; /* Ensures breadcrumb is above the image */
 }
 
-.tab-button1 {
-  top: 50px; /* Điều chỉnh vị trí theo yêu cầu */
-  left: 50px;
+.breadcrumb span {
+  color: #555;
 }
 
-.tab-button2 {
-  top: 50px; /* Điều chỉnh vị trí theo yêu cầu */
-  right: 50px;
-}
-
-.tab-button2:hover {
-  background-color: #e3931b;
-}
-.tab-button1:hover {
-  background-color: #e3931b;
-}
-
-.tab {
-  padding: 10px 20px;
-  cursor: pointer;
-  border: none;
-  background-color: #ddd;
-  color: #000;
-  font-weight: bold;
-  transition: background-color 0.3s ease;
-}
-
-.active-tab {
-  background-color: #f4a41c; /* Bright orange for active tab */
-  color: #fff;
+.breadcrumb .highlight {
+  color: #007bff;
 }
 
 .form-container {
-  background-color: rgb(255, 255, 255); /* White with opacity */
+  max-width: 600px;
+  width: 100%;
   padding: 20px;
+  background: rgba(255, 255, 255, 0.8); /* Semi-transparent white background */
   border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  width: 600px;
-  position: absolute;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  z-index: 1; /* Ensures form is above the background */
 }
 
 h2 {
-  font-size: 24px;
-  color: #f4a41c; /* Match the orange from the tab */
   text-align: center;
+  color: #333;
+  font-size: 24px;
   margin-bottom: 20px;
 }
 
 label {
   display: block;
-  margin-bottom: 10px;
-  font-weight: bold;
+  margin-bottom: 8px;
   color: #333;
+  font-weight: bold;
 }
 
 .input {
-  width: 95%;
+  width: 100%;
   padding: 10px;
-  margin-bottom: 20px;
-  border: 1px solid #ccc;
+  margin-bottom: 15px;
   border-radius: 5px;
+  border: 1px solid #ccc;
   font-size: 16px;
+  box-sizing: border-box;
 }
 
-.radio-group {
-  display: flex;
-  align-items: center;
-  margin-bottom: 20px;
-}
-
-.radio-group input {
-  margin-right: 5px;
-}
-
-.radio-group label {
-  margin-right: 15px;
+.input:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
 }
 
 .submit-button {
   width: 100%;
-  padding: 10px;
-  background-color: #f4a41c; /* Match the orange from the tab */
+  padding: 12px;
+  background-color: #007bff;
   color: white;
+  font-size: 16px;
   border: none;
   border-radius: 5px;
-  font-size: 16px;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
 
 .submit-button:hover {
-  background-color: #e3931b;
+  background-color: #0056b3;
 }
