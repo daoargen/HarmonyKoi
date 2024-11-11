@@ -43,7 +43,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, userRole }) => {
   return (
     <div className={`${styles.sidebar} ${isOpen ? styles.open : ''}`}>
       <button className={styles.closeButton} onClick={onClose}>
-        &times;
+        {/* &times; */}
       </button>
       <ul className={styles.sidebarList}>
         <li>
