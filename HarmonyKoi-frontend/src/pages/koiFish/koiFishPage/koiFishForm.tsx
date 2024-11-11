@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
-import { KoiFishResponse, KoiFishAttributes } from '../../types/koiFish.type'
+import { KoiFishResponse, KoiFishAttributes } from '../../../types/koiFish.type'
 import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from 'lucide-react'
 
 const DEFAULT_ITEMS_PER_PAGE = 8
@@ -91,7 +91,7 @@ const KoiFishDisplay: React.FC = () => {
 
   return (
     <div className='container mx-auto px-4 py-8 mt-[82px]'>
-      <h1 className='text-4xl font-bold text-center text-gray-800 mb-12'>Thông tin Cá Koi</h1>
+      <h1 className='text-4xl font-bold text-center text-gray-800 mb-12'>Danh Sách Cá Koi</h1>
       <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8'>
         {currentKoiFishes.map((koi) => (
           <div
