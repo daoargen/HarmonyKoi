@@ -31,8 +31,9 @@ const Navbar: React.FC = () => {
   return (
     <header className='fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-white'>
       <nav className='container mx-auto px-4 py-4 flex items-center justify-between'>
-        <Link to='/' className={styles.logo}>
+        <Link to='/' className='flex items-center space-x-2'>
           <img src={logoImage} alt='Company Logo' className={styles.logoImage} />
+          <span className='text-2xl font-bold text-blue-600'>KoiFengShui</span>
         </Link>
         <button className={styles.menuButton} onClick={() => setIsOpen(!isOpen)} aria-label='Toggle menu'>
           <span></span>
@@ -67,11 +68,13 @@ const Navbar: React.FC = () => {
           </li>
           <li>
             {accessToken && user ? ( // Kiểm tra accessToken và user
-              <div className={styles.profileContainer}>
-                <button onClick={toggleSidebar} className={styles.avatarButton}>
-                  <img src={user.avatarUrl} alt='User Avatar' className={styles.avatar} />
-                </button>
-                <Sidebar isOpen={isSidebarOpen} onClose={toggleSidebar} userRole={user.user.role} />
+              <div className='flex justify-center items-center mb-0'>
+                <div className={styles.profileContainer}>
+                  <button onClick={toggleSidebar} className={styles.avatarButton}>
+                    <img src={user.avatarUrl} alt='User Avatar' className={styles.avatar} />
+                  </button>
+                  <Sidebar isOpen={isSidebarOpen} onClose={toggleSidebar} userRole={user.user.role} />
+                </div>
               </div>
             ) : (
               <Link to='/login' className={styles.loginButton}>
