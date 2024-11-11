@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { getPostById } from '../../../apis/post.api'
-import { Post } from '../../../types'
+import { Post } from '../../../types/post.type'
 import styles from './PostDetailPage.module.css'
 // import { formatDate, parseDate } from '../../../utils/helpers'
 import banner from '../../../assets/images/banner.gif'
@@ -41,7 +41,7 @@ const PostDetailPage: React.FC = () => {
   return (
     <div className={styles.postDetailContainer}>
       <div className={styles.bannerImage}>
-        <img src={post.imageUrl} alt={post?.title} />
+        <img src={post?.imageUrl} alt={post?.title} />
       </div>
       <div className={styles.postContent}>
         <header className={styles.postHeader}>
