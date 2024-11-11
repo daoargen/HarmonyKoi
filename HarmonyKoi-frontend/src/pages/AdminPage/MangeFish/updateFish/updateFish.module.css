@@ -1,5 +1,5 @@
 .update-fish-modal {
-  width: 90%; /* Full width on smaller screens */
+  width: 100%; /* Full width on smaller screens */
   max-width: 600px; /* Maximum width for larger screens */
   margin: 2rem auto; /* Center the modal */
   padding: 2rem; /* Add padding */
@@ -70,4 +70,52 @@ button[type='button'] {
 
 button:hover {
   opacity: 0.9; /* Slight opacity on hover */
+}
+/* Add a container for checkboxes */
+.checkbox-group {
+  margin-bottom: 16px;
+}
+
+.checkbox-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 16px;
+  margin-top: 8px;
+}
+
+.checkbox-item {
+  display: flex;
+  align-items: center;
+}
+
+.checkbox {
+  margin-right: 8px;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: green; /* Blue color for checkboxes */
+}
+
+.checkbox-label {
+  font-size: 16px;
+  font-weight: 500;
+  color: #333;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.checkbox-label:hover {
+  color: grey; /* Highlight the label when hovered */
+}
+
+.checkbox:focus {
+  outline: none;
+  border: 2px solid #3498db;
+}
+
+/* Add spacing and text styling */
+.checkbox-group label {
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
 }
