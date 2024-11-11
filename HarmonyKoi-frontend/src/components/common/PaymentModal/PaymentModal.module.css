@@ -173,3 +173,9 @@
     font-size: 1.125rem;
   }
 }
+
+.paymentButton:disabled {
+  background-color: #d3d3d3; /* Màu xám nhạt cho button khi bị disable */
+  cursor: not-allowed; /* Thay đổi con trỏ để chỉ ra rằng không thể nhấp vào */
+  opacity: 0.6; /* Hiệu ứng mờ */
+}

@@ -9,6 +9,7 @@ interface UserDetailPopupProps {
   id: string
   onClose: () => void
 }
+import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from 'lucide-react'
 
 const UserDetailPopup: React.FC<UserDetailPopupProps> = ({ id, onClose }) => {
   const [user, setUser] = useState<User | null>(null)
@@ -77,6 +78,8 @@ const ManageUser: React.FC = () => {
   const [error, setError] = useState<string | null>(null)
   const [selectedUserId, setSelectedUserId] = useState<string | null>(null)
   const [showDeleteConfirmation, setShowDeleteConfirmation] = useState<string | null>(null)
+  const [currentPage, setCurrentPage] = useState(1)
+  const itemsPerPage = 10 // Số lượng user mỗi trang
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -116,6 +119,11 @@ const ManageUser: React.FC = () => {
   if (loading) return <p className={styles.loading}>Đang tải...</p>
   if (error) return <p className={styles.error}>{error}</p>
 
+  const totalPages = Math.ceil(users.length / itemsPerPage)
+  const indexOfLastUser = currentPage * itemsPerPage
+  const indexOfFirstUser = indexOfLastUser - itemsPerPage
+  const currentUsers = users.slice(indexOfFirstUser, indexOfLastUser)
+
   return (
     <div className={styles.container}>
       <h1 className={styles.title}>Quản lý người dùng</h1>
@@ -129,7 +137,7 @@ const ManageUser: React.FC = () => {
           </tr>
         </thead>
         <tbody>
-          {users
+          {currentUsers
             .filter((user) => user.role === 'MEMBER')
             .map((user) => (
               <tr key={user.id}>
@@ -176,6 +184,39 @@ const ManageUser: React.FC = () => {
             ))}
         </tbody>
       </table>
+
+      <div className={styles.paginationControls}>
+        <Button onClick={() => setCurrentPage(1)} disabled={currentPage === 1} variant='outline' size='icon'>
+          <ChevronsLeft size={16} />
+        </Button>
+        <Button
+          onClick={() => setCurrentPage(currentPage - 1)}
+          disabled={currentPage === 1}
+          variant='outline'
+          size='icon'
+        >
+          <ChevronLeft size={16} />
+        </Button>
+        <span className={styles.pageInfo}>
+          Trang {currentPage} / {totalPages}
+        </span>
+        <Button
+          onClick={() => setCurrentPage(currentPage + 1)}
+          disabled={currentPage === totalPages}
+          variant='outline'
+          size='icon'
+        >
+          <ChevronRight size={16} />
+        </Button>
+        <Button
+          onClick={() => setCurrentPage(totalPages)}
+          disabled={currentPage === totalPages}
+          variant='outline'
+          size='icon'
+        >
+          <ChevronsRight size={16} />
+        </Button>
+      </div>
 
       <AnimatePresence>
         {selectedUserId && <UserDetailPopup id={selectedUserId} onClose={() => setSelectedUserId(null)} />}

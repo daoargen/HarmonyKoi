@@ -105,7 +105,7 @@ const PostDetailPopup: React.FC<PostDetailPopupProps> = ({ post, onClose, onAppr
         <h2 className={styles.popupTitle}>{post.title}</h2>
         {koiImg && (
           <div className={styles.imageContainer}>
-            <img src={koiImg} alt='Post Image' className={styles.postImage} />
+            <img src={post.imageUrl} alt='Post Image' className={styles.postImage} />
           </div>
         )}
         <div className={styles.popupContent}>
