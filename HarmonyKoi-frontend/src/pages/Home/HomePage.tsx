@@ -99,8 +99,8 @@ const ServiceCard = ({ icon: Icon, title, description, buttonText, buttonLink }:
     if (!isAuthenticated) {
       alert('Vui lòng đăng nhập để sử dụng dịch vụ này.')
       navigate('/login') // Chuyển hướng đến trang đăng nhập
-    } else if (user?.role === 'MEMBER') navigate('/member/manage/manage-posts')
-    else if (user?.role === 'ADMIN') navigate('/admin/manage/approve-posts')
+    } else if (user?.role === 'ADMIN') navigate('/admin/manage/approve-posts')
+    else navigate(buttonLink)
   }
   return (
     <motion.div whileHover={{ scale: 1.05 }} transition={{ type: 'spring', stiffness: 300 }}>

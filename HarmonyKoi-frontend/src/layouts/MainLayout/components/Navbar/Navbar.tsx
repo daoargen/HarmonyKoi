@@ -29,8 +29,8 @@ const Navbar: React.FC = () => {
   }
 
   return (
-    <header className={styles.navbar}>
-      <nav className={styles.nav}>
+    <header className='fixed top-0 left-0 right-0 z-50 transition-all duration-300'>
+      <nav className='container mx-auto px-4 py-4 flex items-center justify-between'>
         <Link to='/' className={styles.logo}>
           <img src={logoImage} alt='Company Logo' className={styles.logoImage} />
         </Link>
@@ -39,29 +39,29 @@ const Navbar: React.FC = () => {
           <span></span>
           <span></span>
         </button>
-        <ul className={`${styles.navList} ${isOpen ? styles.open : ''}`}>
+        <ul className={`flex space-x-6 ${isOpen ? styles.open : ''}`}>
           <li>
-            <Link to='/package' className={styles.navLink}>
+            <Link to='/package' className='text-blue-600 hover:text-blue-800'>
               Gói dịch vụ
             </Link>
           </li>
           <li>
-            <Link to='/consulting' className={styles.navLink}>
+            <Link to='/consulting' className='text-blue-600 hover:text-blue-800'>
               Tư vấn
             </Link>
           </li>
           <li>
-            <Link to='/koiFish' className={styles.navLink}>
+            <Link to='/koiFish' className='text-blue-600 hover:text-blue-800'>
               Danh sách cá koi
             </Link>
           </li>
           <li>
-            <Link to='/post' className={styles.navLink}>
+            <Link to='/post' className='text-blue-600 hover:text-blue-800'>
               Bài viết
             </Link>
           </li>
           <li>
-            <Link to='/news' className={styles.navLink}>
+            <Link to='/news' className='text-blue-600 hover:text-blue-800'>
               Tin tức
             </Link>
           </li>
