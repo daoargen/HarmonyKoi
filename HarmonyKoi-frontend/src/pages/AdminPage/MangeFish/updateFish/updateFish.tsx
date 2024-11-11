@@ -116,24 +116,33 @@ const UpdateFish: React.FC = () => {
           <label htmlFor='price'>Price:</label>
           <input id='price' type='number' value={price} onChange={(e) => setPrice(Number(e.target.value))} required />
         </div>
-        <div>
+        <div className={styles['checkbox-group']}>
           <label htmlFor='elements'>Elements:</label>
-          <select
-            id='elements'
-            multiple
-            value={selectedElements}
-            onChange={(e) => {
-              const options = Array.from(e.target.selectedOptions, (option) => option.value)
-              setSelectedElements(options)
-            }}
-          >
+          <div className={styles['checkbox-container']}>
             {elements.map((element) => (
-              <option key={element.id} value={element.id}>
-                {element.name}
-              </option>
+              <div key={element.id} className={styles['checkbox-item']}>
+                <input
+                  type='checkbox'
+                  id={`element-${element.id}`}
+                  value={element.id}
+                  checked={selectedElements.includes(element.id)}
+                  onChange={(e) => {
+                    if (e.target.checked) {
+                      setSelectedElements([...selectedElements, element.id])
+                    } else {
+                      setSelectedElements(selectedElements.filter((id) => id !== element.id))
+                    }
+                  }}
+                  className={styles['checkbox']}
+                />
+                <label htmlFor={`element-${element.id}`} className={styles['checkbox-label']}>
+                  {element.name}
+                </label>
+              </div>
             ))}
-          </select>
+          </div>
         </div>
+
         <div className={styles['button-group']}>
           <button type='submit'>Update Koi Fish</button>
           <button type='button' onClick={() => navigate('/admin/manage/manage-fish')}>
