@@ -1,111 +1,106 @@
-body {
-  font-family: 'Arial', sans-serif; /* Clean sans-serif font */
-  background-color: #f4f7f8; /* Light background for contrast */
-  color: #333; /* Dark text for readability */
-  line-height: 1.6; /* Increase line height */
-  margin: 0; /* Remove default margin */
-  padding: 20px; /* Add padding around the body */
-}
+/* koiFishPage.module.css */
 
 .container {
-  max-width: 1000px; /* Limit container width */
-  margin: 0 auto; /* Center the container */
-  padding: 20px; /* Padding inside the container */
-  background-color: #ffffff; /* White background for the container */
-  border-radius: 12px; /* Slightly larger rounded corners */
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1); /* Enhanced shadow for depth */
+  max-width: 1200px;
+  margin: auto;
+  padding: 2rem;
+  margin-top: 82px;
+  text-align: center;
 }
 
 h1 {
-  text-align: center; /* Center the heading */
-  color: #4caf50; /* Green color for the heading */
-  font-size: 2.5rem; /* Larger font size for the heading */
-  margin-bottom: 20px; /* Space below the heading */
-  font-family: 'Georgia', serif; /* Change to a serif font for elegance */
-  text-transform: uppercase; /* Uppercase letters for style */
-  letter-spacing: 2px; /* Spacing between letters */
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #1f2937;
+  margin-bottom: 3rem;
 }
 
 .koi-list {
-  display: grid; /* Use grid layout */
-  grid-template-columns: repeat(3, 1fr); /* 3 columns for 3x3 layout */
-  gap: 20px; /* Space between grid items */
+  display: grid;
+  grid-template-columns: 1fr; /* Default to 1 column */
+  gap: 2rem;
+}
+
+@media (min-width: 768px) {
+  .koi-list {
+    grid-template-columns: repeat(3, 1fr); /* 3 columns on medium screens */
+  }
 }
 
 .koi-card {
-  background-color: #ffffff;
-  border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-  padding: 15px;
+  background-color: white;
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out;
   display: flex;
-  flex-direction: column; /* Stack items vertically */
-  justify-content: space-between; /* Push button to the bottom */
-  align-items: flex-start;
-  text-align: left;
-  transition:
-    transform 0.3s,
-    box-shadow 0.3s;
+  flex-direction: column;
+  height: 100%; /* Ensures the card takes full height for consistency */
+  position: relative;
 }
 
 .koi-card:hover {
-  transform: translateY(-5px); /* Slightly lift the card on hover */
-  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.2); /* Enhance shadow on hover */
+  transform: scale(1.05);
 }
 
 .koi-image {
-  width: 100%; /* Take full width of the card */
-  height: 500px; /* Fixed height for uniformity */
-  object-fit: cover; /* Cover the area, cropping if necessary */
-  border-radius: 12px; /* Larger rounded corners for the image */
-  margin-bottom: 15px; /* Space below the image */
-  border: 2px solid #4caf50; /* Border around the image for emphasis */
+  width: 100%;
+  height: 100%; /* Adjusted height */
+  object-fit: cover;
+  border-radius: 0.5rem;
 }
 
-.koi-card h2 {
-  font-size: 1.5rem; /* Font size for the name */
-  margin: 10px 0; /* Margin above and below the name */
-  color: #4caf50; /* Color for the name */
+h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #1f2937;
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
 }
 
-.koi-card p {
-  margin: 5px 0; /* Margin for paragraphs */
-  font-size: 0.95rem; /* Font size for description */
-  color: #555; /* Slightly lighter color for description */
+p {
+  color: #4b5563;
+  margin-bottom: 1rem;
+  flex-grow: 1; /* Allows text content to grow, pushing the button to the bottom */
 }
 
-/* Pagination styles */
+.detailsButton {
+  display: block;
+  background-color: #3b82f6;
+  color: white;
+  font-weight: 600;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.375rem;
+  text-align: center;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+  margin-top: auto; /* Pushes the button to the bottom */
+}
+
+.detailsButton:hover {
+  background-color: #2563eb;
+}
 
 .pagination {
   display: flex;
-  align-items: center;
   justify-content: center;
-  margin-top: 20px;
-  gap: 10px; /* Add consistent gap between buttons */
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 3rem;
 }
 
-.pageButton,
-.pageButtonfirst {
-  background-color: #ffffff;
-  border: 2px solid #4caf50;
-  border-radius: 50px;
-  margin: 0; /* Ensure no unwanted margin */
-  padding: 10px 15px;
-  color: #4caf50;
+.pageButton {
+  padding: 0.5rem;
+  background-color: #e5e7eb;
+  color: #4b5563;
+  border: none;
+  border-radius: 0.375rem;
   cursor: pointer;
-  transition:
-    background-color 0.3s,
-    transform 0.2s;
-}
-.pageButton.active {
-  background-color: #4caf50;
-  color: white;
-  font-weight: bold;
+  transition: background-color 0.3s ease;
 }
 
 .pageButton:hover {
-  background-color: #4caf50;
-  color: #fff;
-  transform: translateY(-2px);
+  background-color: #d1d5db;
 }
 
 .pageButton:disabled {
@@ -113,34 +108,7 @@ h1 {
   cursor: not-allowed;
 }
 
-.pageInfo {
-  font-size: 1.1rem;
-  color: #333;
-  margin-left: 15px;
-}
-
-/* Details Button Styles */
-.detailsButton {
-  margin-top: 15px; /* Smaller margin to fit better */
-  padding: 12px 30px;
-  background-color: #ff4757;
+.active {
+  background-color: #3b82f6;
   color: white;
-  border: none;
-  border-radius: 50px;
-  cursor: pointer;
-  transition:
-    background-color 0.3s,
-    transform 0.2s,
-    box-shadow 0.3s;
-  text-align: center;
-  font-size: 1rem;
-  font-weight: bold;
-  width: 50%;
-  align-self: left; /* Center button horizontally */
-}
-
-.detailsButton:hover {
-  background-color: #ff6b81; /* Change background color on hover */
-  transform: scale(1.05); /* Slightly enlarge the button on hover */
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3); /* Increase shadow on hover for depth */
 }

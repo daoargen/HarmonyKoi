@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import styles from './Consulting.module.css'
-import backgroundImage from '~/assets/images/background.jpg'
+import backgroundImage from '/background.png'
 
 const ConsultingPage: React.FC = () => {
   const [birthDate, setBirthDate] = useState('')

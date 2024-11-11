@@ -16,6 +16,7 @@ const KoiFishDetail: React.FC = () => {
   const [isProcessing, setIsProcessing] = useState<boolean>(false)
   const navigate = useNavigate()
 
+  // Fetch Koi Fish data from API
   useEffect(() => {
     const fetchKoiFishDetail = async () => {
       try {
@@ -35,16 +36,18 @@ const KoiFishDetail: React.FC = () => {
     fetchKoiFishDetail()
   }, [id])
 
+  // Handle buy action
   const handleBuy = () => {
     const token = getToken()
     if (!token) {
       alert('Bạn chưa đăng nhập. Vui lòng đăng nhập để tiếp tục.')
-      navigate('/login') // Điều hướng đến trang đăng nhập
+      navigate('/login')
     } else {
-      setIsModalOpen(true) // Nếu đã đăng nhập, hiển thị modal
+      setIsModalOpen(true)
     }
   }
 
+  // Confirm purchase and create order
   const handleConfirmPurchase = async () => {
     setIsProcessing(true)
     try {
@@ -63,6 +66,7 @@ const KoiFishDetail: React.FC = () => {
     }
   }
 
+  // Handle loading and error states
   if (loading) {
     return <div className={styles.loading}>Đang tải dữ liệu...</div>
   }
@@ -71,6 +75,7 @@ const KoiFishDetail: React.FC = () => {
     return <div className={styles.error}>{error}</div>
   }
 
+  // Render Koi Fish details
   return (
     <div className={styles.container}>
       <div className={styles.background}></div>
@@ -97,7 +102,7 @@ const KoiFishDetail: React.FC = () => {
                 </div>
                 {Array.isArray(koiFish.elements) && koiFish.elements.length > 0 ? (
                   <div className={styles.elements}>
-                    <strong>Mệnh:</strong>
+                    <strong>Mệnh phù hợp:</strong>
                     <ul>
                       {koiFish.elements.map((element) => (
                         <li key={element.id}>{element.name}</li>
@@ -112,11 +117,11 @@ const KoiFishDetail: React.FC = () => {
           </div>
         </div>
         <div className={styles.buttonContainer}>
-          <button onClick={() => window.history.back()} className={styles.backButton}>
-            Quay lại
+          <button onClick={() => window.history.back()} className={`${styles.backButton} ${styles.button}`}>
+            <span className={styles.icon}>&lt;</span> Quay lại
           </button>
-          <button onClick={handleBuy} className={styles.buyButton}>
-            Mua ngay
+          <button onClick={handleBuy} className={`${styles.buyButton} ${styles.button}`}>
+            <span className={styles.icon}>🛒</span> Mua ngay
           </button>
         </div>
       </div>
