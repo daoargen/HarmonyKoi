@@ -21,3 +21,19 @@ export interface Post {
 }
 
 export type PostResponse = SuccessResponse<Post[]>
+
+export interface PostListResponse {
+  timestamp: string
+  statusCode: number
+  message: string
+  data: {
+    formatPost: Post[]
+  }
+  pagination: {
+    pageSize: number
+    totalItem: number
+    currentPage: number
+    maxPageSize: number
+    totalPage: number
+  }
+}
