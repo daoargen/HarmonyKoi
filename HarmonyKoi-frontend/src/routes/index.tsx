@@ -13,24 +13,32 @@ import PostPage from '../pages/Post/PostPage'
 import NewsPage from '../pages/News/NewsPage'
 import ConsultingPage from '../pages/Consulting/ConsultingPage'
 import AppLayout from '../App'
-import KoiFishForm from '../pages/koiFish/koiFishForm'
-import KoiFishDetail from '../pages/koiFish/KoiFishDetail' // Adjust the path as needed
+import KoiFishForm from '../pages/koiFish/koiFishPage/koiFishForm'
+import KoiFishDetail from '../pages/koiFish/koiFishDetail/KoiFishDetail' // Adjust the path as needed
 import LoginPage from '../pages/Login/LoginPage'
+import ServicePackage from '../pages/ServicePackage/ServicePackagePage'
 import AuthGuard from '../Guards/AuthGuard'
-import KoiFishByYear from '../pages/koiFish/koiFishByYear'
+import KoiFishByYear from '../pages/koiFish/koiFishPage/koiFishByYear'
 import RoleBasedGuard from '../Guards/RoleBasedGuard'
 import ManageOrder from '../pages/MemberPage/MangeOrder/MangeOrderPage'
 import ManageNews from '../pages/AdminPage/ManageNews/ManageNewsPage'
 import ManageFish from '../pages/AdminPage/MangeFish/ManageFish'
 import ApprovePost from '../pages/AdminPage/ApprovePost/ApprovePostPage'
-import ManagePond from '../pages/AdminPage/ManagePond/ManagePondPage'
-import ManageUser from '../pages/AdminPage/ManageUser/ManageUser'
+import ManageUser from '../pages/AdminPage/ManageUser/UserPageManagement'
 import ManangePost from '../pages/MemberPage/MangePost/MangePostPage'
 import Dashboard from '../pages/AdminPage/Dashboard/DashboardPage'
+import AddPostPage from '../pages/MemberPage/MangePost/ModifyPostPage/AddPost/AddPostPage'
+import EditPostPage from '../pages/MemberPage/MangePost/ModifyPostPage/EditPost/EditPostPage'
 import { Role } from '../types/user.type'
 import ManagePage from '../layouts/MainLayout/components/Manage/ManagePage/ManagePage'
 import PostDetailPage from '../pages/DetailPage/PostDetail/PostDetailPage'
 import NewsDetailPage from '../pages/DetailPage/NewsDetail/NewsDetailPage'
+
+import CreateFish from '../pages/AdminPage/MangeFish/createFish/createFish'
+import UpdateFish from '../pages/AdminPage/MangeFish/updateFish/updateFish'
+
+import EditNewsPage from '../pages/AdminPage/ManageNews/ModifyNews/EditNews/EditNewsPage'
+import AddNewsPage from '../pages/AdminPage/ManageNews/ModifyNews/AddNews/AddNewsPage'
 
 const router = createBrowserRouter([
   {
@@ -66,6 +74,10 @@ const router = createBrowserRouter([
         element: <KoiFishForm />
       },
       {
+        path: configs.routes.package,
+        element: <ServicePackage />
+      },
+      {
         path: '/koiFishes/:id', // Add the detail route here
         element: <KoiFishDetail />
       },
@@ -73,6 +85,7 @@ const router = createBrowserRouter([
         path: '/koiFishForm/:yearOfBirth', // Add the detail route here
         element: <KoiFishByYear />
       },
+
       {
         path: 'posts/:id',
         element: <PostDetailPage />
@@ -80,6 +93,30 @@ const router = createBrowserRouter([
       {
         path: 'news/:id',
         element: <NewsDetailPage />
+      },
+      {
+        path: '/add-post',
+        element: <AddPostPage />
+      },
+      {
+        path: '/manage-fish/create-fish',
+        element: <CreateFish />
+      },
+      {
+        path: '/manage-fish/update-fish/:id',
+        element: <UpdateFish />
+      },
+      {
+        path: configs.routes.editPost,
+        element: <EditPostPage />
+      },
+      {
+        path: '/add-news',
+        element: <AddNewsPage />
+      },
+      {
+        path: configs.routes.editNews,
+        element: <EditNewsPage />
       },
       // GuestGuard
       {
@@ -123,10 +160,7 @@ const router = createBrowserRouter([
         path: 'manage-fish',
         element: <ManageFish />
       },
-      {
-        path: 'manage-ponds',
-        element: <ManagePond />
-      },
+
       {
         path: 'manage-news',
         element: <ManageNews />

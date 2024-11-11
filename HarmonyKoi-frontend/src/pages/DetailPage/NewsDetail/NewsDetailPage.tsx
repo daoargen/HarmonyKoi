@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { getNewsById } from '../../../apis/news.api'
-import { News } from '../../../types'
+import { News } from '../../../types/news.type'
 import styles from './NewsDetailPage.module.css'
-import { formatDate, parseDate } from '../../../utils/helpers'
-import banner from '../../../assets/images/banner.gif'
+// import { formatDate, parseDate } from '../../../utils/helpers'
+// import banner from '../../../assets/images/banner.gif'
 
-const PostDetailPage: React.FC = () => {
+const NewsDetailPage: React.FC = () => {
   const { id } = useParams<{ id: string }>()
   const [news, setNews] = useState<News | null>(null)
   const [loading, setLoading] = useState(true)
@@ -41,7 +41,7 @@ const PostDetailPage: React.FC = () => {
   return (
     <div className={styles.newsDetailContainer}>
       <div className={styles.bannerImage}>
-        <img src={banner} alt={news?.tittle} />
+        <img src={news?.imageUrl || ''} alt={news?.tittle} className={styles.blogCardImage} />
       </div>
       <div className={styles.newsContent}>
         <header className={styles.newsHeader}>
@@ -63,4 +63,4 @@ const PostDetailPage: React.FC = () => {
   )
 }
 
-export default PostDetailPage
+export default NewsDetailPage

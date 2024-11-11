@@ -86,11 +86,11 @@ router.get("/confirm-register", AuthController.confirmRegister)
  *               loginKey:
  *                 type: string
  *                 description: The loginKey of user. Username or email
- *                 example: dangkhoa
+ *                 example: rolemember
  *               password:
  *                 type: string
  *                 description: The password of user
- *                 example: 'P@s5Word'
+ *                 example: 'P@sswork123'
  *     responses:
  *       200:
  *         description: A user object along with tokens

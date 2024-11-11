@@ -76,6 +76,9 @@ router.get("/:id", NewController.getNew)
  *               content:
  *                 type: string
  *                 description: Content of the news
+ *               imageUrl:
+ *                 type: string
+ *                 description: imageUrl of the news
  *     responses:
  *       201:
  *         description: News created successfully
@@ -137,6 +140,9 @@ router.post("/", authMiddleware.verifyToken, NewController.createNew)
  *               content:
  *                 type: string
  *                 description: Content of the news
+ *               imageUrl:
+ *                 type: string
+ *                 description: imageUrl of the news
  *     responses:
  *       200:
  *         description: News updated successfully

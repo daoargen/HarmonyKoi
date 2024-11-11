@@ -1,0 +1,123 @@
+/* createFish.module.css */
+
+.create-fish-modal {
+  width: 90%; /* Full width on smaller screens */
+  max-width: 600px; /* Maximum width for larger screens */
+  margin: 2rem auto; /* Center the modal */
+  padding: 2rem; /* Add padding */
+  background-color: #ffffff; /* White background for contrast */
+  border-radius: 10px; /* Rounded corners */
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Soft shadow */
+  z-index: 1000; /* Ensure it stays on top */
+}
+
+h2 {
+  margin-bottom: 1rem; /* Space below the header */
+  font-size: 1.5rem; /* Header font size */
+  text-align: center; /* Center the header */
+}
+
+form {
+  display: flex; /* Flexbox layout for the form */
+  flex-direction: column; /* Column layout */
+}
+
+div {
+  margin-bottom: 1rem; /* Space between form fields */
+}
+
+label {
+  margin-bottom: 0.5rem; /* Space below the label */
+  font-weight: bold; /* Bold labels */
+}
+
+input,
+textarea,
+select {
+  width: 100%; /* Full width for inputs */
+  padding: 0.5rem; /* Padding inside inputs */
+  border: 1px solid #cccccc; /* Light gray border */
+  border-radius: 5px; /* Rounded corners */
+  font-size: 1rem; /* Font size for inputs */
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  border-color: #007bff; /* Blue border on focus */
+  outline: none; /* Remove default outline */
+}
+
+.button-group {
+  display: flex; /* Flexbox for button alignment */
+  justify-content: space-between; /* Space between buttons */
+}
+
+button {
+  padding: 0.5rem 1rem; /* Padding for buttons */
+  border: none; /* Remove default border */
+  border-radius: 5px; /* Rounded corners */
+  cursor: pointer; /* Pointer on hover */
+}
+
+button[type='submit'] {
+  background-color: #007bff; /* Green background for submit */
+  color: white; /* White text */
+}
+
+button[type='button'] {
+  background-color: #dc3545; /* Red background for cancel */
+  color: white; /* White text */
+}
+
+button:hover {
+  opacity: 0.9; /* Slight opacity on hover */
+}
+/* Add a container for checkboxes */
+.checkbox-group {
+  margin-bottom: 16px;
+}
+
+.checkbox-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 16px;
+  margin-top: 8px;
+}
+
+.checkbox-item {
+  display: flex;
+  align-items: center;
+}
+
+.checkbox {
+  margin-right: 8px;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: #3498db; /* Blue color for checkboxes */
+}
+
+.checkbox-label {
+  font-size: 16px;
+  font-weight: 500;
+  color: #333;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.checkbox-label:hover {
+  color: #3498db; /* Highlight the label when hovered */
+}
+
+.checkbox:focus {
+  outline: none;
+  border: 2px solid #3498db;
+}
+
+/* Add spacing and text styling */
+.checkbox-group label {
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+}

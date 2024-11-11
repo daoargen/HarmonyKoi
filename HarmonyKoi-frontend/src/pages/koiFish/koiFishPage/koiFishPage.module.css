@@ -1,0 +1,114 @@
+/* koiFishPage.module.css */
+
+.container {
+  max-width: 1200px;
+  margin: auto;
+  padding: 2rem;
+  margin-top: 82px;
+  text-align: center;
+}
+
+h1 {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #1f2937;
+  margin-bottom: 3rem;
+}
+
+.koi-list {
+  display: grid;
+  grid-template-columns: 1fr; /* Default to 1 column */
+  gap: 2rem;
+}
+
+@media (min-width: 768px) {
+  .koi-list {
+    grid-template-columns: repeat(3, 1fr); /* 3 columns on medium screens */
+  }
+}
+
+.koi-card {
+  background-color: white;
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out;
+  display: flex;
+  flex-direction: column;
+  height: 100%; /* Ensures the card takes full height for consistency */
+  position: relative;
+}
+
+.koi-card:hover {
+  transform: scale(1.05);
+}
+
+.koi-image {
+  width: 100%;
+  height: 100%; /* Adjusted height */
+  object-fit: cover;
+  border-radius: 0.5rem;
+}
+
+h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #1f2937;
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.p {
+  color: #4b5563;
+  margin-bottom: 1rem;
+  flex-grow: 1; /* Allows text content to grow, pushing the button to the bottom */
+}
+
+.detailsButton {
+  display: block;
+  background-color: #3b82f6;
+  color: white;
+  font-weight: 600;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.375rem;
+  text-align: center;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+  margin-top: auto; /* Pushes the button to the bottom */
+}
+
+.detailsButton:hover {
+  background-color: #2563eb;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 3rem;
+}
+
+.pageButton {
+  padding: 0.5rem;
+  background-color: #e5e7eb;
+  color: #4b5563;
+  border: none;
+  border-radius: 0.375rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.pageButton:hover {
+  background-color: #d1d5db;
+}
+
+.pageButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.active {
+  background-color: #3b82f6;
+  color: white;
+}

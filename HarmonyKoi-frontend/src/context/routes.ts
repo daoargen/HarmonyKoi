@@ -2,6 +2,7 @@ const routes = {
   home: '/',
   admin: '/admin',
   member: '/member',
+  package: '/package',
   login: '/login',
   loginGoogle: '/login/google',
   register: '/register',
@@ -13,6 +14,8 @@ const routes = {
   orders: '/orders',
   about: '/about',
   error: '*',
+  editPost: '/edit-post/:id',
+  editNews: '/edit-news/:id',
   notFound: '/not-found',
   post: '/post',
   consult: '/consulting',
@@ -22,10 +25,11 @@ const routes = {
   managePost: '/manage-posts',
   manageUsers: '/manage-users',
   manageFish: '/manage-fish',
-  managePonds: '/manage-ponds',
   manageNews: '/manage-news',
   approvePosts: '/approve-posts',
-  dashboard: '/dashboard'
+  dashboard: '/dashboard',
+  CreateFish: '/createFish',
+  UpdateFish: '/update-fish'
 }
 
 export default routes

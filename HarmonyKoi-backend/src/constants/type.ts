@@ -129,11 +129,13 @@ export interface UpdateKoiFishElement {
 export interface CreateNew {
   tittle: string
   content: string
+  imageUrl: string
 }
 
 export interface UpdateNew {
   tittle?: string
   content?: string
+  imageUrl: string
 }
 
 // Order
@@ -234,14 +236,15 @@ export interface UpdatePondElement {
 export interface CreatePost {
   title: string
   content: string
-  status: string | null
+  imageUrl: string
+  rejectReason?: string
 }
 
 export interface UpdatePost {
-  userId?: string
   title?: string
   content?: string
-  dateRemain?: number
+  imageUrl?: string
+  rejectReason?: string
   status?: string
   visible?: boolean
 }

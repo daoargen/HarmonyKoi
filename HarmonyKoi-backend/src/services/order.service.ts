@@ -1,4 +1,5 @@
 import { Request } from "express"
+import moment from "moment"
 import { Op } from "sequelize"
 
 import responseStatus from "~/constants/responseStatus"
@@ -218,7 +219,10 @@ async function getOrderById(orderId: string) {
       where: { id: orderId, isDeleted: false }
     })
     if (!order) throw responseStatus.responseNotFound404("Order not found")
-    return order
+    const payment = await Payment.findOne({
+      where: { orderId: orderId, isDeleted: false }
+    })
+    return { order, payment }
   } catch (error) {
     console.error(error)
     throw error
@@ -252,12 +256,14 @@ async function createOrder(token: string, newOrder: CreateOrder) {
       // Tìm order đầu tiên trong danh sách orderIds
       const existingOrder = await Order.findOne({
         where: {
-          id: filteredOrderIds[0]
+          id: filteredOrderIds[0],
+          status: "PENDING",
+          isDeleted: false
         }
       })
 
       if (existingOrder) {
-        throw responseStatus.responseConflict409("Order already exists")
+        return await getOrderById(existingOrder.id!)
       }
     }
 
@@ -320,9 +326,9 @@ async function createOrder(token: string, newOrder: CreateOrder) {
       amount: order.totalAmount
     }
 
-    await paymentService.createPayment(newPayment)
+    const payment = await paymentService.createPayment(newPayment)
 
-    return order
+    return await getOrderById(order.id!)
   } catch (error) {
     console.error(error)
     throw error
@@ -374,23 +380,87 @@ async function deleteOrder(id: string) {
 async function getCurrentPackage(token: string) {
   try {
     const user = await getUserFromToken(token)
-    const order = await Order.findAll({ where: { userId: user.id, isDeleted: false } })
-    if (!order) {
-      throw responseStatus.responseNotFound404("Order not found or already deleted")
+
+    // 1. Lấy tất cả các order có userId tương ứng và status là COMPLETED
+    const completedOrders = await Order.findAll({
+      where: { userId: user.id, status: "COMPLETED", isDeleted: false },
+      attributes: ["id"] // Chỉ cần lấy id của order
+    })
+
+    // 2. Lọc ra các orderId
+    const completedOrderIds = completedOrders.map((order) => order.id).filter((id): id is string => !!id)
+
+    // 3. Lọc ra các order detail có orderId trong completedOrderIds và type là PACKAGE
+    const packageOrderDetails = await OrderDetail.findAll({
+      where: {
+        orderId: {
+          [Op.in]: completedOrderIds
+        },
+        type: "PACKAGE",
+        isDeleted: false
+      },
+      order: [["createdAt", "DESC"]] // Sắp xếp theo createdAt giảm dần để lấy order detail mới nhất
+    })
+
+    // 4. Lấy order detail mới nhất (nếu có)
+    const latestPackageOrderDetail = packageOrderDetails[0]
+
+    // 5. Trả về package tương ứng (nếu có)
+    if (latestPackageOrderDetail) {
+      const packageId = latestPackageOrderDetail.packageId
+
+      if (packageId) {
+        const currentPackage = await Package.findOne({
+          where: { id: packageId, isDeleted: false }
+        })
+
+        return currentPackage // Trả về package
+      }
     }
 
-    return
+    // Nếu không tìm thấy package, có thể trả về null hoặc throw error tùy theo logic của bạn
+    return null
   } catch (error) {
     console.error(error)
     throw error
   }
 }
 
+async function cancelPendingOrders() {
+  try {
+    const pendingOrders = await Order.findAll({
+      where: {
+        status: "PENDING",
+        isDeleted: false
+      }
+    })
+
+    for (const order of pendingOrders) {
+      try {
+        const payment = await Payment.findOne({
+          where: { orderId: order.id, isDeleted: false }
+        })
+        if (payment) {
+          await paymentService.cancelPayment(payment.id!)
+          console.log(`Đã hủy đơn hàng ${order.id} và thanh toán ${payment.id}`)
+        } else {
+          console.warn(`Không tìm thấy thanh toán cho đơn hàng ${order.id}`)
+        }
+      } catch (error) {
+        console.error(`Lỗi khi hủy đơn hàng ${order.id}:`, error)
+      }
+    }
+  } catch (error) {
+    console.error(error)
+  }
+}
 export default {
   getAllOrders,
   getOrderHistory,
   getOrderById,
   createOrder,
   editOrder,
-  deleteOrder
+  deleteOrder,
+  getCurrentPackage,
+  cancelPendingOrders
 }

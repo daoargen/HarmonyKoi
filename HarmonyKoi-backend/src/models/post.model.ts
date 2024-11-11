@@ -22,6 +22,14 @@ export const Post = sequelize.define<PostInstance>(tableName, {
     type: DataTypes.STRING,
     allowNull: false
   },
+  imageUrl: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  rejectReason: {
+    type: DataTypes.STRING,
+    allowNull: true
+  },
   dateRemain: {
     type: DataTypes.INTEGER,
     allowNull: false
@@ -47,6 +55,8 @@ export interface PostAttributes {
   userId: string
   title: string
   content: string
+  imageUrl: string
+  rejectReason: string | null
   dateRemain: number
   status: string
   visible: boolean
