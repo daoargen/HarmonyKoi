@@ -6,29 +6,40 @@ import { Card, CardHeader, CardTitle, CardContent, CardFooter } from '../../../.
 import { createPost } from '../../../../../apis/post.api'
 import styles from './AddPostPage.module.css'
 import { useNavigate } from 'react-router-dom'
-import { AlertCircle, ArrowLeft, Send } from 'lucide-react'
+import { ArrowLeft, Send } from 'lucide-react'
 
 const AddPostPage: React.FC = () => {
   const [title, setTitle] = useState('')
   const [content, setContent] = useState('')
   const [imageUrl, setImageUrl] = useState('')
-  const [error, setError] = useState<string | null>(null)
+  const [error, setError] = useState({
+    title: '',
+    content: '',
+    imageUrl: ''
+  })
   const [isSubmitting, setIsSubmitting] = useState(false)
   const navigate = useNavigate()
 
   const handleCreatePost = async () => {
-    if (!title || !content) {
-      setError('Vui lòng nhập đầy đủ tiêu đề và nội dung')
-      return
-    }
+    const newErrors = { title: '', content: '', imageUrl: '' }
 
+    if (!title) newErrors.title = 'Vui lòng nhập tiêu đề'
+
+    if (!content) newErrors.content = 'Vui lòng nhập nội dung'
+
+    if (!imageUrl) newErrors.imageUrl = 'Vui lòng nhập url hình ảnh '
+    // You can optionally validate imageUrl as well
+
+    setError(newErrors) // Set error immediately
+
+    if (Object.values(newErrors).some(Boolean)) return // Stop if there are error
     setIsSubmitting(true)
     try {
       await createPost({ title, content, imageUrl })
       alert('Tạo bài viết thành công, hãy đợi quản trị viên duyệt bài')
       navigate('/member/manage/manage-posts')
     } catch (err) {
-      setError('Không thể tạo bài viết')
+      alert('Không thể tạo bài viết')
     } finally {
       setIsSubmitting(false)
     }
@@ -45,12 +56,12 @@ const AddPostPage: React.FC = () => {
           <CardTitle className={styles.title}>Thêm bài viết mới</CardTitle>
         </CardHeader>
         <CardContent>
-          {error && (
+          {/* {error && (
             <div className={styles.error}>
               <AlertCircle size={20} />
               <span>{error}</span>
             </div>
-          )}
+          )} */}
           <div className={styles.formGroup}>
             <label htmlFor='title' className={styles.label}>
               Tiêu đề
@@ -60,10 +71,11 @@ const AddPostPage: React.FC = () => {
               id='title'
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              className={styles.input}
+              className={`${styles.input} ${error.title && styles.invalid}`}
               placeholder='Nhập tiêu đề bài viết'
             />
           </div>
+          {error.title && <p className={styles.errorMessage}>{error.title}</p>}
           <div className={styles.formGroup}>
             <label htmlFor='content' className={styles.label}>
               Nội dung
@@ -72,9 +84,10 @@ const AddPostPage: React.FC = () => {
               id='content'
               value={content}
               onChange={(e) => setContent(e.target.value)}
-              className={styles.textarea}
+              className={`${styles.textarea} ${error.content && styles.invalid}`}
               placeholder='Nhập nội dung bài viết'
             />
+            {error.content && <p className={styles.errorMessage}>{error.content}</p>}
           </div>
           <div className={styles.formGroup}>
             <label htmlFor='imageUrl' className={styles.label}>
@@ -85,9 +98,10 @@ const AddPostPage: React.FC = () => {
               id='imageUrl'
               value={imageUrl}
               onChange={(e) => setImageUrl(e.target.value)}
-              className={styles.input}
+              className={`${styles.input} ${error.imageUrl && styles.invalid}`}
               placeholder='Nhập URL hình ảnh'
             />
+            {error.imageUrl && <p className={styles.errorMessage}>{error.imageUrl}</p>}
           </div>
         </CardContent>
         <CardFooter>

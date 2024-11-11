@@ -6,7 +6,7 @@ import { Button } from '../../../../../components/ui/button'
 import { Input } from '../../../../../components/ui/input'
 import { Textarea } from '../../../../../components/ui/textarea'
 import { Card, CardHeader, CardTitle, CardContent, CardFooter } from '../../../../../components/ui/card'
-import { AlertCircle, ArrowLeft, Save, Eye, EyeOff } from 'lucide-react'
+import { ArrowLeft, Save, Eye, EyeOff } from 'lucide-react'
 import styles from './EditPostPage.module.css'
 import { toast, ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
@@ -16,7 +16,11 @@ const EditPostPage: React.FC = () => {
   const [post, setPost] = useState<Post | null>(null)
   const [imageUrl, setImageUrl] = useState('')
   const [loading, setLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
+  const [error, setError] = useState({
+    title: '',
+    content: '',
+    imageUrl: ''
+  })
   const [isSubmitting, setIsSubmitting] = useState(false)
   const navigate = useNavigate()
 
@@ -29,7 +33,7 @@ const EditPostPage: React.FC = () => {
         }
         setPost(response.data.data)
       } catch (err) {
-        setError('Không thể tải bài viết')
+        alert('Không thể tải bài viết')
         toast.error('Không thể tải bài viết')
       } finally {
         setLoading(false)
@@ -40,30 +44,48 @@ const EditPostPage: React.FC = () => {
   }, [id, post?.imageUrl])
 
   const handleUpdatePost = async () => {
-    if (post) {
-      setIsSubmitting(true)
-      const updatedStatus = post.status === 'APPROVED' || post.status === 'REJECTED' ? 'PENDING' : post.status // Reset status to PENDING
-      try {
-        await updatePost(post.id, {
-          title: post.title,
-          content: post.content,
-          imageurl: post.imageUrl,
-          status: updatedStatus,
-          visible: post.visible
-        })
-        if (updatedStatus === 'PENDING') {
-          toast.success('Cập nhật thành công. Đợi quản trị viên duyệt bài.') // Thông báo nếu chuyển về PENDING
-        } else {
-          toast.success('Bài viết đã được cập nhật thành công.')
-        }
+    if (!post) return // Guard clause
 
-        navigate('/member/manage/manage-posts')
-      } catch (err) {
-        setError('Không thể cập nhật bài viết')
-        toast.error('Không thể cập nhật bài viết')
-      } finally {
-        setIsSubmitting(false)
+    const newErrors = { title: '', content: '', imageUrl: '' }
+
+    if (!post.title) {
+      newErrors.title = 'Vui lòng nhập tiêu đề'
+    }
+    if (!post.content) {
+      newErrors.content = 'Vui lòng nhập nội dung'
+    }
+    if (!imageUrl) {
+      // Validate imageUrl separately
+      newErrors.imageUrl = 'Vui lòng nhập URL hình ảnh'
+    }
+
+    setError(newErrors)
+
+    if (Object.values(newErrors).some(Boolean)) return
+
+    setIsSubmitting(true)
+
+    const updatedStatus = post.status === 'APPROVED' || post.status === 'REJECTED' ? 'PENDING' : post.status // Reset status to PENDING
+    try {
+      await updatePost(post.id, {
+        title: post.title,
+        content: post.content,
+        imageurl: post.imageUrl,
+        status: updatedStatus,
+        visible: post.visible
+      })
+      if (updatedStatus === 'PENDING') {
+        toast.success('Cập nhật thành công. Đợi quản trị viên duyệt bài.') // Thông báo nếu chuyển về PENDING
+      } else {
+        toast.success('Bài viết đã được cập nhật thành công.')
       }
+
+      navigate('/member/manage/manage-posts')
+    } catch (err) {
+      alert('Không thể cập nhật bài viết')
+      toast.error('Không thể cập nhật bài viết')
+    } finally {
+      setIsSubmitting(false)
     }
   }
 
@@ -71,8 +93,10 @@ const EditPostPage: React.FC = () => {
     const { name, value } = e.target
     if (name === 'imageUrl') {
       setImageUrl(value) // Update imageUrl state directly
+      setError((prevErrors) => ({ ...prevErrors, imageUrl: '' })) // Clear error
     } else if (post) {
       setPost({ ...post, [name]: value })
+      setError((prevErrors) => ({ ...prevErrors, [name]: '' })) // Clear error
     }
     // setPost((prevPost) => (prevPost ? { ...prevPost, [name]: value } : null))
   }
@@ -101,12 +125,12 @@ const EditPostPage: React.FC = () => {
           <CardTitle className={styles.title}>Chỉnh sửa bài viết</CardTitle>
         </CardHeader>
         <CardContent>
-          {error && (
+          {/* {error && (
             <div className={styles.error}>
               <AlertCircle size={20} />
               <span>{error}</span>
             </div>
-          )}
+          )} */}
           <div className={styles.formGroup}>
             <label htmlFor='title' className={styles.label}>
               Tiêu đề
@@ -117,9 +141,10 @@ const EditPostPage: React.FC = () => {
               name='title'
               value={post?.title || ''}
               onChange={handleChange}
-              className={styles.input}
+              className={`${styles.input} ${error.title && styles.invalid}`}
               placeholder='Nhập tiêu đề bài viết'
             />
+            {error.title && <p className={styles.errorMessage}>{error.title}</p>}
           </div>
           <div className={styles.formGroup}>
             <label htmlFor='content' className={styles.label}>
@@ -130,9 +155,10 @@ const EditPostPage: React.FC = () => {
               name='content'
               value={post?.content || ''}
               onChange={handleChange}
-              className={styles.textarea}
+              className={`${styles.textarea} ${error.content && styles.invalid}`}
               placeholder='Nhập nội dung bài viết'
             />
+            {error.content && <p className={styles.errorMessage}>{error.content}</p>}
           </div>
           <div className={styles.formGroup}>
             <label htmlFor='imageUrl' className={styles.label}>
@@ -144,9 +170,10 @@ const EditPostPage: React.FC = () => {
               name='imageUrl' // Add name attribute
               value={imageUrl} // Bind to imageUrl state
               onChange={handleChange}
-              className={styles.input}
+              className={`${styles.input} ${error.imageUrl && styles.invalid}`}
               placeholder='Nhập URL hình ảnh'
             />
+            {error.imageUrl && <p className={styles.errorMessage}>{error.imageUrl}</p>}
           </div>
           <div className={styles.visibilityToggle}>
             <Button variant='outline' onClick={handleVisibilityToggle} className={styles.visibilityButton}>

@@ -100,11 +100,6 @@ const ManageOrderPage: React.FC = () => {
     fetchData()
   }, [pagination.currentPage, pagination.pageSize, statusFilter])
 
-  const handlePayment = async (order: Order) => {
-    const response = await getOrderId(order.id)
-    console.log(response.data.data.payment)
-  }
-
   const handlePageChange = (newPage: number) => {
     setPagination((prev) => ({ ...prev, currentPage: newPage }))
   }
@@ -193,7 +188,11 @@ const ManageOrderPage: React.FC = () => {
                     <td className={styles.td}>
                       <div className={styles.actionButtons}>
                         {/* <button onClick={() => handlePayment(order)}> click </button> */}
-                        <PaymentButton amount={order.totalAmount} description={order.payment.paymentCode} />
+                        <PaymentButton
+                          amount={order.totalAmount}
+                          description={order.payment.paymentCode}
+                          isDisabled={order.status === 'COMPLETED'}
+                        />
                         <button
                           onClick={() => handleCancelOrder(order)}
                           className={styles.cancelButton}

@@ -10,3 +10,19 @@ export interface News {
   updatedAt: string
 }
 export type NewsResponse = SuccessResponse<News[]>
+
+export interface NewsListResponse {
+  timestamp: string
+  statusCode: number
+  message: string
+  data: {
+    formatNews: News[]
+  }
+  pagination: {
+    pageSize: number
+    totalItem: number
+    currentPage: number
+    maxPageSize: number
+    totalPage: number
+  }
+}

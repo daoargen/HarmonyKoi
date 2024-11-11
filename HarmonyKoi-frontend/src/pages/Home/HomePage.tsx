@@ -78,7 +78,7 @@ const HeroSection = () => (
       >
         Nền tảng tư vấn và mua bán cá hàng đầu
       </motion.p>
-      <motion.div
+      {/* <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, delay: 0.4 }}
@@ -86,7 +86,7 @@ const HeroSection = () => (
         <Button size='lg' className='bg-blue-600 hover:bg-blue-700 text-white'>
           Khám phá ngay
         </Button>
-      </motion.div>
+      </motion.div> */}
     </div>
   </section>
 )
@@ -255,7 +255,7 @@ const PricingCard = ({ plan, price, features, isPopular }: any) => {
           <CardDescription className='text-gray-600'>Gói đăng tin {plan.toLowerCase()}</CardDescription>
           <div className='mt-4'>
             <span className='text-4xl font-bold text-blue-600'>{price}</span>
-            <span className='text-gray-500 ml-2'>/tháng</span>
+            {/* <span className='text-gray-500 ml-2'>/tháng</span> */}
           </div>
         </CardHeader>
         <CardContent className='flex-grow'>
