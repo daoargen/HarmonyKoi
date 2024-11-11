@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import styles from './PaymentModal.module.css'
-import { completePayment, getPayment } from '../../../apis/payment.api'
+import { completePayment } from '../../../apis/payment.api'
 
 interface PaymentInfo {
   accountNumber: string
@@ -14,9 +14,10 @@ interface PaymentInfo {
 interface PaymentButtonProps {
   amount: number
   description: string
+  isDisabled: boolean
 }
 
-export default function PaymentButton({ amount, description }: PaymentButtonProps) {
+export default function PaymentButton({ amount, description, isDisabled }: PaymentButtonProps) {
   const [isOpen, setIsOpen] = useState<boolean>(false)
 
   const paymentInfo: PaymentInfo = {
@@ -35,7 +36,7 @@ export default function PaymentButton({ amount, description }: PaymentButtonProp
 
   return (
     <div className={styles.paymentContainer}>
-      <button onClick={() => setIsOpen(true)} className={styles.paymentButton}>
+      <button onClick={() => setIsOpen(true)} className={styles.paymentButton} disabled={isDisabled}>
         Thanh toán
       </button>
 

@@ -255,7 +255,7 @@ const PricingCard = ({ plan, price, features, isPopular }: any) => {
           <CardDescription className='text-gray-600'>Gói đăng tin {plan.toLowerCase()}</CardDescription>
           <div className='mt-4'>
             <span className='text-4xl font-bold text-blue-600'>{price}</span>
-            <span className='text-gray-500 ml-2'>/tháng</span>
+            {/* <span className='text-gray-500 ml-2'>/tháng</span> */}
           </div>
         </CardHeader>
         <CardContent className='flex-grow'>
