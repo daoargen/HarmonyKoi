@@ -26,7 +26,7 @@ const ConfirmModal: React.FC<ConfirmModalProps> = ({ isOpen, onClose, onConfirm,
         </div>
         <div className='mb-10'>
           <p className='text-gray-700 mb-2'>
-            Bạn có chắc chắn muốn mua gói <strong className='text-blue-600'>{packageName}</strong>?
+            Bạn có chắc chắn muốn mua cá <strong className='text-blue-600'>{packageName}</strong>?
           </p>
           <p className='text-2xl font-bold text-gray-900'>Giá: {packagePrice.toLocaleString()} VND</p>
         </div>
